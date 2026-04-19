@@ -248,10 +248,11 @@
         </div>
     </section>
 
-    <!-- Portafolio -->
+    <!-- Portafolio (Totalmente reestructurado para evitar aplastamiento) -->
     <section id="portafolio" class="py-20 sm:py-24 md:py-32 bg-brand-surface">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-12 sm:mb-16 lg:mb-20">
+            
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-16 lg:mb-24">
                 <div class="mb-6 sm:mb-0">
                     <h2 class="text-3xl md:text-4xl lg:text-5xl font-semibold mb-3 lg:mb-6">Muestra de Trabajo</h2>
                     <p class="font-light text-sm sm:text-base lg:text-lg text-brand-textSoft">La aplicación práctica de la excelencia en el diseño.</p>
@@ -264,42 +265,76 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 xl:gap-16">
-                <!-- Imagen 1: Papelería -->
-                <div class="group cursor-pointer">
-                    <div class="image-container w-full aspect-[4/3] mb-4 sm:mb-6 lg:mb-8">
-                        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=1200" alt="Identidad Corporativa" class="w-full h-full object-cover">
+            <!-- Contenedor general con espaciado amplio -->
+            <div class="space-y-24 lg:space-y-40">
+                
+                <!-- Item 1: Papelería (Imagen Izquierda en PC) -->
+                <div class="group flex flex-col lg:flex-row gap-8 sm:gap-12 lg:gap-16 xl:gap-24 items-center">
+                    <!-- Contenedor Imagen (Toma más ancho visual) -->
+                    <div class="w-full lg:w-1/2 xl:w-3/5">
+                        <div class="image-container w-full aspect-video sm:aspect-video lg:aspect-[16/10] bg-brand-light rounded-sm shadow-sm overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&q=80&w=1200" alt="Identidad Corporativa" class="w-full h-full object-cover object-center">
+                        </div>
                     </div>
-                    <h4 class="text-lg sm:text-xl lg:text-2xl font-medium mb-1 lg:mb-3">Identidad Corporativa</h4>
-                    <p class="text-[10px] sm:text-xs lg:text-sm text-brand-textSoft font-light uppercase tracking-widest">Papelería Institucional</p>
+                    <!-- Contenedor Texto -->
+                    <div class="w-full lg:w-1/2 xl:w-2/5 flex flex-col justify-center px-2 sm:px-4 lg:px-0">
+                        <span class="text-[10px] sm:text-xs lg:text-sm text-brand-textSoft font-medium uppercase tracking-widest mb-3 block">Papelería Institucional</span>
+                        <h4 class="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-medium mb-4 lg:mb-6 text-brand-dark">Identidad Corporativa</h4>
+                        <p class="text-sm sm:text-base lg:text-lg leading-relaxed font-light text-brand-textSoft">
+                            Desarrollo integral de la identidad visual de su empresa. Abarcamos desde la concepción estratégica del logotipo hasta la papelería corporativa, asegurando una presencia sólida, elegante y coherente en cada punto de contacto.
+                        </p>
+                    </div>
                 </div>
 
-                <!-- Imagen 2: Diseño Web -->
-                <div class="group cursor-pointer">
-                    <div class="image-container w-full aspect-[4/3] mb-4 sm:mb-6 lg:mb-8">
-                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200" alt="Diseño Web" class="w-full h-full object-cover">
+                <!-- Item 2: Diseño Web (Imagen Derecha en PC - Uso de lg:flex-row-reverse) -->
+                <div class="group flex flex-col lg:flex-row-reverse gap-8 sm:gap-12 lg:gap-16 xl:gap-24 items-center">
+                    <div class="w-full lg:w-1/2 xl:w-3/5">
+                        <div class="image-container w-full aspect-video sm:aspect-video lg:aspect-[16/10] bg-brand-light rounded-sm shadow-sm overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200" alt="Diseño Web" class="w-full h-full object-cover object-top">
+                        </div>
                     </div>
-                    <h4 class="text-lg sm:text-xl lg:text-2xl font-medium mb-1 lg:mb-3">Desarrollo Digital</h4>
-                    <p class="text-[10px] sm:text-xs lg:text-sm text-brand-textSoft font-light uppercase tracking-widest">Plataformas Web</p>
+                    <div class="w-full lg:w-1/2 xl:w-2/5 flex flex-col justify-center px-2 sm:px-4 lg:px-0">
+                        <span class="text-[10px] sm:text-xs lg:text-sm text-brand-textSoft font-medium uppercase tracking-widest mb-3 block">Plataformas Web</span>
+                        <h4 class="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-medium mb-4 lg:mb-6 text-brand-dark">Desarrollo Digital</h4>
+                        <p class="text-sm sm:text-base lg:text-lg leading-relaxed font-light text-brand-textSoft">
+                            Creación de plataformas web optimizadas, responsivas y orientadas a la conversión. Diseñamos ecosistemas digitales que reflejan la esencia institucional y ofrecen una experiencia de usuario impecable en cualquier dispositivo.
+                        </p>
+                    </div>
                 </div>
 
-                <!-- Imagen 3: Catálogo Virtual -->
-                <a href="https://www.appkyte.com/fidelizar/catalogo-online" target="_blank" class="group cursor-pointer block">
-                    <div class="image-container w-full aspect-[4/3] mb-4 sm:mb-6 lg:mb-8">
-                        <img src="https://images.unsplash.com/photo-1512295767273-ac109ac3acfa?auto=format&fit=crop&q=80&w=1200" alt="Catálogo Virtual" class="w-full h-full object-cover">
+                <!-- Item 3: Catálogo Virtual (Imagen Izquierda en PC) -->
+                <div class="group flex flex-col lg:flex-row gap-8 sm:gap-12 lg:gap-16 xl:gap-24 items-center">
+                    <div class="w-full lg:w-1/2 xl:w-3/5">
+                        <div class="image-container w-full aspect-video sm:aspect-video lg:aspect-[16/10] bg-brand-light rounded-sm shadow-sm overflow-hidden">
+                            <!-- Imagen ajustada a top para que el catálogo digital no se corte raro -->
+                            <img src="https://www.image2url.com/r2/default/images/1776616333565-a382d4c9-f30f-4d1c-bad6-4f900fca3c53.png" alt="Catálogo Virtual" class="w-full h-full object-cover object-top">
+                        </div>
                     </div>
-                    <h4 class="text-lg sm:text-xl lg:text-2xl font-medium mb-1 lg:mb-3">Catálogo Virtual</h4>
-                    <p class="text-[10px] sm:text-xs lg:text-sm text-brand-textSoft font-light uppercase tracking-widest">Diseño Interactivo</p>
-                </a>
-
-                <!-- Imagen 4: Auditoría/Manuales -->
-                <div class="group cursor-pointer">
-                    <div class="image-container w-full aspect-[4/3] mb-4 sm:mb-6 lg:mb-8">
-                        <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&q=80&w=1200" alt="Manuales de Marca" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                    <div class="w-full lg:w-1/2 xl:w-2/5 flex flex-col justify-center px-2 sm:px-4 lg:px-0">
+                        <span class="text-[10px] sm:text-xs lg:text-sm text-brand-textSoft font-medium uppercase tracking-widest mb-3 block">Diseño Interactivo</span>
+                        <h4 class="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-medium mb-4 lg:mb-6 text-brand-dark">Catálogo Virtual</h4>
+                        <p class="text-sm sm:text-base lg:text-lg leading-relaxed font-light text-brand-textSoft">
+                            Sistemas de presentación interactivos y catálogos en línea que permiten exponer productos y servicios de manera dinámica, facilitando la navegación de los usuarios y acelerando el proceso de ventas.
+                        </p>
                     </div>
-                    <h4 class="text-lg sm:text-xl lg:text-2xl font-medium mb-1 lg:mb-3">Estandarización Visual</h4>
-                    <p class="text-[10px] sm:text-xs lg:text-sm text-brand-textSoft font-light uppercase tracking-widest">Manuales de Marca</p>
                 </div>
+
+                <!-- Item 4: Auditoría/Manuales (Imagen Derecha en PC) -->
+                <div class="group flex flex-col lg:flex-row-reverse gap-8 sm:gap-12 lg:gap-16 xl:gap-24 items-center">
+                    <div class="w-full lg:w-1/2 xl:w-3/5">
+                        <div class="image-container w-full aspect-video sm:aspect-video lg:aspect-[16/10] bg-brand-light rounded-sm shadow-sm overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?auto=format&fit=crop&q=80&w=1200" alt="Manuales de Marca" class="w-full h-full object-cover object-center grayscale group-hover:grayscale-0 transition-all duration-500">
+                        </div>
+                    </div>
+                    <div class="w-full lg:w-1/2 xl:w-2/5 flex flex-col justify-center px-2 sm:px-4 lg:px-0">
+                        <span class="text-[10px] sm:text-xs lg:text-sm text-brand-textSoft font-medium uppercase tracking-widest mb-3 block">Manuales de Marca</span>
+                        <h4 class="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-medium mb-4 lg:mb-6 text-brand-dark">Estandarización Visual</h4>
+                        <p class="text-sm sm:text-base lg:text-lg leading-relaxed font-light text-brand-textSoft">
+                            Documentación exhaustiva y manuales normativos que garantizan la correcta aplicación de los activos visuales en cualquier formato, manteniendo el orden corporativo y la coherencia visual a nivel global.
+                        </p>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </section>
