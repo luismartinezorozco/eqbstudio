@@ -82,10 +82,12 @@
     <!-- Navbar -->
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-brand-light border-b border-transparent py-2 lg:py-4">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
-            <div class="flex justify-between items-center h-16 md:h-20 lg:h-24 transition-all duration-300" id="nav-container">
+            <!-- Altura optimizada en móviles (h-20) y PC (md:h-24) -->
+            <div class="flex justify-between items-center h-20 md:h-24 transition-all duration-300" id="nav-container">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center cursor-pointer" onclick="window.scrollTo(0,0)">
-                    <img class="h-10 sm:h-12 md:h-14 lg:h-16 xl:h-20 w-auto object-contain transition-all duration-300" id="nav-logo" src="https://www.image2url.com/r2/default/images/1776611881108-f2727ca1-db6f-499c-861d-060b2c44c59a.png" alt="EQB STUDIO Logo">
+                    <!-- Logo más grande en móviles por defecto (h-12 en vez de h-10) -->
+                    <img class="h-12 md:h-16 lg:h-20 w-auto object-contain transition-all duration-300" id="nav-logo" src="https://www.image2url.com/r2/default/images/1776611881108-f2727ca1-db6f-499c-861d-060b2c44c59a.png" alt="EQB STUDIO Logo">
                 </div>
                 
                 <!-- Menú Desktop -->
@@ -108,7 +110,7 @@
                 <!-- Botón Menú Móvil -->
                 <div class="md:hidden flex items-center">
                     <button id="mobile-menu-btn" class="text-brand-dark focus:outline-none p-2">
-                        <svg class="w-6 h-6 sm:w-7 sm:h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
+                        <svg class="w-7 h-7" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"></line><line x1="4" x2="20" y1="6" y2="6"></line><line x1="4" x2="20" y1="18" y2="18"></line></svg>
                     </button>
                 </div>
             </div>
@@ -117,10 +119,10 @@
         <!-- Menú Móvil Desplegable -->
         <div id="mobile-menu" class="hidden md:hidden bg-brand-surface border-t border-brand-light">
             <div class="px-4 pt-2 pb-6 space-y-2 shadow-lg">
-                <a href="#firma" class="block py-4 text-brand-dark border-b border-brand-light font-semibold uppercase text-xs tracking-widest">La Firma</a>
-                <a href="#servicios" class="block py-4 text-brand-dark border-b border-brand-light font-semibold uppercase text-xs tracking-widest">Servicios</a>
-                <a href="#portafolio" class="block py-4 text-brand-dark border-b border-brand-light font-semibold uppercase text-xs tracking-widest">Portafolio</a>
-                <a href="https://www.instagram.com/eqbstudio/" target="_blank" class="flex items-center py-4 text-brand-dark font-semibold border-b border-brand-light uppercase text-xs tracking-widest">
+                <a href="#firma" class="block py-4 text-brand-dark border-b border-brand-light font-semibold uppercase text-xs tracking-widest text-center">La Firma</a>
+                <a href="#servicios" class="block py-4 text-brand-dark border-b border-brand-light font-semibold uppercase text-xs tracking-widest text-center">Servicios</a>
+                <a href="#portafolio" class="block py-4 text-brand-dark border-b border-brand-light font-semibold uppercase text-xs tracking-widest text-center">Portafolio</a>
+                <a href="https://www.instagram.com/eqbstudio/" target="_blank" class="flex items-center justify-center py-4 text-brand-dark font-semibold border-b border-brand-light uppercase text-xs tracking-widest">
                     <svg class="w-4 h-4 mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg> 
                     Instagram
                 </a>
@@ -130,8 +132,8 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="relative pt-32 pb-20 sm:pt-40 sm:pb-24 md:pt-48 md:pb-32 lg:pt-56 lg:pb-40 xl:pt-64 xl:pb-48 bg-brand-light flex flex-col justify-center min-h-[90vh] md:min-h-screen">
-        <div class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 text-center mt-10 md:mt-0">
+    <section class="relative pt-40 sm:pt-48 md:pt-48 pb-20 sm:pb-24 lg:pt-56 lg:pb-40 xl:pt-64 xl:pb-48 bg-brand-light flex flex-col justify-center min-h-[90vh] md:min-h-screen">
+        <div class="max-w-[1400px] w-full mx-auto px-6 sm:px-8 lg:px-12 text-center mt-10 md:mt-0">
             <h2 class="text-[10px] sm:text-xs lg:text-sm font-semibold tracking-[0.25em] text-brand-dark uppercase mb-4 sm:mb-6 lg:mb-8">Consultoría y Desarrollo Estratégico</h2>
             <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold leading-tight mb-6 sm:mb-8 lg:mb-10 max-w-6xl mx-auto text-brand-dark">
                 Construimos marcas institucionales con absoluta <span class="italic font-light">coherencia visual.</span>
@@ -139,7 +141,7 @@
             <p class="text-base sm:text-lg lg:text-xl xl:text-2xl max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto mb-10 sm:mb-12 lg:mb-16 font-light leading-relaxed text-brand-textMain">
                 EQB STUDIO es una firma dedicada a la creación de identidades corporativas sólidas y plataformas web de alto rendimiento. Estructuramos su modelo de negocio para proyectar autoridad, confianza y diferenciación en el mercado.
             </p>
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6">
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 w-full max-w-md sm:max-w-none mx-auto">
                 <a href="#servicios" class="w-full sm:w-auto px-8 py-4 lg:px-10 lg:py-5 bg-brand-dark text-white text-[11px] sm:text-xs lg:text-sm font-semibold tracking-widest uppercase hover:bg-black transition-colors text-center shadow-md">
                     Nuestras Áreas de Práctica
                 </a>
@@ -281,10 +283,9 @@
                     </div>
                 </div>
 
-                <!-- Item 2: Desarrollo Web (Mockup PNG Actualizado) -->
+                <!-- Item 2: Desarrollo Web -->
                 <div class="group flex flex-col lg:flex-row-reverse gap-8 sm:gap-12 lg:gap-16 xl:gap-24 items-center">
                     <div class="w-full lg:w-1/2 xl:w-3/5 flex justify-center">
-                        <!-- Eliminado el contenedor gris, ahora es un PNG flotante -->
                         <img src="https://www.image2url.com/r2/default/images/1776617840059-33fc338e-9b96-4b76-b3c9-e1411398656d.png" alt="Diseño Web" class="w-full h-auto object-contain png-mockup max-h-[500px]">
                     </div>
                     <div class="w-full lg:w-1/2 xl:w-2/5 flex flex-col justify-center px-2 sm:px-4 lg:px-0">
@@ -296,10 +297,9 @@
                     </div>
                 </div>
 
-                <!-- Item 3: Catálogo Virtual (Mockup PNG) -->
+                <!-- Item 3: Catálogo Virtual -->
                 <div class="group flex flex-col lg:flex-row gap-8 sm:gap-12 lg:gap-16 xl:gap-24 items-center">
                     <div class="w-full lg:w-1/2 xl:w-3/5 flex justify-center">
-                        <!-- Eliminado el contenedor gris, ahora es un PNG flotante -->
                         <img src="https://www.image2url.com/r2/default/images/1776616333565-a382d4c9-f30f-4d1c-bad6-4f900fca3c53.png" alt="Catálogo Virtual" class="w-full h-auto object-contain png-mockup max-h-[500px]">
                     </div>
                     <div class="w-full lg:w-1/2 xl:w-2/5 flex flex-col justify-center px-2 sm:px-4 lg:px-0">
@@ -410,6 +410,14 @@
         const menu = document.getElementById('mobile-menu');
         btn.addEventListener('click', () => menu.classList.toggle('hidden'));
 
+        // Cerrar menú móvil al hacer clic en cualquier enlace interno
+        const mobileLinks = menu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+
         // Script Navbar responsivo y estético
         const nav = document.getElementById('navbar');
         const navContainer = document.getElementById('nav-container');
@@ -417,17 +425,21 @@
         
         window.addEventListener('scroll', () => {
             if (window.scrollY > 20) {
+                // Al hacer scroll
                 nav.classList.add('scrolled-nav', 'border-transparent');
-                navContainer.classList.remove('h-16', 'md:h-20', 'lg:h-24');
-                navContainer.classList.add('h-14', 'md:h-16', 'lg:h-20');
-                navLogo.classList.remove('h-10', 'sm:h-12', 'md:h-14', 'lg:h-16', 'xl:h-20');
-                navLogo.classList.add('h-8', 'sm:h-10', 'md:h-12', 'lg:h-14', 'xl:h-16');
+                navContainer.classList.remove('h-20', 'md:h-24');
+                navContainer.classList.add('h-16', 'md:h-20');
+                
+                navLogo.classList.remove('h-12', 'md:h-16', 'lg:h-20');
+                navLogo.classList.add('h-10', 'md:h-14', 'lg:h-16');
             } else {
+                // Arriba del todo
                 nav.classList.remove('scrolled-nav');
-                navContainer.classList.remove('h-14', 'md:h-16', 'lg:h-20');
-                navContainer.classList.add('h-16', 'md:h-20', 'lg:h-24');
-                navLogo.classList.remove('h-8', 'sm:h-10', 'md:h-12', 'lg:h-14', 'xl:h-16');
-                navLogo.classList.add('h-10', 'sm:h-12', 'md:h-14', 'lg:h-16', 'xl:h-20');
+                navContainer.classList.remove('h-16', 'md:h-20');
+                navContainer.classList.add('h-20', 'md:h-24');
+                
+                navLogo.classList.remove('h-10', 'md:h-14', 'lg:h-16');
+                navLogo.classList.add('h-12', 'md:h-16', 'lg:h-20');
             }
         });
     </script>
