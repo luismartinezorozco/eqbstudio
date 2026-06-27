@@ -92,9 +92,17 @@
         .logo-black { filter: brightness(0); }
         .logo-white { filter: brightness(0) invert(1); }
 
-        /* Cortes Diagonales */
-        .clip-diagonal { clip-path: polygon(25% 0, 100% 0, 100% 100%, 0% 100%); }
-        @media (max-width: 1024px) { .clip-diagonal { clip-path: polygon(0 30%, 100% 0, 100% 100%, 0% 100%); } }
+        /* Cortes Diagonales Optimizados para Contraste */
+        .clip-diagonal { 
+            /* Desktop: Naranja estrictamente a la derecha, dejando margen para el texto en la izquierda */
+            clip-path: polygon(55% 0, 100% 0, 100% 100%, 35% 100%); 
+        }
+        @media (max-width: 1024px) { 
+            .clip-diagonal { 
+                /* Mobile: Naranja inicia en la parte inferior protegiendo el 100% de la zona de texto superior */
+                clip-path: polygon(0 55%, 100% 35%, 100% 100%, 0% 100%); 
+            } 
+        }
         .clip-diagonal-reverse { clip-path: polygon(0 0, 100% 10%, 100% 100%, 0 90%); }
 
         /* Navbar Scrolled */
@@ -200,22 +208,25 @@
 
         <!-- ================= PÁGINA: INICIO ================= -->
         <div id="page-inicio" class="page-view active-page">
-            <section class="relative min-h-[85vh] flex items-center bg-white overflow-hidden">
+            <section class="relative min-h-[85vh] flex items-center bg-white overflow-hidden pb-10 lg:pb-0">
+                <!-- Fondo Naranja protegido del texto mediante clip-path reajustado -->
                 <div class="absolute inset-0 z-0 bg-brand-accent clip-diagonal hidden lg:block"></div>
                 <div class="absolute inset-0 z-0 bg-brand-accent clip-diagonal lg:hidden"></div>
 
-                <div class="max-w-[1400px] w-full mx-auto px-6 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center mt-10 lg:mt-0">
-                    <!-- Left Text Content -->
-                    <div class="text-center lg:text-left reveal-left">
+                <div class="max-w-[1400px] w-full mx-auto px-6 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mt-6 lg:mt-0">
+                    
+                    <!-- Left Text Content (Restringido en grid para no invadir el naranja) -->
+                    <div class="lg:col-span-7 xl:col-span-6 text-center lg:text-left reveal-left pt-6 pb-2 lg:py-0">
                         <span class="inline-block py-1.5 px-4 bg-brand-light border border-brand-gray rounded-full text-[10px] sm:text-xs font-black text-brand-accent uppercase tracking-widest mb-6">
                             Desarrollo Digital & Creativo
                         </span>
-                        <h1 class="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-[1.05] mb-6 text-brand-textDark tracking-tighter">
+                        <!-- Tipografía ajustada para mantener proporción dentro de su columna -->
+                        <h1 class="text-[2.75rem] leading-[1.05] sm:text-6xl lg:text-[4.25rem] xl:text-[5rem] font-black mb-6 text-brand-textDark tracking-tighter">
                             MARCAS CON <br>
-                            <span class="text-brand-accent lg:text-brand-textDark">COHERENCIA</span> <br>
+                            <span class="text-brand-accent">COHERENCIA</span> <br>
                             VISUAL.
                         </h1>
-                        <p class="text-base sm:text-lg max-w-xl mx-auto lg:mx-0 mb-10 font-semibold text-brand-textSoft">
+                        <p class="text-base sm:text-lg max-w-lg mx-auto lg:mx-0 mb-10 font-semibold text-brand-textSoft">
                             Diseñamos con propósito e innovamos con pasión. Impulsamos tu negocio con estrategias que dominan el mercado digital.
                         </p>
                         <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
@@ -229,15 +240,15 @@
                     </div>
 
                     <!-- Right Image Content -->
-                    <div class="relative flex justify-center lg:justify-end items-center reveal-right pt-10 lg:pt-0">
-                        <div class="absolute w-[300px] h-[300px] bg-black/10 blur-[50px] rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
-                        <img src="https://www.image2url.com/r2/default/images/1782571037969-5dcdb824-91fd-43d8-b539-cfe0894386ca.png" alt="Mascota Eqbito" class="w-full max-w-[350px] sm:max-w-[450px] lg:max-w-[600px] h-auto object-contain relative z-20 drop-shadow-2xl levitate">
+                    <div class="lg:col-span-5 xl:col-span-6 relative flex justify-center lg:justify-end items-center reveal-right pt-10 lg:pt-0">
+                        <div class="absolute w-[280px] sm:w-[350px] h-[280px] sm:h-[350px] bg-black/10 blur-[60px] rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                        <img src="https://www.image2url.com/r2/default/images/1782571037969-5dcdb824-91fd-43d8-b539-cfe0894386ca.png" alt="Mascota Eqbito" class="w-full max-w-[320px] sm:max-w-[450px] lg:max-w-[600px] h-auto object-contain relative z-20 drop-shadow-2xl levitate">
                     </div>
                 </div>
             </section>
 
-            <!-- Stats Banner -->
-            <div class="bg-brand-textDark relative z-20">
+            <!-- Stats Banner (Añadido margen negativo superior para eliminar cualquier hueco/línea de renderizado visual) -->
+            <div class="bg-brand-textDark relative z-20 -mt-[1px]">
                 <div class="max-w-[1200px] mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-white/10 text-center counter-box">
                     <div class="reveal">
                         <h4 class="text-5xl lg:text-6xl font-black text-white mb-2">+<span class="counter" data-target="200">0</span></h4>
