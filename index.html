@@ -94,8 +94,8 @@
 
         /* Cortes Diagonales Optimizados para Contraste */
         .clip-diagonal { 
-            /* Desktop: Naranja estrictamente a la derecha, dejando margen para el texto en la izquierda */
-            clip-path: polygon(55% 0, 100% 0, 100% 100%, 35% 100%); 
+            /* Desktop: Naranja estrictamente a la derecha, dejando MUCHO margen para el texto en la izquierda */
+            clip-path: polygon(62% 0, 100% 0, 100% 100%, 45% 100%); 
         }
         @media (max-width: 1024px) { 
             .clip-diagonal { 
@@ -104,6 +104,15 @@
             } 
         }
         .clip-diagonal-reverse { clip-path: polygon(0 0, 100% 10%, 100% 100%, 0 90%); }
+
+        /* Footer Marquee */
+        .marquee-wrapper { 
+            display: flex; overflow: hidden; width: 100%; 
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); 
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); 
+        }
+        .marquee-track { display: flex; flex-shrink: 0; min-width: 100%; animation: scrollMarquee 25s linear infinite; }
+        @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* Navbar Scrolled */
         .scrolled-nav {
@@ -216,7 +225,7 @@
                 <div class="max-w-[1400px] w-full mx-auto px-6 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mt-6 lg:mt-0">
                     
                     <!-- Left Text Content (Restringido en grid para no invadir el naranja) -->
-                    <div class="lg:col-span-7 xl:col-span-6 text-center lg:text-left reveal-left pt-6 pb-2 lg:py-0">
+                    <div class="lg:col-span-6 xl:col-span-5 text-center lg:text-left reveal-left pt-6 pb-2 lg:py-0 pr-0 lg:pr-8">
                         <span class="inline-block py-1.5 px-4 bg-brand-light border border-brand-gray rounded-full text-[10px] sm:text-xs font-black text-brand-accent uppercase tracking-widest mb-6">
                             Desarrollo Digital & Creativo
                         </span>
@@ -240,7 +249,7 @@
                     </div>
 
                     <!-- Right Image Content -->
-                    <div class="lg:col-span-5 xl:col-span-6 relative flex justify-center lg:justify-end items-center reveal-right pt-10 lg:pt-0">
+                    <div class="lg:col-span-6 xl:col-span-7 relative flex justify-center lg:justify-end items-center reveal-right pt-10 lg:pt-0">
                         <div class="absolute w-[280px] sm:w-[350px] h-[280px] sm:h-[350px] bg-black/10 blur-[60px] rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                         <img src="https://www.image2url.com/r2/default/images/1782571037969-5dcdb824-91fd-43d8-b539-cfe0894386ca.png" alt="Mascota Eqbito" class="w-full max-w-[320px] sm:max-w-[450px] lg:max-w-[600px] h-auto object-contain relative z-20 drop-shadow-2xl levitate">
                     </div>
@@ -480,14 +489,34 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-brand-textDark pt-10 pb-8 border-t border-white/10 relative z-20 mt-auto">
+    <footer class="bg-brand-textDark pt-10 pb-8 border-t border-white/10 relative z-20 mt-auto overflow-hidden">
         <div class="max-w-[1400px] mx-auto px-6 lg:px-12">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
-                <div class="text-center md:text-left">
-                    <img class="h-10 w-auto mb-4 logo-white mx-auto md:mx-0" src="https://www.image2url.com/r2/default/images/1776611881108-f2727ca1-db6f-499c-861d-060b2c44c59a.png" alt="EQB STUDIO Logo">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 mb-8 w-full">
+                <!-- Logo Agrandado -->
+                <div class="text-center md:text-left shrink-0 z-10">
+                    <img class="h-16 sm:h-20 w-auto logo-white mx-auto md:mx-0 drop-shadow-lg" src="https://www.image2url.com/r2/default/images/1776611881108-f2727ca1-db6f-499c-861d-060b2c44c59a.png" alt="EQB STUDIO Logo">
                 </div>
-                <div class="flex items-center gap-6">
-                    <a href="https://www.instagram.com/eqbstudio/" target="_blank" class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-brand-accent transition-colors">
+                
+                <!-- Ticker de Servicios -->
+                <div class="flex-grow w-full relative marquee-wrapper border-y border-white/10 py-3 hidden sm:flex">
+                    <div class="marquee-track items-center text-brand-gray/30 font-black uppercase tracking-[0.2em] lg:tracking-[0.3em] text-lg lg:text-2xl">
+                        <!-- Set 1 -->
+                        <span class="mx-6">Páginas Web</span> <span class="text-brand-accent opacity-50">✦</span>
+                        <span class="mx-6">Creación de Marca</span> <span class="text-brand-accent opacity-50">✦</span>
+                        <span class="mx-6">Catálogos Digitales</span> <span class="text-brand-accent opacity-50">✦</span>
+                        <span class="mx-6">vCard Digitales</span> <span class="text-brand-accent opacity-50">✦</span>
+                        <span class="mx-6">Tarjetas NFC</span> <span class="text-brand-accent opacity-50">✦</span>
+                        <!-- Set 2 (Duplicado para loop continuo) -->
+                        <span class="mx-6">Páginas Web</span> <span class="text-brand-accent opacity-50">✦</span>
+                        <span class="mx-6">Creación de Marca</span> <span class="text-brand-accent opacity-50">✦</span>
+                        <span class="mx-6">Catálogos Digitales</span> <span class="text-brand-accent opacity-50">✦</span>
+                        <span class="mx-6">vCard Digitales</span> <span class="text-brand-accent opacity-50">✦</span>
+                        <span class="mx-6">Tarjetas NFC</span> <span class="text-brand-accent opacity-50">✦</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-6 shrink-0 z-10">
+                    <a href="https://www.instagram.com/eqbstudio/" target="_blank" class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center text-white hover:bg-brand-accent transition-colors shadow-lg">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                     </a>
                 </div>
