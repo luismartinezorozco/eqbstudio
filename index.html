@@ -80,9 +80,7 @@
             opacity: 0;
             animation: fadeInPage 0.5s ease forwards;
         }
-        .page-view.active-page {
-            display: block;
-        }
+        .page-view.active-page { display: block; }
         @keyframes fadeInPage {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -93,71 +91,46 @@
         .logo-white { filter: brightness(0) invert(1); }
 
         /* Cortes Diagonales Optimizados para Contraste */
-        .clip-diagonal { 
-            /* Desktop: Naranja estrictamente a la derecha, dejando MUCHO margen para el texto en la izquierda */
-            clip-path: polygon(62% 0, 100% 0, 100% 100%, 45% 100%); 
-        }
-        @media (max-width: 1024px) { 
-            .clip-diagonal { 
-                /* Mobile: Naranja inicia en la parte inferior protegiendo el 100% de la zona de texto superior */
-                clip-path: polygon(0 55%, 100% 35%, 100% 100%, 0% 100%); 
-            } 
-        }
+        .clip-diagonal { clip-path: polygon(55% 0, 100% 0, 100% 100%, 35% 100%); }
+        @media (max-width: 1024px) { .clip-diagonal { clip-path: polygon(0 60%, 100% 40%, 100% 100%, 0% 100%); } }
         .clip-diagonal-reverse { clip-path: polygon(0 0, 100% 10%, 100% 100%, 0 90%); }
 
+        /* Efectos Parallax & Animaciones */
+        .parallax-wrapper { transition: transform 0.1s ease-out; will-change: transform; }
+        .levitate { animation: levitate 5s ease-in-out infinite; }
+        .levitate-slow { animation: levitate 7s ease-in-out infinite reverse; }
+        @keyframes levitate { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .png-mockup { filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15)); transition: transform 0.5s ease, filter 0.5s ease; }
+        .group:hover .png-mockup { transform: scale(1.05) translateY(-10px); filter: drop-shadow(0 30px 40px rgba(255,106,0,0.25)); }
+
         /* Footer Marquee */
-        .marquee-wrapper { 
-            display: flex; overflow: hidden; width: 100%; 
-            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); 
-            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); 
-        }
+        .marquee-wrapper { display: flex; overflow: hidden; width: 100%; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
         .marquee-track { display: flex; flex-shrink: 0; min-width: 100%; animation: scrollMarquee 25s linear infinite; }
         @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* Navbar Scrolled */
-        .scrolled-nav {
-            background-color: rgba(255, 255, 255, 0.98);
-            border-bottom: 1px solid #E9ECEF;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            padding-top: 0.5rem; padding-bottom: 0.5rem;
-        }
+        .scrolled-nav { background-color: rgba(255, 255, 255, 0.98); border-bottom: 1px solid #E9ECEF; box-shadow: 0 4px 20px rgba(0,0,0,0.05); padding-top: 0.5rem; padding-bottom: 0.5rem; }
+        .nav-link.active { color: #FF6A00; position: relative; }
+        .nav-link.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background-color: #FF6A00; border-radius: 2px; }
 
-        /* Navegación Activa */
-        .nav-link.active {
-            color: #FF6A00;
-            position: relative;
-        }
-        .nav-link.active::after {
-            content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background-color: #FF6A00; border-radius: 2px;
-        }
-
-        /* Animaciones Reveal */
+        /* Reveal Animation */
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal-left { opacity: 0; transform: translateX(-40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal-right { opacity: 0; transform: translateX(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active, .reveal-left.active, .reveal-right.active { opacity: 1; transform: translate(0,0); }
         .delay-100 { transition-delay: 0.1s; } .delay-200 { transition-delay: 0.2s; }
 
-        /* Levitación y Mockups */
-        .levitate { animation: levitate 4s ease-in-out infinite; }
-        @keyframes levitate { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        .png-mockup { filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15)); transition: transform 0.5s ease, filter 0.5s ease; }
-        .group:hover .png-mockup { transform: scale(1.05) translateY(-10px); filter: drop-shadow(0 30px 40px rgba(255,106,0,0.25)); }
-
-        /* Botones SPA Servicios */
+        /* SPA Tabs */
         .tab-btn { border-left: 4px solid transparent; }
         .tab-btn.active { background-color: #FFFFFF; border-left-color: #FF6A00; box-shadow: 0 4px 15px rgba(0,0,0,0.05); font-weight: 700; color: #111111; }
         .plan-card { opacity: 0; transform: scale(0.95); animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes popIn { to { opacity: 1; transform: scale(1); } }
         
-        /* Select custom */
         .custom-select {
             background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23FF6A00' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
             background-position: right 1rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em;
             appearance: none; -webkit-appearance: none;
         }
-
-        /* Flex grow para empujar el footer al fondo si la página es corta */
         main { flex-grow: 1; }
     </style>
 </head>
@@ -175,20 +148,15 @@
     <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-white/90 backdrop-blur-md py-4 shadow-sm border-b border-brand-gray">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
             <div class="flex justify-between items-center h-12 transition-all duration-300">
-                <!-- Logo -->
                 <div class="flex-shrink-0 cursor-pointer" onclick="navigate('inicio')">
                     <img class="h-8 md:h-12 w-auto object-contain logo-black transition-all duration-300" src="https://www.image2url.com/r2/default/images/1776611881108-f2727ca1-db6f-499c-861d-060b2c44c59a.png" alt="EQB STUDIO Logo">
                 </div>
-                
-                <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-8 items-center px-6 py-2">
                     <button onclick="navigate('inicio')" class="nav-link text-[13px] font-bold tracking-wide text-brand-textDark hover:text-brand-accent transition-colors uppercase">Inicio</button>
                     <button onclick="navigate('nosotros')" class="nav-link text-[13px] font-bold tracking-wide text-brand-textDark hover:text-brand-accent transition-colors uppercase">Nosotros</button>
                     <button onclick="navigate('servicios')" class="nav-link text-[13px] font-bold tracking-wide text-brand-textDark hover:text-brand-accent transition-colors uppercase">Servicios</button>
                     <button onclick="navigate('portafolio')" class="nav-link text-[13px] font-bold tracking-wide text-brand-textDark hover:text-brand-accent transition-colors uppercase">Portafolio</button>
                 </div>
-
-                <!-- CTA & Mobile Btn -->
                 <div class="flex items-center gap-4">
                     <button onclick="navigate('contacto')" class="hidden md:inline-flex bg-brand-accent text-white px-6 py-2.5 text-xs font-black tracking-widest hover:bg-brand-accentHover transition-transform hover:-translate-y-0.5 uppercase rounded-full shadow-lg shadow-brand-accent/40">
                         Cotizar Proyecto
@@ -199,8 +167,6 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white border-b border-brand-gray shadow-xl">
             <div class="flex flex-col p-6 space-y-2 text-center">
                 <button onclick="navigate('inicio')" class="mobile-nav-link text-brand-textDark text-sm uppercase tracking-widest font-black py-3 border-b border-brand-gray">Inicio</button>
@@ -212,24 +178,21 @@
         </div>
     </nav>
 
-    <!-- Main Content Area -->
     <main class="pt-20 lg:pt-24">
 
         <!-- ================= PÁGINA: INICIO ================= -->
         <div id="page-inicio" class="page-view active-page">
-            <section class="relative min-h-[85vh] flex items-center bg-white overflow-hidden pb-10 lg:pb-0">
-                <!-- Fondo Naranja protegido del texto mediante clip-path reajustado -->
+            <!-- NOTA: Se modificó el padding py-24 lg:py-32 para asegurar suficiente espacio abajo y evitar choques con el banner estadístico -->
+            <section class="relative flex items-center min-h-[90vh] bg-white overflow-hidden py-24 lg:py-32">
                 <div class="absolute inset-0 z-0 bg-brand-accent clip-diagonal hidden lg:block"></div>
                 <div class="absolute inset-0 z-0 bg-brand-accent clip-diagonal lg:hidden"></div>
 
-                <div class="max-w-[1400px] w-full mx-auto px-6 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mt-6 lg:mt-0">
+                <div class="max-w-[1400px] w-full mx-auto px-6 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
                     
-                    <!-- Left Text Content (Restringido en grid para no invadir el naranja) -->
-                    <div class="lg:col-span-6 xl:col-span-5 text-center lg:text-left reveal-left pt-6 pb-2 lg:py-0 pr-0 lg:pr-8">
-                        <span class="inline-block py-1.5 px-4 bg-brand-light border border-brand-gray rounded-full text-[10px] sm:text-xs font-black text-brand-accent uppercase tracking-widest mb-6">
+                    <div class="lg:col-span-7 xl:col-span-6 text-center lg:text-left reveal-left relative z-20">
+                        <span class="inline-block py-1.5 px-4 bg-brand-light border border-brand-gray rounded-full text-[10px] sm:text-xs font-black text-brand-accent uppercase tracking-widest mb-6 shadow-sm">
                             Desarrollo Digital & Creativo
                         </span>
-                        <!-- Tipografía ajustada para mantener proporción dentro de su columna -->
                         <h1 class="text-[2.75rem] leading-[1.05] sm:text-6xl lg:text-[4.25rem] xl:text-[5rem] font-black mb-6 text-brand-textDark tracking-tighter">
                             MARCAS CON <br>
                             <span class="text-brand-accent">COHERENCIA</span> <br>
@@ -248,27 +211,26 @@
                         </div>
                     </div>
 
-                    <!-- Right Image Content -->
-                    <div class="lg:col-span-6 xl:col-span-7 relative flex justify-center lg:justify-end items-center reveal-right pt-10 lg:pt-0">
+                    <div class="lg:col-span-5 xl:col-span-6 relative flex justify-center lg:justify-end items-center reveal-right mt-12 lg:mt-0 parallax-wrapper" data-speed="1.5">
                         <div class="absolute w-[280px] sm:w-[350px] h-[280px] sm:h-[350px] bg-black/10 blur-[60px] rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
                         <img src="https://www.image2url.com/r2/default/images/1782571037969-5dcdb824-91fd-43d8-b539-cfe0894386ca.png" alt="Mascota Eqbito" class="w-full max-w-[320px] sm:max-w-[450px] lg:max-w-[600px] h-auto object-contain relative z-20 drop-shadow-2xl levitate">
                     </div>
                 </div>
             </section>
 
-            <!-- Stats Banner (Añadido margen negativo superior para eliminar cualquier hueco/línea de renderizado visual) -->
-            <div class="bg-brand-textDark relative z-20 -mt-[1px]">
-                <div class="max-w-[1200px] mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-white/10 text-center counter-box">
+            <!-- Stats Banner (Ahora se une perfectamente gracias al espacio asegurado en el hero) -->
+            <div class="bg-brand-textDark relative z-20">
+                <div class="max-w-[1200px] mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-10 divide-y md:divide-y-0 md:divide-x divide-white/10 text-center counter-box">
                     <div class="reveal">
-                        <h4 class="text-5xl lg:text-6xl font-black text-white mb-2">+<span class="counter" data-target="200">0</span></h4>
+                        <h4 class="text-5xl lg:text-6xl font-black text-white mb-3">+<span class="counter" data-target="200">0</span></h4>
                         <p class="text-xs text-brand-accent font-black uppercase tracking-widest">Diseños Gráficos</p>
                     </div>
-                    <div class="pt-8 md:pt-0 reveal delay-100">
-                        <h4 class="text-5xl lg:text-6xl font-black text-white mb-2">+<span class="counter" data-target="50">0</span></h4>
+                    <div class="pt-10 md:pt-0 reveal delay-100">
+                        <h4 class="text-5xl lg:text-6xl font-black text-white mb-3">+<span class="counter" data-target="50">0</span></h4>
                         <p class="text-xs text-brand-accent font-black uppercase tracking-widest">Páginas Realizadas</p>
                     </div>
-                    <div class="pt-8 md:pt-0 reveal delay-200">
-                        <h4 class="text-5xl lg:text-6xl font-black text-white mb-2">+<span class="counter" data-target="3">0</span></h4>
+                    <div class="pt-10 md:pt-0 reveal delay-200">
+                        <h4 class="text-5xl lg:text-6xl font-black text-white mb-3">+<span class="counter" data-target="3">0</span></h4>
                         <p class="text-xs text-brand-accent font-black uppercase tracking-widest">Años de Experiencia</p>
                     </div>
                 </div>
@@ -277,34 +239,49 @@
 
         <!-- ================= PÁGINA: NOSOTROS ================= -->
         <div id="page-nosotros" class="page-view">
-            <section class="py-16 lg:py-24 bg-white relative overflow-hidden">
+            <section class="py-20 lg:py-32 bg-white relative overflow-hidden">
                 <div class="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
-                    <div class="text-center mb-16 reveal">
-                        <h2 class="text-4xl lg:text-5xl font-black text-brand-textDark uppercase tracking-tight">Orden. Estrategia. <span class="text-brand-accent">Diseño.</span></h2>
-                        <p class="mt-4 text-brand-textSoft font-semibold max-w-2xl mx-auto text-lg">No creamos elementos aislados; desarrollamos ecosistemas visuales y digitales listos para operar y generar valor real a su empresa.</p>
-                    </div>
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                        
+                        <div class="lg:col-span-7 reveal-left">
+                            <h2 class="text-4xl lg:text-5xl font-black text-brand-textDark uppercase tracking-tight mb-6">Orden. Estrategia. <span class="text-brand-accent">Diseño.</span></h2>
+                            <p class="text-brand-textSoft font-semibold text-lg mb-12 max-w-2xl">No creamos elementos aislados; desarrollamos ecosistemas visuales y digitales listos para operar y generar valor real a su empresa.</p>
+                            
+                            <div class="space-y-6">
+                                <div class="bg-brand-light border border-brand-gray p-6 rounded-2xl flex items-start gap-6 hover:shadow-xl hover:border-brand-accent/50 transition-all">
+                                    <div class="w-14 h-14 bg-white shadow-sm rounded-full flex items-center justify-center shrink-0 text-brand-accent">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xl font-black text-brand-textDark mb-2">Atención Cercana</h4>
+                                        <p class="text-brand-textSoft text-sm font-medium leading-relaxed">Atención personalizada y dedicada para cada cliente durante todo el proceso creativo.</p>
+                                    </div>
+                                </div>
+                                <div class="bg-brand-light border border-brand-gray p-6 rounded-2xl flex items-start gap-6 hover:shadow-xl hover:border-brand-accent/50 transition-all">
+                                    <div class="w-14 h-14 bg-white shadow-sm rounded-full flex items-center justify-center shrink-0 text-brand-accent">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xl font-black text-brand-textDark mb-2">Diseños Modernos</h4>
+                                        <p class="text-brand-textSoft text-sm font-medium leading-relaxed">Creaciones funcionales y estéticamente atractivas, adaptadas a las tendencias actuales.</p>
+                                    </div>
+                                </div>
+                                <div class="bg-brand-light border border-brand-gray p-6 rounded-2xl flex items-start gap-6 hover:shadow-xl hover:border-brand-accent/50 transition-all">
+                                    <div class="w-14 h-14 bg-white shadow-sm rounded-full flex items-center justify-center shrink-0 text-brand-accent">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xl font-black text-brand-textDark mb-2">Entrega Profesional</h4>
+                                        <p class="text-brand-textSoft text-sm font-medium leading-relaxed">Cumplimos rigurosamente con los plazos y los altos estándares de calidad establecidos.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="bg-brand-light border-2 border-brand-gray p-10 rounded-2xl reveal hover:shadow-2xl hover:shadow-brand-accent/10 hover:border-brand-accent/50 transition-all duration-300 transform hover:-translate-y-2">
-                            <div class="w-16 h-16 bg-white shadow-md rounded-full flex items-center justify-center mb-6 text-brand-accent">
-                                <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                            </div>
-                            <h4 class="text-2xl font-black text-brand-textDark mb-3">Atención Cercana</h4>
-                            <p class="text-brand-textSoft text-base font-medium leading-relaxed">Atención personalizada y dedicada para cada cliente durante todo el proceso creativo.</p>
-                        </div>
-                        <div class="bg-brand-light border-2 border-brand-gray p-10 rounded-2xl reveal delay-100 hover:shadow-2xl hover:shadow-brand-accent/10 hover:border-brand-accent/50 transition-all duration-300 transform hover:-translate-y-2">
-                            <div class="w-16 h-16 bg-white shadow-md rounded-full flex items-center justify-center mb-6 text-brand-accent">
-                                <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
-                            </div>
-                            <h4 class="text-2xl font-black text-brand-textDark mb-3">Diseños Modernos</h4>
-                            <p class="text-brand-textSoft text-base font-medium leading-relaxed">Creaciones funcionales y estéticamente atractivas, adaptadas a las tendencias del mercado actual.</p>
-                        </div>
-                        <div class="bg-brand-light border-2 border-brand-gray p-10 rounded-2xl reveal delay-200 hover:shadow-2xl hover:shadow-brand-accent/10 hover:border-brand-accent/50 transition-all duration-300 transform hover:-translate-y-2">
-                            <div class="w-16 h-16 bg-white shadow-md rounded-full flex items-center justify-center mb-6 text-brand-accent">
-                                <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
-                            </div>
-                            <h4 class="text-2xl font-black text-brand-textDark mb-3">Entrega Profesional</h4>
-                            <p class="text-brand-textSoft text-base font-medium leading-relaxed">Cumplimos rigurosamente con los plazos y los más altos estándares de calidad establecidos.</p>
+                        <!-- Nueva Imagen 3D Interactiva -->
+                        <div class="lg:col-span-5 relative flex justify-center items-center reveal-right parallax-wrapper" data-speed="-1.2">
+                            <div class="absolute w-[300px] h-[300px] bg-brand-accent/10 blur-[80px] rounded-full"></div>
+                            <img src="https://www.image2url.com/r2/default/images/1782663913038-eaa39201-f81e-43d7-aed0-ef120710283c.png" alt="Composición 3D Nosotros" class="w-full max-w-[500px] h-auto object-contain relative z-20 drop-shadow-2xl levitate-slow">
                         </div>
                     </div>
                 </div>
@@ -313,9 +290,14 @@
 
         <!-- ================= PÁGINA: SERVICIOS ================= -->
         <div id="page-servicios" class="page-view">
-            <section class="py-16 lg:py-24 bg-brand-light relative">
+            <section class="py-20 lg:py-32 bg-brand-light relative overflow-hidden">
+                <!-- Imagen 3D Decorativa de fondo flotante -->
+                <div class="absolute right-[-5%] top-[10%] opacity-40 parallax-wrapper pointer-events-none" data-speed="0.8">
+                    <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1782664134/no_bg_image_3_fozthi.png" alt="Graphic Element" class="w-[300px] md:w-[400px] levitate blur-[2px]">
+                </div>
+
                 <div class="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
-                    <div class="text-center md:text-left mb-12 reveal flex flex-col md:flex-row justify-between items-end">
+                    <div class="text-center md:text-left mb-16 reveal flex flex-col md:flex-row justify-between items-end">
                         <div>
                             <h2 class="text-sm font-black tracking-[0.2em] text-brand-accent uppercase mb-2">Catálogo de Soluciones</h2>
                             <h3 class="text-4xl lg:text-5xl font-black text-brand-textDark">¿QUÉ NECESITAS HOY?</h3>
@@ -323,8 +305,7 @@
                     </div>
 
                     <div class="flex flex-col lg:flex-row gap-10">
-                        <!-- Sidebar Tabs -->
-                        <div class="w-full lg:w-1/4 flex flex-row lg:flex-col gap-3 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 reveal">
+                        <div class="w-full lg:w-1/4 flex flex-row lg:flex-col gap-3 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 reveal bg-white lg:bg-transparent p-4 lg:p-0 rounded-2xl shadow-sm lg:shadow-none border border-brand-gray lg:border-none">
                             <button onclick="renderService('web')" id="btn-web" class="tab-btn active flex items-center gap-4 w-full text-left px-6 py-4 rounded-xl text-sm font-bold text-brand-textSoft transition-all whitespace-nowrap lg:whitespace-normal bg-transparent hover:bg-white border border-transparent hover:border-brand-gray">
                                 <span class="w-10 h-10 rounded-full bg-brand-accent/10 flex items-center justify-center text-brand-accent shrink-0"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg></span>
                                 Páginas Web
@@ -347,16 +328,12 @@
                             </button>
                         </div>
 
-                        <!-- Content Area -->
                         <div class="w-full lg:w-3/4 min-h-[450px]">
                             <div id="service-header" class="mb-8 reveal delay-100 bg-white p-8 rounded-2xl shadow-md border-2 border-brand-gray">
                                 <h3 id="service-title" class="text-3xl sm:text-4xl font-black text-brand-textDark mb-3 uppercase">Cargando...</h3>
                                 <p id="service-desc" class="text-brand-textSoft max-w-3xl text-base font-semibold leading-relaxed">Por favor espere.</p>
                             </div>
-                            <!-- Plans Grid -->
-                            <div id="service-plans" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                                <!-- JS injects here -->
-                            </div>
+                            <div id="service-plans" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
                         </div>
                     </div>
                 </div>
@@ -365,15 +342,20 @@
 
         <!-- ================= PÁGINA: PORTAFOLIO ================= -->
         <div id="page-portafolio" class="page-view">
-            <section class="py-16 lg:py-24 bg-white relative overflow-hidden">
+            <section class="py-20 lg:py-32 bg-white relative overflow-hidden">
+                
+                <!-- Extra Decoración 3D (Gemini Image) Flotando en el header del Portafolio -->
+                <div class="absolute left-[-5%] top-[5%] opacity-30 parallax-wrapper pointer-events-none" data-speed="1">
+                    <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1782664406/Gemini_Generated_Image_vllh0gvllh0gvllh_inspyrenet_ocw53a.png" alt="3D Graphics" class="w-[250px] md:w-[350px] levitate-slow blur-[1px] rotate-12">
+                </div>
+
                 <div class="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
-                    <div class="text-center mb-20 reveal">
-                        <h2 class="text-4xl lg:text-5xl font-black text-brand-textDark uppercase tracking-tight">MUESTRA DE TRABAJO</h2>
-                        <div class="w-24 h-2 bg-brand-accent mx-auto mt-6 rounded-full"></div>
+                    <div class="text-center mb-24 reveal relative">
+                        <h2 class="text-4xl lg:text-5xl font-black text-brand-textDark uppercase tracking-tight relative z-10">MUESTRA DE TRABAJO</h2>
+                        <div class="w-24 h-2 bg-brand-accent mx-auto mt-6 rounded-full relative z-10"></div>
                     </div>
 
-                    <div class="space-y-28 lg:space-y-40">
-                        <!-- Item 1 -->
+                    <div class="space-y-32 lg:space-y-48">
                         <div class="reveal group flex flex-col lg:flex-row gap-12 items-center">
                             <div class="w-full lg:w-1/2 flex justify-center relative">
                                 <div class="absolute inset-0 bg-brand-light rounded-full transform -rotate-6 scale-105 transition-transform duration-500 group-hover:rotate-0 border-2 border-brand-gray"></div>
@@ -389,7 +371,6 @@
                             </div>
                         </div>
 
-                        <!-- Item 2 -->
                         <div class="reveal group flex flex-col lg:flex-row-reverse gap-12 items-center">
                             <div class="w-full lg:w-1/2 flex justify-center relative">
                                 <div class="absolute inset-0 bg-brand-light rounded-full transform rotate-6 scale-105 transition-transform duration-500 group-hover:rotate-0 border-2 border-brand-gray"></div>
@@ -405,7 +386,6 @@
                             </div>
                         </div>
                         
-                        <!-- Item 3 -->
                         <div class="reveal group flex flex-col lg:flex-row gap-12 items-center">
                             <div class="w-full lg:w-1/2 flex justify-center relative">
                                 <div class="absolute inset-0 bg-brand-light rounded-full transform -rotate-6 scale-105 transition-transform duration-500 group-hover:rotate-0 border-2 border-brand-gray"></div>
@@ -427,28 +407,31 @@
 
         <!-- ================= PÁGINA: CONTACTO ================= -->
         <div id="page-contacto" class="page-view">
-            <section class="relative py-16 lg:py-24 bg-brand-textDark overflow-hidden">
+            <section class="relative py-24 lg:py-32 bg-brand-textDark overflow-hidden">
                 <div class="absolute right-0 top-0 w-1/2 h-full bg-brand-accent opacity-20 blur-[100px] pointer-events-none"></div>
 
                 <div class="max-w-[1200px] mx-auto px-6 relative z-10">
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                         
-                        <!-- Text Area -->
-                        <div class="text-center lg:text-left reveal-left">
-                            <h2 class="text-5xl sm:text-6xl font-black text-white uppercase tracking-tight mb-6 leading-none">
+                        <div class="text-center lg:text-left reveal-left relative">
+                            <h2 class="text-5xl sm:text-6xl font-black text-white uppercase tracking-tight mb-6 leading-none relative z-10">
                                 ES HORA <br><span class="text-brand-accent">DE ESCALAR</span> <br>TU MARCA.
                             </h2>
-                            <p class="text-brand-gray text-base sm:text-lg font-medium max-w-md mx-auto lg:mx-0 mb-10">
+                            <p class="text-brand-gray text-base sm:text-lg font-medium max-w-md mx-auto lg:mx-0 mb-10 relative z-10">
                                 Seleccione el servicio, escriba sus detalles y envíenos la solicitud directamente a nuestro WhatsApp oficial para atención inmediata.
                             </p>
-                            <div class="hidden lg:flex items-center justify-center lg:justify-start gap-4 text-brand-gray font-bold text-lg">
+                            <div class="hidden lg:flex items-center justify-center lg:justify-start gap-4 text-brand-gray font-bold text-lg relative z-10">
                                 <svg class="w-8 h-8 text-brand-accent" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                                 +57 302 119 2800
                             </div>
+                            
+                            <!-- 3D Image in Contact -->
+                            <div class="hidden lg:block absolute -left-10 bottom-[-80px] w-48 opacity-60 pointer-events-none parallax-wrapper" data-speed="-1">
+                                <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1782664272/no_bg_image_4_zjuest.png" alt="Decoration" class="w-full h-auto drop-shadow-xl levitate transform -rotate-12">
+                            </div>
                         </div>
 
-                        <!-- Form Card -->
-                        <div class="bg-white p-8 sm:p-10 rounded-3xl shadow-2xl reveal-right border-4 border-brand-accent/20">
+                        <div class="bg-white p-8 sm:p-10 rounded-3xl shadow-2xl reveal-right border-4 border-brand-accent/20 relative z-20">
                             <form id="contact-form" class="space-y-6" onsubmit="handleFormSubmit(event)">
                                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                                     <div>
@@ -488,25 +471,21 @@
 
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-brand-textDark pt-10 pb-8 border-t border-white/10 relative z-20 mt-auto overflow-hidden">
+    <footer class="bg-brand-textDark pt-12 pb-8 border-t border-white/10 relative z-20 mt-auto overflow-hidden">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8 mb-8 w-full">
-                <!-- Logo Agrandado -->
+                
                 <div class="text-center md:text-left shrink-0 z-10">
-                    <img class="h-14 sm:h-20 w-auto logo-white mx-auto md:mx-0 drop-shadow-lg" style="filter: brightness(0) invert(1);" src="https://www.image2url.com/r2/default/images/1776611881108-f2727ca1-db6f-499c-861d-060b2c44c59a.png" alt="EQB STUDIO Logo">
+                    <img class="h-16 sm:h-20 w-auto logo-white mx-auto md:mx-0 drop-shadow-lg" style="filter: brightness(0) invert(1);" src="https://www.image2url.com/r2/default/images/1776611881108-f2727ca1-db6f-499c-861d-060b2c44c59a.png" alt="EQB STUDIO Logo">
                 </div>
                 
-                <!-- Ticker de Servicios (Responsivo para todo dispositivo) -->
-                <div class="flex-grow w-full relative marquee-wrapper border-y border-white/10 py-3 flex">
-                    <div class="marquee-track items-center text-white/50 font-black uppercase tracking-[0.1em] sm:tracking-[0.2em] lg:tracking-[0.3em] text-sm sm:text-lg lg:text-2xl">
-                        <!-- Set 1 -->
+                <div class="flex-grow w-full relative marquee-wrapper py-3 flex">
+                    <div class="marquee-track items-center text-white/40 font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] lg:tracking-[0.3em] text-sm sm:text-lg lg:text-2xl">
                         <span class="mx-4 sm:mx-6 text-white">Páginas Web</span> <span class="text-brand-accent opacity-50">✦</span>
                         <span class="mx-4 sm:mx-6 text-white">Creación de Marca</span> <span class="text-brand-accent opacity-50">✦</span>
                         <span class="mx-4 sm:mx-6 text-white">Catálogos Digitales</span> <span class="text-brand-accent opacity-50">✦</span>
                         <span class="mx-4 sm:mx-6 text-white">vCard Digitales</span> <span class="text-brand-accent opacity-50">✦</span>
                         <span class="mx-4 sm:mx-6 text-white">Tarjetas NFC</span> <span class="text-brand-accent opacity-50">✦</span>
-                        <!-- Set 2 (Duplicado para loop continuo) -->
                         <span class="mx-4 sm:mx-6 text-white">Páginas Web</span> <span class="text-brand-accent opacity-50">✦</span>
                         <span class="mx-4 sm:mx-6 text-white">Creación de Marca</span> <span class="text-brand-accent opacity-50">✦</span>
                         <span class="mx-4 sm:mx-6 text-white">Catálogos Digitales</span> <span class="text-brand-accent opacity-50">✦</span>
@@ -528,68 +507,46 @@
         </div>
     </footer>
 
-    <!-- Botón Flotante WhatsApp (Móvil) -->
+    <!-- Botón Flotante WhatsApp -->
     <a href="https://wa.me/573021192800?text=Hola%20EQB%20STUDIO" target="_blank" class="md:hidden fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-white text-brand-textDark border-2 border-brand-gray rounded-full shadow-2xl hover:scale-110 transition-transform">
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     </a>
 
-    <!-- Lógica JavaScript (Router & App) -->
     <script>
         // --- 1. Router Interno Multi-Página ---
         function navigate(pageId) {
-            // Ocultar todas las páginas
-            document.querySelectorAll('.page-view').forEach(p => {
-                p.classList.remove('active-page');
-            });
+            document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active-page'));
             
-            // Mostrar la página deseada
             const targetPage = document.getElementById(`page-${pageId}`);
             if (targetPage) {
                 targetPage.classList.add('active-page');
-                window.scrollTo(0, 0); // Reiniciar scroll al top de la nueva página
+                window.scrollTo(0, 0); 
                 
-                // Reiniciar animaciones Reveal en la nueva página
                 setTimeout(() => {
-                    targetPage.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
-                        el.classList.add('active');
-                    });
-                    
-                    // Disparar contadores si estamos en inicio
+                    targetPage.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => el.classList.add('active'));
                     if (pageId === 'inicio') triggerCounters();
                 }, 50);
             }
 
-            // Actualizar estado de los enlaces en el Navbar
             document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
                 link.classList.remove('active', 'text-brand-accent');
-                if (link.textContent.toLowerCase() === pageId.toLowerCase()) {
-                    link.classList.add('active', 'text-brand-accent');
-                }
+                if (link.textContent.toLowerCase() === pageId.toLowerCase()) link.classList.add('active', 'text-brand-accent');
             });
-
-            // Cerrar menú móvil si estaba abierto
             document.getElementById('mobile-menu').classList.add('hidden');
         }
 
-        // --- 2. Selección Inteligente de Plan a Contacto ---
+        // --- 2. Selección Inteligente ---
         function selectPlan(serviceName, planName) {
-            // Navegar a la página de contacto
             navigate('contacto');
-            
-            // Auto-seleccionar el servicio en el dropdown
             const select = document.getElementById('servicio-select');
             for(let i = 0; i < select.options.length; i++) {
                 if(select.options[i].value === serviceName || select.options[i].text === serviceName) {
-                    select.selectedIndex = i;
-                    break;
+                    select.selectedIndex = i; break;
                 }
             }
-
-            // Llenar el área de texto con la información específica
             const textarea = document.getElementById('mensaje');
             textarea.value = `Hola, estoy muy interesado en el servicio de ${serviceName}, específicamente me gustaría cotizar el "${planName}". Por favor envíenme más información.`;
             
-            // Hacer scroll directo al formulario para llamar la atención del usuario
             setTimeout(() => {
                 document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
                 textarea.focus();
@@ -599,8 +556,7 @@
         // --- 3. Base de Datos de Servicios ---
         const servicesData = {
             web: {
-                title: "Páginas Web",
-                desc: "Diseñamos plataformas modernas, rápidas y optimizadas para dispositivos móviles.",
+                title: "Páginas Web", desc: "Diseñamos plataformas modernas, rápidas y optimizadas para dispositivos móviles.",
                 plans: [
                     { name: "Plan Emprendedor", target: "Inicia tu presencia", features: ["Sitio web 4 secciones", "Dominio semi personalizado", "Formulario de contacto", "Optimización básica"] },
                     { name: "Plan Profesional", target: "Negocios establecidos", features: ["Sitio web 6 secciones", "Dominio propio", "Formulario inteligente", "Integración WhatsApp", "2 rondas ajustes"], isPopular: true },
@@ -608,8 +564,7 @@
                 ]
             },
             marca: {
-                title: "Identidad de Marca",
-                desc: "Construimos una identidad visual coherente y profesional preparada para crecer.",
+                title: "Identidad de Marca", desc: "Construimos una identidad visual coherente y profesional preparada para crecer.",
                 plans: [
                     { name: "Marca Esencial", target: "Ideal para iniciar", features: ["Logotipo principal", "Paleta de colores", "Tipografías recomendadas", "Mockup principal"] },
                     { name: "Marca Profesional", target: "Negocios establecidos", features: ["Logo & Variantes", "Paleta & Tipografías", "Manual básico de marca", "Mockups profesionales"], isPopular: true },
@@ -617,8 +572,7 @@
                 ]
             },
             catalogos: {
-                title: "Catálogos Digitales",
-                desc: "Presenta tus productos de forma organizada y personalizada a tu marca.",
+                title: "Catálogos Digitales", desc: "Presenta tus productos de forma organizada y personalizada a tu marca.",
                 plans: [
                     { name: "Catálogo Emprendedor", target: "Menús y catálogos básicos", features: ["Hasta 10 páginas", "Portada personalizada", "1 ronda de cambios", "Entrega PDF"] },
                     { name: "Catálogo Profesional", target: "Negocios en crecimiento", features: ["Hasta 18 páginas", "Diseño personalizado", "2 rondas de cambios", "Entrega PDF"], isPopular: true },
@@ -626,8 +580,7 @@
                 ]
             },
             vcard: {
-                title: "vCard Digitales",
-                desc: "Tu tarjeta de presentación digital 24/7. Redes y contacto en un enlace.",
+                title: "vCard Digitales", desc: "Tu tarjeta de presentación digital 24/7. Redes y contacto en un enlace.",
                 plans: [
                     { name: "vCard Basic", target: "Independientes", features: ["Diseño personalizado", "Hasta 4 enlaces", "Info de contacto"] },
                     { name: "vCard Pro", target: "Perfiles ejecutivos", features: ["Diseño avanzado", "Hasta 8 enlaces", "Botones de acción"], isPopular: true },
@@ -635,8 +588,7 @@
                 ]
             },
             nfc: {
-                title: "Tarjetas NFC",
-                desc: "Moderniza tu conexión. Comparte todo acercando la tarjeta al celular.",
+                title: "Tarjetas NFC", desc: "Moderniza tu conexión. Comparte todo acercando la tarjeta al celular.",
                 plans: [
                     { name: "NFC Lite", target: "Conexión rápida", features: ["Tarjeta NFC personalizada", "Configuración vCard Basic"] },
                     { name: "NFC Pro", target: "Profesionales", features: ["Tarjeta NFC personalizada", "Configuración vCard Pro", "Diseño premium"], isPopular: true },
@@ -648,43 +600,21 @@
         function renderService(key) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(`btn-${key}`).classList.add('active');
-
             const data = servicesData[key];
             document.getElementById('service-title').innerText = data.title;
             document.getElementById('service-desc').innerText = data.desc;
-
             const plansContainer = document.getElementById('service-plans');
             plansContainer.innerHTML = ''; 
-
             data.plans.forEach((plan, index) => {
                 const popularBadge = plan.isPopular ? `<span class="absolute -top-4 right-4 bg-brand-accent text-white text-[11px] font-black uppercase tracking-widest py-1.5 px-4 rounded-full shadow-lg">Recomendado</span>` : '';
                 const borderClass = plan.isPopular ? 'border-brand-accent shadow-xl shadow-brand-accent/20 border-2' : 'border-brand-gray shadow-md border-2';
-                
-                const featuresHtml = plan.features.map(f => `
-                    <li class="flex items-start text-sm text-brand-textSoft font-semibold mb-3">
-                        <svg class="w-5 h-5 text-brand-accent mr-2 shrink-0" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"></path></svg>
-                        ${f}
-                    </li>
-                `).join('');
-
-                const cardHtml = `
-                    <div class="plan-card bg-white p-8 rounded-2xl ${borderClass} relative hover:-translate-y-2 transition-transform duration-300" style="animation-delay: ${index * 0.1}s">
-                        ${popularBadge}
-                        <h4 class="text-2xl font-black text-brand-textDark mb-1">${plan.name}</h4>
-                        <p class="text-xs text-brand-accent font-black uppercase tracking-widest mb-6">${plan.target}</p>
-                        <ul class="mb-8">${featuresHtml}</ul>
-                        
-                        <!-- BOTÓN MODIFICADO PARA SELECCIONAR PLAN CONCRETO -->
-                        <button onclick="selectPlan('${data.title}', '${plan.name}')" class="mt-auto flex justify-center w-full py-4 bg-brand-light border-2 border-brand-gray hover:border-brand-accent hover:bg-brand-accent hover:text-white text-xs font-black uppercase tracking-widest text-brand-textDark transition-all rounded-xl">
-                            Elegir Plan
-                        </button>
-                    </div>
-                `;
+                const featuresHtml = plan.features.map(f => `<li class="flex items-start text-sm text-brand-textSoft font-semibold mb-3"><svg class="w-5 h-5 text-brand-accent mr-2 shrink-0" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"></path></svg>${f}</li>`).join('');
+                const cardHtml = `<div class="plan-card bg-white p-8 rounded-2xl ${borderClass} relative hover:-translate-y-2 transition-transform duration-300" style="animation-delay: ${index * 0.1}s">${popularBadge}<h4 class="text-2xl font-black text-brand-textDark mb-1">${plan.name}</h4><p class="text-xs text-brand-accent font-black uppercase tracking-widest mb-6">${plan.target}</p><ul class="mb-8">${featuresHtml}</ul><button onclick="selectPlan('${data.title}', '${plan.name}')" class="mt-auto flex justify-center w-full py-4 bg-brand-light border-2 border-brand-gray hover:border-brand-accent hover:bg-brand-accent hover:text-white text-xs font-black uppercase tracking-widest text-brand-textDark transition-all rounded-xl">Elegir Plan</button></div>`;
                 plansContainer.insertAdjacentHTML('beforeend', cardHtml);
             });
         }
 
-        // --- 4. Animaciones e Inicio ---
+        // --- 4. Inicialización e Interacciones ---
         function triggerCounters() {
             document.querySelectorAll('.counter').forEach(counter => {
                 const target = +counter.getAttribute('data-target');
@@ -698,24 +628,27 @@
             });
         }
 
+        // Interacción Parallax (Mouse Move)
+        document.addEventListener('mousemove', (e) => {
+            document.querySelectorAll('.parallax-wrapper').forEach(el => {
+                const speed = parseFloat(el.getAttribute('data-speed')) || 1;
+                // Calculamos el desplazamiento desde el centro de la pantalla
+                const x = (window.innerWidth / 2 - e.pageX) * (speed / 50);
+                const y = (window.innerHeight / 2 - e.pageY) * (speed / 50);
+                el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+            });
+        });
+
         window.addEventListener('load', () => {
-            // Preloader
             const loader = document.getElementById('preloader');
             const loaderBar = document.getElementById('loader-bar');
             loaderBar.style.width = '100%';
             setTimeout(() => { loader.style.opacity = '0'; loader.style.visibility = 'hidden'; }, 600);
-
-            // Inicializar SPA
-            renderService('web');
-            navigate('inicio'); // Cargar primera página
+            renderService('web'); navigate('inicio');
         });
 
-        // Toggle del menú móvil
-        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        });
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('hidden'));
 
-        // Formulario a WhatsApp
         function handleFormSubmit(event) {
             event.preventDefault();
             const nombre = document.getElementById('nombre').value;
@@ -723,17 +656,7 @@
             const select = document.getElementById('servicio-select');
             const servicioTexto = select.options[select.selectedIndex].text;
             const mensaje = document.getElementById('mensaje').value;
-
-            const txt = `Hola EQB STUDIO, solicito información.
-            
-*Mis Datos:*
-- Nombre: ${nombre}
-- Correo: ${email}
-- Interés: ${servicioTexto}
-
-*Proyecto:*
-${mensaje}`;
-
+            const txt = `Hola EQB STUDIO, solicito información.\n\n*Mis Datos:*\n- Nombre: ${nombre}\n- Correo: ${email}\n- Interés: ${servicioTexto}\n\n*Proyecto:*\n${mensaje}`;
             window.open(`https://wa.me/573021192800?text=${encodeURIComponent(txt)}`, '_blank');
             event.target.reset();
         }
