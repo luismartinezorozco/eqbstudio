@@ -173,6 +173,8 @@
                 <button onclick="navigate('contacto')" class="bg-brand-accent text-white py-4 text-xs uppercase tracking-widest font-black rounded-md mt-4 shadow-lg shadow-brand-accent/30">Cotizar Proyecto</button>
             </div>
         </div>
+    </nav>
+
     <!-- Main Content Area -->
     <main class="pt-20 lg:pt-24">
 
@@ -747,18 +749,16 @@
             document.getElementById(`btn-${key}`).classList.add('active');
             
             const data = servicesData[key];
-            document.getElementById('service-title').innerText = data.title.toUpperCase(); // Render en mayúsculas como en la imagen
+            document.getElementById('service-title').innerText = data.title.toUpperCase(); 
             document.getElementById('service-desc').innerText = data.desc;
             
             const plansContainer = document.getElementById('service-plans');
             plansContainer.innerHTML = ''; 
             
             data.plans.forEach((plan, index) => {
-                // Etiqueta flotante RECOMENDADO calcada de tu diseño original
                 const popularBadge = plan.isPopular ? `<span class="absolute -top-3.5 right-6 bg-brand-accent text-white text-[10px] font-black uppercase tracking-widest py-1.5 px-4 rounded-full shadow-lg z-10">Recomendado</span>` : '';
                 const borderClass = plan.isPopular ? 'border-brand-accent shadow-2xl shadow-brand-accent/20 border-[3px]' : 'border-brand-gray/60 shadow-md border-2';
                 
-                // Iconos de check naranjas
                 const featuresHtml = plan.features.map(f => `<li class="flex items-start text-sm text-brand-textSoft font-semibold mb-3"><svg class="w-5 h-5 text-brand-accent mr-2 shrink-0" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"></path></svg>${f}</li>`).join('');
                 
                 const cardHtml = `
@@ -787,6 +787,32 @@
                 };
                 updateCount();
             });
+        }
+
+        // Funciones FAQ aseguradas para el menú de servicios
+        function toggleFaq(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('svg');
+            const parent = button.parentElement;
+
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.classList.remove('-rotate-180');
+                parent.classList.remove('border-brand-accent', 'shadow-md');
+                parent.classList.add('border-brand-gray');
+            } else {
+                document.querySelectorAll('.faq-content').forEach(c => c.style.maxHeight = null);
+                document.querySelectorAll('.faq-btn svg').forEach(i => i.classList.remove('-rotate-180'));
+                document.querySelectorAll('.faq-item').forEach(p => {
+                    p.classList.remove('border-brand-accent', 'shadow-md');
+                    p.classList.add('border-brand-gray');
+                });
+
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.classList.add('-rotate-180');
+                parent.classList.remove('border-brand-gray');
+                parent.classList.add('border-brand-accent', 'shadow-md');
+            }
         }
 
         // Efecto Parallax Sensible al Movimiento
@@ -836,31 +862,6 @@
         document.getElementById('mobile-menu-btn').addEventListener('click', () => {
             document.getElementById('mobile-menu').classList.toggle('hidden');
         });
-
-        function toggleFaq(button) {
-            const content = button.nextElementSibling;
-            const icon = button.querySelector('svg');
-            const parent = button.parentElement;
-
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-                icon.classList.remove('-rotate-180');
-                parent.classList.remove('border-brand-accent', 'shadow-md');
-                parent.classList.add('border-brand-gray');
-            } else {
-                document.querySelectorAll('.faq-content').forEach(c => c.style.maxHeight = null);
-                document.querySelectorAll('.faq-btn svg').forEach(i => i.classList.remove('-rotate-180'));
-                document.querySelectorAll('.faq-item').forEach(p => {
-                    p.classList.remove('border-brand-accent', 'shadow-md');
-                    p.classList.add('border-brand-gray');
-                });
-
-                content.style.maxHeight = content.scrollHeight + "px";
-                icon.classList.add('-rotate-180');
-                parent.classList.remove('border-brand-gray');
-                parent.classList.add('border-brand-accent', 'shadow-md');
-            }
-        }
 
         function handleFormSubmit(event) {
             event.preventDefault();
