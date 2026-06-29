@@ -75,27 +75,32 @@
         }
 
         /* Sistema Multi-Página Interno */
-        .page-view {
-            display: none;
-            opacity: 0;
-            animation: fadeInPage 0.5s ease forwards;
-        }
+        .page-view { display: none; opacity: 0; animation: fadeInPage 0.5s ease forwards; }
         .page-view.active-page { display: block; }
-        @keyframes fadeInPage {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeInPage { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Utilidades de Logo */
         .logo-black { filter: brightness(0); }
         .logo-white { filter: brightness(0) invert(1); }
 
-        /* Cortes Diagonales Optimizados para Contraste */
-        .clip-diagonal { clip-path: polygon(55% 0, 100% 0, 100% 100%, 35% 100%); }
-        @media (max-width: 1024px) { .clip-diagonal { clip-path: polygon(0 60%, 100% 40%, 100% 100%, 0% 100%); } }
+        /* Cortes Diagonales Optimizados */
+        .clip-diagonal { clip-path: polygon(50% 0, 100% 0, 100% 100%, 30% 100%); }
+        @media (max-width: 1024px) { .clip-diagonal { clip-path: polygon(0 55%, 100% 35%, 100% 100%, 0% 100%); } }
         .clip-diagonal-reverse { clip-path: polygon(0 0, 100% 10%, 100% 100%, 0 90%); }
 
-        /* Efectos Parallax & Animaciones */
+        /* Navbar Scrolled */
+        .scrolled-nav { background-color: rgba(255, 255, 255, 0.98); border-bottom: 1px solid #E9ECEF; box-shadow: 0 4px 20px rgba(0,0,0,0.05); padding-top: 0.5rem; padding-bottom: 0.5rem; }
+        .nav-link.active { color: #FF6A00; position: relative; }
+        .nav-link.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background-color: #FF6A00; border-radius: 2px; }
+
+        /* Animaciones Reveal */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-left { opacity: 0; transform: translateX(-40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-right { opacity: 0; transform: translateX(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active, .reveal-left.active, .reveal-right.active { opacity: 1; transform: translate(0,0); }
+        .delay-100 { transition-delay: 0.1s; } .delay-200 { transition-delay: 0.2s; }
+
+        /* Efectos Parallax & Animaciones 3D */
         .parallax-wrapper { transition: transform 0.1s ease-out; will-change: transform; }
         .levitate { animation: levitate 5s ease-in-out infinite; }
         .levitate-slow { animation: levitate 7s ease-in-out infinite reverse; }
@@ -108,29 +113,13 @@
         .marquee-track { display: flex; flex-shrink: 0; min-width: 100%; animation: scrollMarquee 25s linear infinite; }
         @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* Navbar Scrolled */
-        .scrolled-nav { background-color: rgba(255, 255, 255, 0.98); border-bottom: 1px solid #E9ECEF; box-shadow: 0 4px 20px rgba(0,0,0,0.05); padding-top: 0.5rem; padding-bottom: 0.5rem; }
-        .nav-link.active { color: #FF6A00; position: relative; }
-        .nav-link.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background-color: #FF6A00; border-radius: 2px; }
-
-        /* Reveal Animation */
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal-left { opacity: 0; transform: translateX(-40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal-right { opacity: 0; transform: translateX(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal.active, .reveal-left.active, .reveal-right.active { opacity: 1; transform: translate(0,0); }
-        .delay-100 { transition-delay: 0.1s; } .delay-200 { transition-delay: 0.2s; }
-
-        /* SPA Tabs */
-        .tab-btn { border-left: 4px solid transparent; }
-        .tab-btn.active { background-color: #FFFFFF; border-left-color: #FF6A00; box-shadow: 0 4px 15px rgba(0,0,0,0.05); font-weight: 700; color: #111111; }
+        /* SPA Tabs Ajustados (Exacto como la imagen) */
+        .tab-btn { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); border-left: 4px solid transparent; }
+        .tab-btn.active { background-color: #FFFFFF; box-shadow: 0 10px 40px rgba(0,0,0,0.06); font-weight: 800; color: #111111; transform: translateX(5px); border-radius: 16px; border-left-color: transparent;}
         .plan-card { opacity: 0; transform: scale(0.95); animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes popIn { to { opacity: 1; transform: scale(1); } }
         
-        .custom-select {
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23FF6A00' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-            background-position: right 1rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em;
-            appearance: none; -webkit-appearance: none;
-        }
+        .custom-select { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23FF6A00' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 1rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; appearance: none; -webkit-appearance: none; }
         main { flex-grow: 1; }
     </style>
 </head>
@@ -182,106 +171,191 @@
 
         <!-- ================= PÁGINA: INICIO ================= -->
         <div id="page-inicio" class="page-view active-page">
-            <!-- NOTA: Se modificó el padding py-24 lg:py-32 para asegurar suficiente espacio abajo y evitar choques con el banner estadístico -->
-            <section class="relative flex items-center min-h-[90vh] bg-white overflow-hidden py-24 lg:py-32">
+            <section class="relative flex items-center min-h-[85vh] bg-white overflow-hidden py-16 lg:py-0">
+                <!-- Diagonal idéntica a tu imagen de referencia -->
                 <div class="absolute inset-0 z-0 bg-brand-accent clip-diagonal hidden lg:block"></div>
                 <div class="absolute inset-0 z-0 bg-brand-accent clip-diagonal lg:hidden"></div>
 
-                <div class="max-w-[1400px] w-full mx-auto px-6 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="max-w-[1400px] w-full mx-auto px-6 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
                     
-                    <div class="lg:col-span-7 xl:col-span-6 text-center lg:text-left reveal-left relative z-20">
-                        <span class="inline-block py-1.5 px-4 bg-brand-light border border-brand-gray rounded-full text-[10px] sm:text-xs font-black text-brand-accent uppercase tracking-widest mb-6 shadow-sm">
+                    <div class="lg:col-span-7 xl:col-span-6 text-center lg:text-left reveal-left relative z-10 pt-6">
+                        <span class="inline-block py-1.5 px-5 bg-brand-light border border-brand-gray rounded-full text-[10px] sm:text-xs font-black text-brand-accent uppercase tracking-[0.15em] mb-6">
                             Desarrollo Digital & Creativo
                         </span>
-                        <h1 class="text-[2.75rem] leading-[1.05] sm:text-6xl lg:text-[4.25rem] xl:text-[5rem] font-black mb-6 text-brand-textDark tracking-tighter">
+                        <!-- Título idéntico a la foto (MARCAS CON COHERENCIA VISUAL) -->
+                        <h1 class="text-[3.5rem] leading-[1.05] sm:text-[4.5rem] lg:text-[5.5rem] xl:text-[6rem] font-black mb-6 text-brand-textDark tracking-tighter">
                             MARCAS CON <br>
                             <span class="text-brand-accent">COHERENCIA</span> <br>
                             VISUAL.
                         </h1>
-                        <p class="text-base sm:text-lg max-w-lg mx-auto lg:mx-0 mb-10 font-semibold text-brand-textSoft">
+                        <p class="text-base sm:text-lg max-w-[500px] mx-auto lg:mx-0 mb-10 font-bold text-brand-textSoft">
                             Diseñamos con propósito e innovamos con pasión. Impulsamos tu negocio con estrategias que dominan el mercado digital.
                         </p>
                         <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
-                            <button onclick="navigate('portafolio')" class="px-8 py-4 bg-brand-textDark text-white text-xs font-black tracking-widest uppercase hover:bg-black transition-transform hover:-translate-y-1 rounded-full shadow-xl flex items-center justify-center gap-2">
+                            <!-- Botones idénticos a la foto -->
+                            <button onclick="navigate('portafolio')" class="px-8 py-4 bg-brand-textDark text-white text-xs font-black tracking-[0.2em] uppercase hover:bg-black transition-transform hover:-translate-y-1 rounded-full shadow-xl">
                                 Ver Proyectos
                             </button>
-                            <button onclick="navigate('contacto')" class="px-8 py-4 bg-white border-2 border-brand-gray text-brand-textDark text-xs font-black tracking-widest uppercase hover:border-brand-textDark transition-all rounded-full flex items-center justify-center">
+                            <button onclick="navigate('contacto')" class="px-8 py-4 bg-white border-2 border-brand-gray text-brand-textDark text-xs font-black tracking-[0.2em] uppercase hover:border-brand-textDark transition-all rounded-full">
                                 Contáctanos
                             </button>
                         </div>
                     </div>
 
-                    <div class="lg:col-span-5 xl:col-span-6 relative flex justify-center lg:justify-end items-center reveal-right mt-12 lg:mt-0 parallax-wrapper" data-speed="1.5">
-                        <div class="absolute w-[320px] sm:w-[400px] h-[320px] sm:h-[400px] bg-black/10 blur-[60px] rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
-                        <img src="https://www.image2url.com/r2/default/images/1782571037969-5dcdb824-91fd-43d8-b539-cfe0894386ca.png" alt="Mascota Eqbito" class="w-full max-w-[360px] sm:max-w-[500px] lg:max-w-[700px] h-auto object-contain relative z-20 drop-shadow-2xl levitate">
+                    <div class="lg:col-span-5 xl:col-span-6 relative flex justify-center lg:justify-end items-center reveal-right pt-8 lg:pt-0">
+                        <!-- Mascota Zorro 3D -->
+                        <div class="absolute w-[300px] sm:w-[400px] h-[300px] sm:h-[400px] bg-black/10 blur-[60px] rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                        <img src="https://www.image2url.com/r2/default/images/1782571037969-5dcdb824-91fd-43d8-b539-cfe0894386ca.png" alt="Mascota Eqbito" class="w-full max-w-[340px] sm:max-w-[480px] lg:max-w-[750px] h-auto object-contain relative z-20 drop-shadow-2xl parallax-wrapper levitate" data-speed="1.2">
                     </div>
                 </div>
             </section>
 
-            <!-- Stats Banner (Ahora se une perfectamente gracias al espacio asegurado en el hero) -->
-            <div class="bg-brand-textDark relative z-20">
-                <div class="max-w-[1200px] mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-3 gap-10 divide-y md:divide-y-0 md:divide-x divide-white/10 text-center counter-box">
+            <!-- Stats Banner Negro Inferior -->
+            <div class="bg-brand-textDark relative z-20 -mt-[1px]">
+                <div class="max-w-[1200px] mx-auto px-6 py-12 lg:py-16 grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-white/10 text-center counter-box">
                     <div class="reveal">
-                        <h4 class="text-5xl lg:text-6xl font-black text-white mb-3">+<span class="counter" data-target="200">0</span></h4>
+                        <h4 class="text-5xl lg:text-7xl font-black text-white mb-2">+<span class="counter" data-target="200">0</span></h4>
                         <p class="text-xs text-brand-accent font-black uppercase tracking-widest">Diseños Gráficos</p>
                     </div>
-                    <div class="pt-10 md:pt-0 reveal delay-100">
-                        <h4 class="text-5xl lg:text-6xl font-black text-white mb-3">+<span class="counter" data-target="50">0</span></h4>
+                    <div class="pt-8 md:pt-0 reveal delay-100">
+                        <h4 class="text-5xl lg:text-7xl font-black text-white mb-2">+<span class="counter" data-target="50">0</span></h4>
                         <p class="text-xs text-brand-accent font-black uppercase tracking-widest">Páginas Realizadas</p>
                     </div>
-                    <div class="pt-10 md:pt-0 reveal delay-200">
-                        <h4 class="text-5xl lg:text-6xl font-black text-white mb-3">+<span class="counter" data-target="3">0</span></h4>
+                    <div class="pt-8 md:pt-0 reveal delay-200">
+                        <h4 class="text-5xl lg:text-7xl font-black text-white mb-2">+<span class="counter" data-target="3">0</span></h4>
                         <p class="text-xs text-brand-accent font-black uppercase tracking-widest">Años de Experiencia</p>
                     </div>
                 </div>
             </div>
+
+            <!-- Testimonios agregados como valor estratégico -->
+            <section class="py-20 lg:py-32 bg-brand-light relative overflow-hidden border-b border-brand-gray">
+                <div class="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
+                    <div class="text-center mb-16 reveal">
+                        <h2 class="text-sm font-black tracking-[0.2em] text-brand-accent uppercase mb-2">Lo que dicen de nosotros</h2>
+                        <h3 class="text-4xl lg:text-5xl font-black text-brand-textDark uppercase tracking-tight">CLIENTES SATISFECHOS</h3>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <div class="bg-white border-2 border-brand-gray p-8 rounded-3xl reveal hover:-translate-y-2 transition-transform duration-300 shadow-md flex flex-col">
+                            <svg class="w-10 h-10 text-brand-accent/20 mb-6" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                            <p class="text-brand-textSoft font-medium mb-8 italic flex-grow">"EQB Studio transformó por completo nuestra presencia online. El diseño de nuestra web superó todas las expectativas y el soporte post-lanzamiento fue impecable."</p>
+                            <div class="flex items-center gap-4 mt-auto">
+                                <div class="w-12 h-12 bg-brand-textDark rounded-full flex items-center justify-center text-white font-black text-lg shrink-0">CM</div>
+                                <div><h5 class="font-black text-brand-textDark text-sm">Carlos Mendoza</h5><p class="text-[10px] text-brand-accent font-black uppercase tracking-widest">CEO, TechFlow</p></div>
+                            </div>
+                        </div>
+                        <div class="bg-white border-2 border-brand-gray p-8 rounded-3xl reveal delay-100 hover:-translate-y-2 transition-transform duration-300 shadow-md flex flex-col">
+                            <svg class="w-10 h-10 text-brand-accent/20 mb-6" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                            <p class="text-brand-textSoft font-medium mb-8 italic flex-grow">"Buscábamos un rediseño de marca que reflejara nuestros nuevos valores corporativos. El equipo logró capturar nuestra esencia a la perfección. 100% recomendados."</p>
+                            <div class="flex items-center gap-4 mt-auto">
+                                <div class="w-12 h-12 bg-brand-accent rounded-full flex items-center justify-center text-white font-black text-lg shrink-0">LG</div>
+                                <div><h5 class="font-black text-brand-textDark text-sm">Laura Gómez</h5><p class="text-[10px] text-brand-accent font-black uppercase tracking-widest">Dir. Creativa, Lumina</p></div>
+                            </div>
+                        </div>
+                        <div class="bg-white border-2 border-brand-gray p-8 rounded-3xl reveal delay-200 hover:-translate-y-2 transition-transform duration-300 shadow-md flex flex-col">
+                            <svg class="w-10 h-10 text-brand-accent/20 mb-6" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                            <p class="text-brand-textSoft font-medium mb-8 italic flex-grow">"La entrega fue rápida y el catálogo digital interactivo nos ha ayudado a cerrar ventas mucho más rápido a través de WhatsApp. Un excelente servicio integral."</p>
+                            <div class="flex items-center gap-4 mt-auto">
+                                <div class="w-12 h-12 bg-brand-textDark rounded-full flex items-center justify-center text-white font-black text-lg shrink-0">AF</div>
+                                <div><h5 class="font-black text-brand-textDark text-sm">Andrés Forero</h5><p class="text-[10px] text-brand-accent font-black uppercase tracking-widest">Fundador, EcoStore</p></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
 
         <!-- ================= PÁGINA: NOSOTROS ================= -->
         <div id="page-nosotros" class="page-view">
-            <section class="py-20 lg:py-32 bg-white relative overflow-hidden">
+            <section class="py-20 lg:py-28 bg-white relative overflow-hidden border-b border-brand-gray">
                 <div class="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+                    
+                    <!-- Párrafo cabecera idéntico a la imagen -->
+                    <p class="text-brand-textSoft font-bold max-w-4xl text-lg sm:text-xl lg:text-2xl mb-16 reveal">
+                        No creamos elementos aislados; desarrollamos ecosistemas visuales y digitales listos para operar y generar valor real a su empresa.
+                    </p>
+
+                    <!-- Layout 2 columnas idéntico a la imagen -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
                         
-                        <div class="lg:col-span-7 reveal-left">
-                            <h2 class="text-4xl lg:text-5xl font-black text-brand-textDark uppercase tracking-tight mb-6">Orden. Estrategia. <span class="text-brand-accent">Diseño.</span></h2>
-                            <p class="text-brand-textSoft font-semibold text-lg mb-12 max-w-2xl">No creamos elementos aislados; desarrollamos ecosistemas visuales y digitales listos para operar y generar valor real a su empresa.</p>
+                        <!-- Columna Izquierda: Tarjetas de Beneficios (Apiladas verticalmente) -->
+                        <div class="lg:col-span-7 flex flex-col gap-5">
                             
-                            <div class="space-y-6">
-                                <div class="bg-brand-light border border-brand-gray p-6 rounded-2xl flex items-start gap-6 hover:shadow-xl hover:border-brand-accent/50 transition-all">
-                                    <div class="w-14 h-14 bg-white shadow-sm rounded-full flex items-center justify-center shrink-0 text-brand-accent">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                    </div>
-                                    <div>
-                                        <h4 class="text-xl font-black text-brand-textDark mb-2">Atención Cercana</h4>
-                                        <p class="text-brand-textSoft text-sm font-medium leading-relaxed">Atención personalizada y dedicada para cada cliente durante todo el proceso creativo.</p>
-                                    </div>
+                            <!-- Card 1 -->
+                            <div class="bg-brand-light border border-brand-gray/60 p-6 sm:p-8 rounded-[20px] reveal hover:shadow-lg transition-all duration-300 flex items-start gap-6">
+                                <div class="w-14 h-14 bg-white shadow-sm rounded-full flex items-center justify-center shrink-0 text-brand-accent">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                 </div>
-                                <div class="bg-brand-light border border-brand-gray p-6 rounded-2xl flex items-start gap-6 hover:shadow-xl hover:border-brand-accent/50 transition-all">
-                                    <div class="w-14 h-14 bg-white shadow-sm rounded-full flex items-center justify-center shrink-0 text-brand-accent">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
-                                    </div>
-                                    <div>
-                                        <h4 class="text-xl font-black text-brand-textDark mb-2">Diseños Modernos</h4>
-                                        <p class="text-brand-textSoft text-sm font-medium leading-relaxed">Creaciones funcionales y estéticamente atractivas, adaptadas a las tendencias actuales.</p>
-                                    </div>
+                                <div>
+                                    <h4 class="text-xl sm:text-2xl font-black text-brand-textDark mb-2">Atención Cercana</h4>
+                                    <p class="text-brand-textSoft text-sm font-medium leading-relaxed">Atención personalizada y dedicada para cada cliente durante todo el proceso creativo.</p>
                                 </div>
-                                <div class="bg-brand-light border border-brand-gray p-6 rounded-2xl flex items-start gap-6 hover:shadow-xl hover:border-brand-accent/50 transition-all">
-                                    <div class="w-14 h-14 bg-white shadow-sm rounded-full flex items-center justify-center shrink-0 text-brand-accent">
-                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
-                                    </div>
-                                    <div>
-                                        <h4 class="text-xl font-black text-brand-textDark mb-2">Entrega Profesional</h4>
-                                        <p class="text-brand-textSoft text-sm font-medium leading-relaxed">Cumplimos rigurosamente con los plazos y los altos estándares de calidad establecidos.</p>
-                                    </div>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="bg-brand-light border border-brand-gray/60 p-6 sm:p-8 rounded-[20px] reveal delay-100 hover:shadow-lg transition-all duration-300 flex items-start gap-6">
+                                <div class="w-14 h-14 bg-white shadow-sm rounded-full flex items-center justify-center shrink-0 text-brand-accent">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl sm:text-2xl font-black text-brand-textDark mb-2">Diseños Modernos</h4>
+                                    <p class="text-brand-textSoft text-sm font-medium leading-relaxed">Creaciones funcionales y estéticamente atractivas, adaptadas a las tendencias actuales.</p>
+                                </div>
+                            </div>
+
+                            <!-- Card 3 -->
+                            <div class="bg-brand-light border border-brand-gray/60 p-6 sm:p-8 rounded-[20px] reveal delay-200 hover:shadow-lg transition-all duration-300 flex items-start gap-6">
+                                <div class="w-14 h-14 bg-white shadow-sm rounded-full flex items-center justify-center shrink-0 text-brand-accent">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-xl sm:text-2xl font-black text-brand-textDark mb-2">Entrega Profesional</h4>
+                                    <p class="text-brand-textSoft text-sm font-medium leading-relaxed">Cumplimos rigurosamente con los plazos y los altos estándares de calidad establecidos.</p>
                                 </div>
                             </div>
                         </div>
+                        
+                        <!-- Columna Derecha: Imagen interactiva de Zorro -->
+                        <div class="lg:col-span-5 relative flex justify-center reveal-right pt-10 lg:pt-0">
+                            <!-- Destello de fondo -->
+                            <div class="absolute w-[300px] h-[300px] bg-brand-accent/5 blur-[80px] rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+                            <!-- Usando la imagen 3D genérica del zorro como fallback interactivo -->
+                            <img src="https://www.image2url.com/r2/default/images/1782663913038-eaa39201-f81e-43d7-aed0-ef120710283c.png" alt="Nosotros EQB" class="w-full max-w-[320px] sm:max-w-[420px] lg:max-w-[550px] object-contain relative z-10 parallax-wrapper levitate" data-speed="1.5">
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-                        <!-- Nueva Imagen 3D Interactiva -->
-                        <div class="lg:col-span-5 relative flex justify-center items-center reveal-right parallax-wrapper" data-speed="-1.2">
-                            <div class="absolute w-[300px] h-[300px] bg-brand-accent/10 blur-[80px] rounded-full"></div>
-                            <img src="https://www.image2url.com/r2/default/images/1782663913038-eaa39201-f81e-43d7-aed0-ef120710283c.png" alt="Composición 3D Nosotros" class="w-full max-w-[650px] h-auto object-contain relative z-20 drop-shadow-2xl levitate-slow">
+            <!-- Metodología - Proceso Estratégico (Valor Agregado) -->
+            <section class="py-20 lg:py-32 bg-brand-textDark relative overflow-hidden">
+                <div class="absolute right-0 top-0 w-1/3 h-full bg-brand-accent opacity-10 blur-[100px] pointer-events-none"></div>
+                <div class="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
+                    <div class="text-center mb-20 reveal">
+                        <h2 class="text-sm font-black tracking-[0.2em] text-brand-accent uppercase mb-2">Metodología Comprobada</h2>
+                        <h3 class="text-4xl lg:text-5xl font-black text-white uppercase tracking-tight">NUESTRO PROCESO</h3>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-6 relative">
+                        <div class="hidden md:block absolute top-10 left-[12%] right-[12%] h-[2px] bg-white/10 z-0"></div>
+                        <div class="relative z-10 text-center reveal">
+                            <div class="w-20 h-20 mx-auto bg-brand-textDark border-4 border-brand-accent text-brand-accent rounded-full flex items-center justify-center text-3xl font-black mb-6 shadow-[0_0_20px_rgba(255,106,0,0.3)]">1</div>
+                            <h4 class="text-xl font-black text-white mb-3">Descubrimiento</h4>
+                            <p class="text-brand-gray text-sm font-medium">Analizamos tu marca, objetivos y competencia para trazar una ruta clara.</p>
+                        </div>
+                        <div class="relative z-10 text-center reveal delay-100">
+                            <div class="w-20 h-20 mx-auto bg-brand-textDark border-4 border-white/20 text-white rounded-full flex items-center justify-center text-3xl font-black mb-6 hover:border-brand-accent transition-colors duration-300">2</div>
+                            <h4 class="text-xl font-black text-white mb-3">Estrategia</h4>
+                            <p class="text-brand-gray text-sm font-medium">Presentamos conceptos visuales y arquitectura funcional del proyecto.</p>
+                        </div>
+                        <div class="relative z-10 text-center reveal delay-200">
+                            <div class="w-20 h-20 mx-auto bg-brand-textDark border-4 border-white/20 text-white rounded-full flex items-center justify-center text-3xl font-black mb-6 hover:border-brand-accent transition-colors duration-300">3</div>
+                            <h4 class="text-xl font-black text-white mb-3">Desarrollo</h4>
+                            <p class="text-brand-gray text-sm font-medium">Damos vida al proyecto con diseño moderno, iteraciones y optimización.</p>
+                        </div>
+                        <div class="relative z-10 text-center reveal delay-300">
+                            <div class="w-20 h-20 mx-auto bg-brand-textDark border-4 border-white/20 text-white rounded-full flex items-center justify-center text-3xl font-black mb-6 hover:border-brand-accent transition-colors duration-300">4</div>
+                            <h4 class="text-xl font-black text-white mb-3">Lanzamiento</h4>
+                            <p class="text-brand-gray text-sm font-medium">Realizamos pruebas finales y entregamos tu proyecto listo para impactar.</p>
                         </div>
                     </div>
                 </div>
@@ -290,50 +364,108 @@
 
         <!-- ================= PÁGINA: SERVICIOS ================= -->
         <div id="page-servicios" class="page-view">
-            <section class="py-20 lg:py-32 bg-brand-light relative overflow-hidden">
-                <!-- Imagen 3D Decorativa de fondo flotante -->
-                <div class="absolute right-[-5%] top-[10%] opacity-40 parallax-wrapper pointer-events-none" data-speed="0.8">
-                    <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1782664134/no_bg_image_3_fozthi.png" alt="Graphic Element" class="w-[350px] md:w-[500px] levitate blur-[2px]">
+            <section class="py-20 lg:py-28 bg-brand-light relative">
+                
+                <!-- Extra Interactive Image Floating (from new links) -->
+                <div class="absolute right-[0%] top-[10%] opacity-30 pointer-events-none parallax-wrapper" data-speed="0.8">
+                    <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1782664134/no_bg_image_3_fozthi.png" alt="Decoración 3D" class="w-[300px] md:w-[500px] levitate-slow blur-[1px]">
                 </div>
 
                 <div class="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
-                    <div class="text-center md:text-left mb-16 reveal flex flex-col md:flex-row justify-between items-end">
-                        <div>
-                            <h2 class="text-sm font-black tracking-[0.2em] text-brand-accent uppercase mb-2">Catálogo de Soluciones</h2>
-                            <h3 class="text-4xl lg:text-5xl font-black text-brand-textDark">¿QUÉ NECESITAS HOY?</h3>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col lg:flex-row gap-10">
-                        <div class="w-full lg:w-1/4 flex flex-row lg:flex-col gap-3 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 reveal bg-white lg:bg-transparent p-4 lg:p-0 rounded-2xl shadow-sm lg:shadow-none border border-brand-gray lg:border-none">
-                            <button onclick="renderService('web')" id="btn-web" class="tab-btn active flex items-center gap-4 w-full text-left px-6 py-4 rounded-xl text-sm font-bold text-brand-textSoft transition-all whitespace-nowrap lg:whitespace-normal bg-transparent hover:bg-white border border-transparent hover:border-brand-gray">
+                    
+                    <div class="flex flex-col lg:flex-row gap-12 lg:gap-16">
+                        
+                        <!-- Sidebar Tabs (Idéntico a la imagen) -->
+                        <div class="w-full lg:w-1/4 flex flex-row lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 reveal shrink-0">
+                            
+                            <!-- Tab 1 -->
+                            <button onclick="renderService('web')" id="btn-web" class="tab-btn active flex items-center gap-4 w-full text-left px-5 py-4 text-sm font-bold text-brand-textSoft hover:bg-white/60 whitespace-nowrap lg:whitespace-normal">
                                 <span class="w-10 h-10 rounded-full bg-brand-accent/10 flex items-center justify-center text-brand-accent shrink-0"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg></span>
                                 Páginas Web
                             </button>
-                            <button onclick="renderService('marca')" id="btn-marca" class="tab-btn flex items-center gap-4 w-full text-left px-6 py-4 rounded-xl text-sm font-bold text-brand-textSoft transition-all whitespace-nowrap lg:whitespace-normal bg-transparent hover:bg-white border border-transparent hover:border-brand-gray">
+                            <!-- Tab 2 -->
+                            <button onclick="renderService('marca')" id="btn-marca" class="tab-btn flex items-center gap-4 w-full text-left px-5 py-4 text-sm font-bold text-brand-textSoft hover:bg-white/60 whitespace-nowrap lg:whitespace-normal">
                                 <span class="w-10 h-10 rounded-full bg-brand-accent/10 flex items-center justify-center text-brand-accent shrink-0"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2-1 4-2 7-2 2.5 0 4.5 1 6.5 2a1 1 0 0 1 1 1z"></path></svg></span>
                                 Creación de Marca
                             </button>
-                            <button onclick="renderService('catalogos')" id="btn-catalogos" class="tab-btn flex items-center gap-4 w-full text-left px-6 py-4 rounded-xl text-sm font-bold text-brand-textSoft transition-all whitespace-nowrap lg:whitespace-normal bg-transparent hover:bg-white border border-transparent hover:border-brand-gray">
+                            <!-- Tab 3 -->
+                            <button onclick="renderService('catalogos')" id="btn-catalogos" class="tab-btn flex items-center gap-4 w-full text-left px-5 py-4 text-sm font-bold text-brand-textSoft hover:bg-white/60 whitespace-nowrap lg:whitespace-normal">
                                 <span class="w-10 h-10 rounded-full bg-brand-accent/10 flex items-center justify-center text-brand-accent shrink-0"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
                                 Catálogos Digitales
                             </button>
-                            <button onclick="renderService('vcard')" id="btn-vcard" class="tab-btn flex items-center gap-4 w-full text-left px-6 py-4 rounded-xl text-sm font-bold text-brand-textSoft transition-all whitespace-nowrap lg:whitespace-normal bg-transparent hover:bg-white border border-transparent hover:border-brand-gray">
+                            <!-- Tab 4 -->
+                            <button onclick="renderService('vcard')" id="btn-vcard" class="tab-btn flex items-center gap-4 w-full text-left px-5 py-4 text-sm font-bold text-brand-textSoft hover:bg-white/60 whitespace-nowrap lg:whitespace-normal">
                                 <span class="w-10 h-10 rounded-full bg-brand-accent/10 flex items-center justify-center text-brand-accent shrink-0"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg></span>
                                 vCard Digitales
                             </button>
-                            <button onclick="renderService('nfc')" id="btn-nfc" class="tab-btn flex items-center gap-4 w-full text-left px-6 py-4 rounded-xl text-sm font-bold text-brand-textSoft transition-all whitespace-nowrap lg:whitespace-normal bg-transparent hover:bg-white border border-transparent hover:border-brand-gray">
+                            <!-- Tab 5 -->
+                            <button onclick="renderService('nfc')" id="btn-nfc" class="tab-btn flex items-center gap-4 w-full text-left px-5 py-4 text-sm font-bold text-brand-textSoft hover:bg-white/60 whitespace-nowrap lg:whitespace-normal">
                                 <span class="w-10 h-10 rounded-full bg-brand-accent/10 flex items-center justify-center text-brand-accent shrink-0"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M6 10a6 6 0 0 1 12 0"></path><path d="M12 14v4"></path></svg></span>
                                 Tarjetas NFC
                             </button>
                         </div>
 
-                        <div class="w-full lg:w-3/4 min-h-[450px]">
-                            <div id="service-header" class="mb-8 reveal delay-100 bg-white p-8 rounded-2xl shadow-md border-2 border-brand-gray">
-                                <h3 id="service-title" class="text-3xl sm:text-4xl font-black text-brand-textDark mb-3 uppercase">Cargando...</h3>
-                                <p id="service-desc" class="text-brand-textSoft max-w-3xl text-base font-semibold leading-relaxed">Por favor espere.</p>
+                        <!-- Content Area (Grid idéntico a la imagen) -->
+                        <div class="w-full lg:w-3/4 min-h-[500px]">
+                            
+                            <!-- Header de la sección interna -->
+                            <div id="service-header" class="mb-10 reveal delay-100 bg-white p-8 sm:p-10 rounded-[20px] shadow-sm border border-brand-gray/60">
+                                <h3 id="service-title" class="text-4xl sm:text-5xl font-black text-brand-textDark mb-4 uppercase tracking-tight">Cargando...</h3>
+                                <p id="service-desc" class="text-brand-textSoft max-w-3xl text-base sm:text-lg font-semibold leading-relaxed">Por favor espere.</p>
                             </div>
-                            <div id="service-plans" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+                            
+                            <!-- Plans Grid (Donde se inyectan las tarjetas desde JS) -->
+                            <div id="service-plans" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <!-- JS injects here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Acordeón FAQ Agregado -->
+            <section class="py-20 lg:py-32 bg-white relative">
+                <div class="max-w-[800px] mx-auto px-6 lg:px-12 relative z-10">
+                    <div class="text-center mb-16 reveal">
+                        <h2 class="text-4xl lg:text-5xl font-black text-brand-textDark uppercase tracking-tight">Preguntas <span class="text-brand-accent">Frecuentes</span></h2>
+                        <p class="mt-4 text-brand-textSoft font-semibold text-lg">Resolvemos tus dudas antes de iniciar tu proyecto.</p>
+                    </div>
+
+                    <div class="space-y-4 reveal delay-100">
+                        <div class="faq-item border-2 border-brand-gray rounded-2xl overflow-hidden bg-brand-light transition-all">
+                            <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+                                <span class="font-black text-brand-textDark text-sm sm:text-base">¿Cuánto tiempo toma diseñar una página web?</span>
+                                <svg class="w-6 h-6 text-brand-accent transform transition-transform duration-300 shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                                <div class="px-6 pb-6 text-brand-textSoft text-sm font-medium leading-relaxed">
+                                    Depende de la complejidad, pero nuestros planes profesionales suelen estar listos en un periodo de entre 2 y 4 semanas tras recibir la información de tu negocio.
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="faq-item border-2 border-brand-gray rounded-2xl overflow-hidden bg-brand-light transition-all">
+                            <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+                                <span class="font-black text-brand-textDark text-sm sm:text-base">¿Cuáles son los métodos de pago?</span>
+                                <svg class="w-6 h-6 text-brand-accent transform transition-transform duration-300 shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                                <div class="px-6 pb-6 text-brand-textSoft text-sm font-medium leading-relaxed">
+                                    Aceptamos transferencias bancarias locales, tarjetas y pagos internacionales. Nuestra modalidad estándar es 50% anticipo para iniciar y 50% contra entrega.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="faq-item border-2 border-brand-gray rounded-2xl overflow-hidden bg-brand-light transition-all">
+                            <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
+                                <span class="font-black text-brand-textDark text-sm sm:text-base">¿Incluyen el dominio y hosting?</span>
+                                <svg class="w-6 h-6 text-brand-accent transform transition-transform duration-300 shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
+                                <div class="px-6 pb-6 text-brand-textSoft text-sm font-medium leading-relaxed">
+                                    ¡Sí! Todos nuestros planes Profesional y Empresarial incluyen el registro de tu dominio personalizado y alojamiento de alta velocidad gratuito el primer año.
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -342,11 +474,11 @@
 
         <!-- ================= PÁGINA: PORTAFOLIO ================= -->
         <div id="page-portafolio" class="page-view">
-            <section class="py-20 lg:py-32 bg-white relative overflow-hidden">
+            <section class="py-20 lg:py-32 bg-white relative overflow-hidden border-b border-brand-gray">
                 
-                <!-- Extra Decoración 3D (Gemini Image) Flotando en el header del Portafolio -->
-                <div class="absolute left-[-5%] top-[5%] opacity-30 parallax-wrapper pointer-events-none" data-speed="1">
-                    <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1782664406/Gemini_Generated_Image_vllh0gvllh0gvllh_inspyrenet_ocw53a.png" alt="3D Graphics" class="w-[300px] md:w-[450px] levitate-slow blur-[1px] rotate-12">
+                <!-- Decoración 3D (Gemini Image) Flotando -->
+                <div class="absolute left-[0%] top-[5%] opacity-40 parallax-wrapper pointer-events-none" data-speed="1.2">
+                    <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1782664406/Gemini_Generated_Image_vllh0gvllh0gvllh_inspyrenet_ocw53a.png" alt="3D Graphics" class="w-[300px] md:w-[600px] levitate-slow rotate-12">
                 </div>
 
                 <div class="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
@@ -358,14 +490,14 @@
                     <div class="space-y-32 lg:space-y-48">
                         <div class="reveal group flex flex-col lg:flex-row gap-12 items-center">
                             <div class="w-full lg:w-1/2 flex justify-center relative">
-                                <div class="absolute inset-0 bg-brand-light rounded-full transform -rotate-6 scale-105 transition-transform duration-500 group-hover:rotate-0 border-2 border-brand-gray"></div>
+                                <div class="absolute inset-0 bg-brand-light rounded-full transform -rotate-6 scale-105 transition-transform duration-500 group-hover:rotate-0 border border-brand-gray"></div>
                                 <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1778502887/1_jgcm39.png" alt="Identidad Corporativa" class="w-full h-auto object-contain png-mockup max-h-[500px] relative z-10">
                             </div>
                             <div class="w-full lg:w-1/2 flex flex-col justify-center px-4 text-center lg:text-left">
                                 <span class="inline-block py-1 px-3 bg-brand-light border border-brand-gray text-brand-accent font-black text-[11px] uppercase tracking-widest rounded-full w-max mx-auto lg:mx-0 mb-4">Papelería Institucional</span>
                                 <h4 class="text-3xl sm:text-4xl font-black text-brand-textDark mb-4">IDENTIDAD CORPORATIVA</h4>
                                 <p class="text-lg font-medium text-brand-textSoft mb-8 max-w-md mx-auto lg:mx-0">Diseño estratégico del logotipo y papelería asegurando presencia coherente y profesional en cada punto de contacto.</p>
-                                <button onclick="selectPlan('Identidad de Marca', 'Consulta de Portafolio')" class="inline-flex items-center text-brand-textDark font-black uppercase tracking-widest hover:text-brand-accent transition-colors w-max mx-auto lg:mx-0">
+                                <button onclick="selectPlan('Identidad de Marca', 'Consulta de Portafolio')" class="inline-flex items-center justify-center lg:justify-start text-brand-textDark font-black uppercase tracking-widest hover:text-brand-accent transition-colors">
                                     Iniciar Proyecto <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
                                 </button>
                             </div>
@@ -373,14 +505,14 @@
 
                         <div class="reveal group flex flex-col lg:flex-row-reverse gap-12 items-center">
                             <div class="w-full lg:w-1/2 flex justify-center relative">
-                                <div class="absolute inset-0 bg-brand-light rounded-full transform rotate-6 scale-105 transition-transform duration-500 group-hover:rotate-0 border-2 border-brand-gray"></div>
+                                <div class="absolute inset-0 bg-brand-light rounded-full transform rotate-6 scale-105 transition-transform duration-500 group-hover:rotate-0 border border-brand-gray"></div>
                                 <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1778502887/4_xspar2.png" alt="Diseño Web" class="w-full h-auto object-contain png-mockup max-h-[500px] relative z-10">
                             </div>
                             <div class="w-full lg:w-1/2 flex flex-col justify-center px-4 text-center lg:text-left">
                                 <span class="inline-block py-1 px-3 bg-brand-light border border-brand-gray text-brand-accent font-black text-[11px] uppercase tracking-widest rounded-full w-max mx-auto lg:mx-0 mb-4">Plataformas Web</span>
                                 <h4 class="text-3xl sm:text-4xl font-black text-brand-textDark mb-4">DESARROLLO DIGITAL</h4>
                                 <p class="text-lg font-medium text-brand-textSoft mb-8 max-w-md mx-auto lg:mx-0">Ecosistemas optimizados y responsivos diseñados bajo los más altos estándares de conversión y experiencia de usuario.</p>
-                                <button onclick="selectPlan('Páginas Web', 'Consulta de Desarrollo Digital')" class="inline-flex items-center text-brand-textDark font-black uppercase tracking-widest hover:text-brand-accent transition-colors w-max mx-auto lg:mx-0">
+                                <button onclick="selectPlan('Páginas Web', 'Consulta de Desarrollo Digital')" class="inline-flex items-center justify-center lg:justify-start text-brand-textDark font-black uppercase tracking-widest hover:text-brand-accent transition-colors">
                                     Cotizar Web <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
                                 </button>
                             </div>
@@ -388,14 +520,14 @@
                         
                         <div class="reveal group flex flex-col lg:flex-row gap-12 items-center">
                             <div class="w-full lg:w-1/2 flex justify-center relative">
-                                <div class="absolute inset-0 bg-brand-light rounded-full transform -rotate-6 scale-105 transition-transform duration-500 group-hover:rotate-0 border-2 border-brand-gray"></div>
+                                <div class="absolute inset-0 bg-brand-light rounded-full transform -rotate-6 scale-105 transition-transform duration-500 group-hover:rotate-0 border border-brand-gray"></div>
                                 <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1778502888/2_eohnei.png" alt="Catálogo Virtual" class="w-full h-auto object-contain png-mockup max-h-[500px] relative z-10">
                             </div>
                             <div class="w-full lg:w-1/2 flex flex-col justify-center px-4 text-center lg:text-left">
                                 <span class="inline-block py-1 px-3 bg-brand-light border border-brand-gray text-brand-accent font-black text-[11px] uppercase tracking-widest rounded-full w-max mx-auto lg:mx-0 mb-4">Diseño Interactivo</span>
                                 <h4 class="text-3xl sm:text-4xl font-black text-brand-textDark mb-4">CATÁLOGO VIRTUAL</h4>
                                 <p class="text-lg font-medium text-brand-textSoft mb-8 max-w-md mx-auto lg:mx-0">Sistemas dinámicos y atractivos para exponer productos facilitando enormemente la toma de decisión del cliente.</p>
-                                <button onclick="selectPlan('Catálogos Digitales', 'Consulta de Catálogo Virtual')" class="inline-flex items-center text-brand-textDark font-black uppercase tracking-widest hover:text-brand-accent transition-colors w-max mx-auto lg:mx-0">
+                                <button onclick="selectPlan('Catálogos Digitales', 'Consulta de Catálogo Virtual')" class="inline-flex items-center justify-center lg:justify-start text-brand-textDark font-black uppercase tracking-widest hover:text-brand-accent transition-colors">
                                     Diseñar Catálogo <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
                                 </button>
                             </div>
@@ -426,8 +558,8 @@
                             </div>
                             
                             <!-- 3D Image in Contact -->
-                            <div class="hidden lg:block absolute -left-16 bottom-[-100px] w-72 opacity-60 pointer-events-none parallax-wrapper" data-speed="-1">
-                                <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1782664272/no_bg_image_4_zjuest.png" alt="Decoration" class="w-full h-auto drop-shadow-xl levitate transform -rotate-12">
+                            <div class="hidden lg:block absolute -left-16 bottom-[-150px] w-96 opacity-60 pointer-events-none parallax-wrapper" data-speed="-1">
+                                <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1782664272/no_bg_image_4_zjuest.png" alt="Decoration" class="w-full h-auto drop-shadow-2xl levitate transform -rotate-12">
                             </div>
                         </div>
 
@@ -471,14 +603,17 @@
 
     </main>
 
+    <!-- Footer y Marquesina (Agrandada e Invertida) -->
     <footer class="bg-brand-textDark pt-12 pb-8 border-t border-white/10 relative z-20 mt-auto overflow-hidden">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8 mb-8 w-full">
                 
+                <!-- Logo Agrandado -->
                 <div class="text-center md:text-left shrink-0 z-10">
                     <img class="h-16 sm:h-20 w-auto logo-white mx-auto md:mx-0 drop-shadow-lg" style="filter: brightness(0) invert(1);" src="https://www.image2url.com/r2/default/images/1776611881108-f2727ca1-db6f-499c-861d-060b2c44c59a.png" alt="EQB STUDIO Logo">
                 </div>
                 
+                <!-- Marquesina de Servicios Responsiva -->
                 <div class="flex-grow w-full relative marquee-wrapper py-3 flex">
                     <div class="marquee-track items-center text-white/40 font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] lg:tracking-[0.3em] text-sm sm:text-lg lg:text-2xl">
                         <span class="mx-4 sm:mx-6 text-white">Páginas Web</span> <span class="text-brand-accent opacity-50">✦</span>
@@ -486,6 +621,7 @@
                         <span class="mx-4 sm:mx-6 text-white">Catálogos Digitales</span> <span class="text-brand-accent opacity-50">✦</span>
                         <span class="mx-4 sm:mx-6 text-white">vCard Digitales</span> <span class="text-brand-accent opacity-50">✦</span>
                         <span class="mx-4 sm:mx-6 text-white">Tarjetas NFC</span> <span class="text-brand-accent opacity-50">✦</span>
+                        <!-- Repetición para loop infinito continuo -->
                         <span class="mx-4 sm:mx-6 text-white">Páginas Web</span> <span class="text-brand-accent opacity-50">✦</span>
                         <span class="mx-4 sm:mx-6 text-white">Creación de Marca</span> <span class="text-brand-accent opacity-50">✦</span>
                         <span class="mx-4 sm:mx-6 text-white">Catálogos Digitales</span> <span class="text-brand-accent opacity-50">✦</span>
@@ -494,6 +630,7 @@
                     </div>
                 </div>
 
+                <!-- Icono Redes Blanco Destacado -->
                 <div class="flex items-center gap-6 shrink-0 z-10">
                     <a href="https://www.instagram.com/eqbstudio/" target="_blank" class="w-12 h-12 rounded-full border-2 border-white bg-transparent flex items-center justify-center text-white hover:bg-white hover:text-brand-textDark transition-all shadow-lg">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
@@ -507,7 +644,7 @@
         </div>
     </footer>
 
-    <!-- Botón Flotante WhatsApp -->
+    <!-- Botón Flotante WhatsApp Blanco Premium -->
     <a href="https://wa.me/573021192800?text=Hola%20EQB%20STUDIO" target="_blank" class="md:hidden fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-white text-brand-textDark border-2 border-brand-gray rounded-full shadow-2xl hover:scale-110 transition-transform">
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     </a>
@@ -535,7 +672,7 @@
             document.getElementById('mobile-menu').classList.add('hidden');
         }
 
-        // --- 2. Selección Inteligente ---
+        // --- 2. Selección Inteligente de Plan a Contacto ---
         function selectPlan(serviceName, planName) {
             navigate('contacto');
             const select = document.getElementById('servicio-select');
@@ -553,7 +690,7 @@
             }, 300);
         }
 
-        // --- 3. Base de Datos de Servicios ---
+        // --- 3. Base de Datos de Servicios (Coincide con diseño enviado) ---
         const servicesData = {
             web: {
                 title: "Páginas Web", desc: "Diseñamos plataformas modernas, rápidas y optimizadas para dispositivos móviles.",
@@ -564,7 +701,7 @@
                 ]
             },
             marca: {
-                title: "Identidad de Marca", desc: "Construimos una identidad visual coherente y profesional preparada para crecer.",
+                title: "Creación de Marca", desc: "Construimos una identidad visual coherente y profesional preparada para crecer.",
                 plans: [
                     { name: "Marca Esencial", target: "Ideal para iniciar", features: ["Logotipo principal", "Paleta de colores", "Tipografías recomendadas", "Mockup principal"] },
                     { name: "Marca Profesional", target: "Negocios establecidos", features: ["Logo & Variantes", "Paleta & Tipografías", "Manual básico de marca", "Mockups profesionales"], isPopular: true },
@@ -600,16 +737,32 @@
         function renderService(key) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(`btn-${key}`).classList.add('active');
+            
             const data = servicesData[key];
-            document.getElementById('service-title').innerText = data.title;
+            document.getElementById('service-title').innerText = data.title.toUpperCase(); // Render en mayúsculas como en la imagen
             document.getElementById('service-desc').innerText = data.desc;
+            
             const plansContainer = document.getElementById('service-plans');
             plansContainer.innerHTML = ''; 
+            
             data.plans.forEach((plan, index) => {
-                const popularBadge = plan.isPopular ? `<span class="absolute -top-4 right-4 bg-brand-accent text-white text-[11px] font-black uppercase tracking-widest py-1.5 px-4 rounded-full shadow-lg">Recomendado</span>` : '';
-                const borderClass = plan.isPopular ? 'border-brand-accent shadow-xl shadow-brand-accent/20 border-2' : 'border-brand-gray shadow-md border-2';
+                // Etiqueta flotante RECOMENDADO calcada de tu diseño original
+                const popularBadge = plan.isPopular ? `<span class="absolute -top-3.5 right-6 bg-brand-accent text-white text-[10px] font-black uppercase tracking-widest py-1.5 px-4 rounded-full shadow-lg z-10">Recomendado</span>` : '';
+                const borderClass = plan.isPopular ? 'border-brand-accent shadow-2xl shadow-brand-accent/20 border-[3px]' : 'border-brand-gray/60 shadow-md border-2';
+                
+                // Iconos de check naranjas
                 const featuresHtml = plan.features.map(f => `<li class="flex items-start text-sm text-brand-textSoft font-semibold mb-3"><svg class="w-5 h-5 text-brand-accent mr-2 shrink-0" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"></path></svg>${f}</li>`).join('');
-                const cardHtml = `<div class="plan-card bg-white p-8 rounded-2xl ${borderClass} relative hover:-translate-y-2 transition-transform duration-300" style="animation-delay: ${index * 0.1}s">${popularBadge}<h4 class="text-2xl font-black text-brand-textDark mb-1">${plan.name}</h4><p class="text-xs text-brand-accent font-black uppercase tracking-widest mb-6">${plan.target}</p><ul class="mb-8">${featuresHtml}</ul><button onclick="selectPlan('${data.title}', '${plan.name}')" class="mt-auto flex justify-center w-full py-4 bg-brand-light border-2 border-brand-gray hover:border-brand-accent hover:bg-brand-accent hover:text-white text-xs font-black uppercase tracking-widest text-brand-textDark transition-all rounded-xl">Elegir Plan</button></div>`;
+                
+                const cardHtml = `
+                <div class="plan-card bg-white p-8 rounded-3xl ${borderClass} relative hover:-translate-y-2 transition-transform duration-300 flex flex-col" style="animation-delay: ${index * 0.1}s">
+                    ${popularBadge}
+                    <h4 class="text-2xl font-black text-brand-textDark mb-1">${plan.name}</h4>
+                    <p class="text-xs text-brand-accent font-black uppercase tracking-[0.1em] mb-6">${plan.target}</p>
+                    <ul class="mb-8 flex-grow">${featuresHtml}</ul>
+                    <button onclick="selectPlan('${data.title}', '${plan.name}')" class="mt-auto flex justify-center w-full py-4 bg-brand-light border-2 border-brand-gray hover:border-brand-accent hover:bg-brand-accent hover:text-white text-xs font-black uppercase tracking-widest text-brand-textDark transition-all rounded-2xl">
+                        Elegir Plan
+                    </button>
+                </div>`;
                 plansContainer.insertAdjacentHTML('beforeend', cardHtml);
             });
         }
@@ -628,15 +781,38 @@
             });
         }
 
-        // Interacción Parallax (Mouse Move)
+        // Efecto Parallax Sensible al Movimiento
         document.addEventListener('mousemove', (e) => {
-            document.querySelectorAll('.parallax-wrapper').forEach(el => {
-                const speed = parseFloat(el.getAttribute('data-speed')) || 1;
-                // Calculamos el desplazamiento desde el centro de la pantalla
-                const x = (window.innerWidth / 2 - e.pageX) * (speed / 50);
-                const y = (window.innerHeight / 2 - e.pageY) * (speed / 50);
-                el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+            const wrappers = document.querySelectorAll('.parallax-wrapper');
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const percentX = (e.clientX - centerX) / centerX;
+            const percentY = (e.clientY - centerY) / centerY;
+
+            wrappers.forEach(wrap => {
+                const speed = parseFloat(wrap.getAttribute('data-speed')) || 1;
+                const moveX = percentX * 30 * speed;
+                const moveY = percentY * 30 * speed;
+                wrap.style.transform = `translate(${moveX}px, ${moveY}px)`;
             });
+        });
+
+        // Soporte Parallax móvil
+        document.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0) {
+                const touch = e.touches[0];
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2;
+                const percentX = (touch.clientX - centerX) / centerX;
+                const percentY = (touch.clientY - centerY) / centerY;
+
+                document.querySelectorAll('.parallax-wrapper').forEach(wrap => {
+                    const speed = parseFloat(wrap.getAttribute('data-speed')) || 1;
+                    const moveX = percentX * 20 * speed;
+                    const moveY = percentY * 20 * speed;
+                    wrap.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                });
+            }
         });
 
         window.addEventListener('load', () => {
@@ -644,10 +820,39 @@
             const loaderBar = document.getElementById('loader-bar');
             loaderBar.style.width = '100%';
             setTimeout(() => { loader.style.opacity = '0'; loader.style.visibility = 'hidden'; }, 600);
-            renderService('web'); navigate('inicio');
+
+            renderService('web');
+            navigate('inicio');
         });
 
-        document.getElementById('mobile-menu-btn').addEventListener('click', () => document.getElementById('mobile-menu').classList.toggle('hidden'));
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        function toggleFaq(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('svg');
+            const parent = button.parentElement;
+
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.classList.remove('-rotate-180');
+                parent.classList.remove('border-brand-accent', 'shadow-md');
+                parent.classList.add('border-brand-gray');
+            } else {
+                document.querySelectorAll('.faq-content').forEach(c => c.style.maxHeight = null);
+                document.querySelectorAll('.faq-btn svg').forEach(i => i.classList.remove('-rotate-180'));
+                document.querySelectorAll('.faq-item').forEach(p => {
+                    p.classList.remove('border-brand-accent', 'shadow-md');
+                    p.classList.add('border-brand-gray');
+                });
+
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.classList.add('-rotate-180');
+                parent.classList.remove('border-brand-gray');
+                parent.classList.add('border-brand-accent', 'shadow-md');
+            }
+        }
 
         function handleFormSubmit(event) {
             event.preventDefault();
@@ -656,7 +861,9 @@
             const select = document.getElementById('servicio-select');
             const servicioTexto = select.options[select.selectedIndex].text;
             const mensaje = document.getElementById('mensaje').value;
+
             const txt = `Hola EQB STUDIO, solicito información.\n\n*Mis Datos:*\n- Nombre: ${nombre}\n- Correo: ${email}\n- Interés: ${servicioTexto}\n\n*Proyecto:*\n${mensaje}`;
+
             window.open(`https://wa.me/573021192800?text=${encodeURIComponent(txt)}`, '_blank');
             event.target.reset();
         }
