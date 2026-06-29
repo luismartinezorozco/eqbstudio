@@ -83,9 +83,17 @@
         .logo-black { filter: brightness(0); }
         .logo-white { filter: brightness(0) invert(1); }
 
-        /* Cortes Diagonales Optimizados */
-        .clip-diagonal { clip-path: polygon(50% 0, 100% 0, 100% 100%, 30% 100%); }
-        @media (max-width: 1024px) { .clip-diagonal { clip-path: polygon(0 55%, 100% 35%, 100% 100%, 0% 100%); } }
+        /* Cortes Diagonales Optimizados para Contraste */
+        .clip-diagonal { 
+            /* Desktop: Punto medio exacto al 50% para sincronizar con el grid de 2 columnas */
+            clip-path: polygon(55% 0, 100% 0, 100% 100%, 45% 100%); 
+        }
+        @media (max-width: 1024px) { 
+            .clip-diagonal { 
+                /* Mobile: Naranja inicia en la parte inferior protegiendo el 100% de la zona de texto superior */
+                clip-path: polygon(0 55%, 100% 35%, 100% 100%, 0% 100%); 
+            } 
+        }
         .clip-diagonal-reverse { clip-path: polygon(0 0, 100% 10%, 100% 100%, 0 90%); }
 
         /* Navbar Scrolled */
@@ -165,52 +173,52 @@
                 <button onclick="navigate('contacto')" class="bg-brand-accent text-white py-4 text-xs uppercase tracking-widest font-black rounded-md mt-4 shadow-lg shadow-brand-accent/30">Cotizar Proyecto</button>
             </div>
         </div>
-    </nav>
-
+    <!-- Main Content Area -->
     <main class="pt-20 lg:pt-24">
 
         <!-- ================= PÁGINA: INICIO ================= -->
         <div id="page-inicio" class="page-view active-page">
-            <section class="relative flex items-center min-h-[85vh] bg-white overflow-hidden py-16 lg:py-0">
-                <!-- Diagonal idéntica a tu imagen de referencia -->
+            <section class="relative lg:min-h-[90vh] flex items-center bg-white overflow-hidden pt-12 pb-24 lg:py-0">
+                <!-- Fondo Naranja protegido del texto mediante clip-path sincronizado al 50% -->
                 <div class="absolute inset-0 z-0 bg-brand-accent clip-diagonal hidden lg:block"></div>
                 <div class="absolute inset-0 z-0 bg-brand-accent clip-diagonal lg:hidden"></div>
 
-                <div class="max-w-[1400px] w-full mx-auto px-6 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                <!-- Grid de 2 columnas exactas (50/50) para que el texto NUNCA cruce al área naranja -->
+                <div class="max-w-[1400px] w-full mx-auto px-6 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
                     
-                    <div class="lg:col-span-7 xl:col-span-6 text-center lg:text-left reveal-left relative z-10 pt-6">
-                        <span class="inline-block py-1.5 px-5 bg-brand-light border border-brand-gray rounded-full text-[10px] sm:text-xs font-black text-brand-accent uppercase tracking-[0.15em] mb-6">
+                    <!-- Left Text Content -->
+                    <div class="text-center lg:text-left reveal-left">
+                        <span class="inline-block py-1.5 px-4 bg-brand-light border border-brand-gray rounded-full text-[10px] sm:text-xs font-black text-brand-accent uppercase tracking-widest mb-6 shadow-sm">
                             Desarrollo Digital & Creativo
                         </span>
-                        <!-- Título idéntico a la foto (MARCAS CON COHERENCIA VISUAL) -->
-                        <h1 class="text-[3.5rem] leading-[1.05] sm:text-[4.5rem] lg:text-[5.5rem] xl:text-[6rem] font-black mb-6 text-brand-textDark tracking-tighter">
+                        <!-- Tipografía fluida calibrada para evitar desbordamientos y cortes en laptops -->
+                        <h1 class="text-[3rem] sm:text-6xl lg:text-[4rem] xl:text-[5.5rem] font-black leading-[1.05] mb-6 text-brand-textDark tracking-tighter">
                             MARCAS CON <br>
                             <span class="text-brand-accent">COHERENCIA</span> <br>
                             VISUAL.
                         </h1>
-                        <p class="text-base sm:text-lg max-w-[500px] mx-auto lg:mx-0 mb-10 font-bold text-brand-textSoft">
+                        <p class="text-base sm:text-lg max-w-md mx-auto lg:mx-0 mb-10 font-semibold text-brand-textSoft">
                             Diseñamos con propósito e innovamos con pasión. Impulsamos tu negocio con estrategias que dominan el mercado digital.
                         </p>
                         <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4">
-                            <!-- Botones idénticos a la foto -->
-                            <button onclick="navigate('portafolio')" class="px-8 py-4 bg-brand-textDark text-white text-xs font-black tracking-[0.2em] uppercase hover:bg-black transition-transform hover:-translate-y-1 rounded-full shadow-xl">
+                            <button onclick="navigate('portafolio')" class="px-8 py-4 bg-brand-textDark text-white text-xs sm:text-sm font-black tracking-widest uppercase hover:bg-black transition-transform hover:-translate-y-1 rounded-full shadow-xl flex items-center justify-center gap-2">
                                 Ver Proyectos
                             </button>
-                            <button onclick="navigate('contacto')" class="px-8 py-4 bg-white border-2 border-brand-gray text-brand-textDark text-xs font-black tracking-[0.2em] uppercase hover:border-brand-textDark transition-all rounded-full">
+                            <button onclick="navigate('contacto')" class="px-8 py-4 bg-white border-2 border-brand-gray text-brand-textDark text-xs sm:text-sm font-black tracking-widest uppercase hover:border-brand-textDark transition-all rounded-full flex items-center justify-center">
                                 Contáctanos
                             </button>
                         </div>
                     </div>
 
-                    <div class="lg:col-span-5 xl:col-span-6 relative flex justify-center lg:justify-end items-center reveal-right pt-8 lg:pt-0">
-                        <!-- Mascota Zorro 3D -->
-                        <div class="absolute w-[300px] sm:w-[400px] h-[300px] sm:h-[400px] bg-black/10 blur-[60px] rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
-                        <img src="https://www.image2url.com/r2/default/images/1782571037969-5dcdb824-91fd-43d8-b539-cfe0894386ca.png" alt="Mascota Eqbito" class="w-full max-w-[340px] sm:max-w-[480px] lg:max-w-[750px] h-auto object-contain relative z-20 drop-shadow-2xl parallax-wrapper levitate" data-speed="1.2">
+                    <!-- Right Image Content -->
+                    <div class="relative flex justify-center lg:justify-end items-center reveal-right pt-10 lg:pt-0">
+                        <div class="absolute w-[280px] sm:w-[350px] lg:w-[450px] h-[280px] sm:h-[350px] lg:h-[450px] bg-black/10 blur-[60px] rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                        <img src="https://www.image2url.com/r2/default/images/1782571037969-5dcdb824-91fd-43d8-b539-cfe0894386ca.png" alt="Mascota Eqbito" class="w-full max-w-[320px] sm:max-w-[450px] lg:max-w-[600px] xl:max-w-[700px] h-auto object-contain relative z-20 drop-shadow-2xl levitate parallax-wrapper" data-speed="1.2">
                     </div>
                 </div>
             </section>
 
-            <!-- Stats Banner Negro Inferior -->
+            <!-- Stats Banner -->
             <div class="bg-brand-textDark relative z-20 -mt-[1px]">
                 <div class="max-w-[1200px] mx-auto px-6 py-12 lg:py-16 grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-white/10 text-center counter-box">
                     <div class="reveal">
