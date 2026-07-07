@@ -15,7 +15,7 @@
     </script>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="https://www.image2url.com/r2/default/images/1776611881108-f2727ca1-db6f-499c-861d-060b2c44c59a.png">
+    <link rel="icon" type="image/png" href="https://www.image2url.com/r2/default/images/1783443251633-c2d56297-30d4-4ac8-8d74-7e9f2b2d6681.png">
 
     <!-- Google Fonts: Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -68,7 +68,7 @@
             position: fixed; inset: 0; background: #FFFFFF; z-index: 99999; display: flex;
             justify-content: center; align-items: center; flex-direction: column; transition: opacity 0.6s ease, visibility 0.6s;
         }
-        .loader-logo { animation: pulseLogo 1.5s infinite alternate; filter: brightness(0); }
+        .loader-logo { animation: pulseLogo 1.5s infinite alternate; }
         @keyframes pulseLogo { 
             0% { transform: scale(0.95); opacity: 0.8; } 
             100% { transform: scale(1.05); opacity: 1; } 
@@ -78,10 +78,6 @@
         .page-view { display: none; opacity: 0; animation: fadeInPage 0.5s ease forwards; }
         .page-view.active-page { display: block; }
         @keyframes fadeInPage { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* Utilidades de Logo */
-        .logo-black { filter: brightness(0); }
-        .logo-white { filter: brightness(0) invert(1); }
 
         /* Cortes Diagonales Optimizados para Contraste */
         .clip-diagonal { 
@@ -135,7 +131,7 @@
 
     <!-- Preloader -->
     <div id="preloader">
-        <img src="https://www.image2url.com/r2/default/images/1776611881108-f2727ca1-db6f-499c-861d-060b2c44c59a.png" class="h-16 mb-6 logo-black loader-logo" alt="EQB Loading">
+        <img src="https://www.image2url.com/r2/default/images/1783443251633-c2d56297-30d4-4ac8-8d74-7e9f2b2d6681.png" class="h-16 md:h-20 mb-6 loader-logo object-contain" alt="EQB Loading">
         <div class="w-48 h-1 bg-brand-gray rounded-full overflow-hidden">
             <div class="h-full bg-brand-accent w-0 transition-all duration-[1000ms] ease-out" id="loader-bar"></div>
         </div>
@@ -146,7 +142,7 @@
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
             <div class="flex justify-between items-center h-12 transition-all duration-300">
                 <div class="flex-shrink-0 cursor-pointer" onclick="navigate('inicio')">
-                    <img class="h-8 md:h-12 w-auto object-contain logo-black transition-all duration-300" src="https://www.image2url.com/r2/default/images/1776611881108-f2727ca1-db6f-499c-861d-060b2c44c59a.png" alt="EQB STUDIO Logo">
+                    <img class="h-10 md:h-14 w-auto object-contain transition-all duration-300 drop-shadow-sm" src="https://www.image2url.com/r2/default/images/1783443251633-c2d56297-30d4-4ac8-8d74-7e9f2b2d6681.png" alt="EQB STUDIO Logo">
                 </div>
                 <div class="hidden md:flex space-x-8 items-center px-6 py-2">
                     <button onclick="navigate('inicio')" class="nav-link text-[13px] font-bold tracking-wide text-brand-textDark hover:text-brand-accent transition-colors uppercase">Inicio</button>
@@ -618,9 +614,9 @@
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8 mb-8 w-full">
                 
-                <!-- Logo Agrandado -->
-                <div class="text-center md:text-left shrink-0 z-10">
-                    <img class="h-16 sm:h-20 w-auto logo-white mx-auto md:mx-0 drop-shadow-lg" style="filter: brightness(0) invert(1);" src="https://www.image2url.com/r2/default/images/1776611881108-f2727ca1-db6f-499c-861d-060b2c44c59a.png" alt="EQB STUDIO Logo">
+                <!-- Logo Agrandado y Protegido para Contraste -->
+                <div class="text-center md:text-left shrink-0 z-10 bg-white p-3 sm:p-4 rounded-2xl shadow-lg border border-brand-gray/20 transition-transform hover:-translate-y-1">
+                    <img class="h-12 sm:h-16 w-auto mx-auto md:mx-0 object-contain" src="https://www.image2url.com/r2/default/images/1783443251633-c2d56297-30d4-4ac8-8d74-7e9f2b2d6681.png" alt="EQB STUDIO Logo">
                 </div>
                 
                 <!-- Marquesina de Servicios Responsiva -->
