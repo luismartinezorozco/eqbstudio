@@ -46,7 +46,7 @@
     </script>
 
     <style>
-        html { scroll-behavior: smooth; overflow-x: hidden; }
+        html { scroll-behavior: smooth; overflow-x: hidden; cursor: none; /* Ocultar cursor default en escritorio */ }
         
         body {
             font-family: 'Poppins', sans-serif;
@@ -61,57 +61,61 @@
             min-height: 100vh;
         }
 
-        /* Prevent horizontal overflow on all elements */
-        *, *::before, *::after {
-            box-sizing: border-box;
-            max-width: 100%;
+        /* Restaurar cursor en dispositivos móviles/táctiles */
+        @media (pointer: coarse) {
+            html { cursor: auto; }
+            .custom-cursor, .custom-cursor-dot { display: none !important; }
         }
+
+        /* Prevent horizontal overflow on all elements */
+        *, *::before, *::after { box-sizing: border-box; max-width: 100%; cursor: none; }
+        @media (pointer: coarse) { *, *::before, *::after { cursor: auto; } }
         
         /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: #F8F9FA; }
-        ::-webkit-scrollbar-thumb { background: #FF6A00; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #FF6A00; border-radius: 10px; border: 2px solid #F8F9FA; }
         ::-webkit-scrollbar-thumb:hover { background: #E65C00; }
 
         /* Hide scrollbar for mobile horizontal tabs */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
+        /* --- EFECTO WOW: Cursor Personalizado --- */
+        .custom-cursor { position: fixed; top: 0; left: 0; width: 36px; height: 36px; border-radius: 50%; border: 2px solid rgba(255, 106, 0, 0.5); pointer-events: none; z-index: 999999; transform: translate(-50%, -50%); transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), height 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s, border-color 0.3s; will-change: transform; }
+        .custom-cursor-dot { position: fixed; top: 0; left: 0; width: 8px; height: 8px; border-radius: 50%; background-color: #FF6A00; pointer-events: none; z-index: 1000000; transform: translate(-50%, -50%); will-change: transform; transition: opacity 0.3s, transform 0.1s; }
+        .custom-cursor.hovering { width: 60px; height: 60px; background-color: rgba(255, 106, 0, 0.1); border-color: transparent; }
+        
+        /* --- EFECTO WOW: Background Pattern (Dots) --- */
+        .bg-dots {
+            background-color: #F8F9FA;
+            background-image: radial-gradient(#d1d5db 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+        }
+
         /* Loader */
-        #preloader {
-            position: fixed; inset: 0; background: #FFFFFF; z-index: 99999; display: flex;
-            justify-content: center; align-items: center; flex-direction: column; transition: opacity 0.6s ease, visibility 0.6s;
-        }
+        #preloader { position: fixed; inset: 0; background: #FFFFFF; z-index: 9999999; display: flex; justify-content: center; align-items: center; flex-direction: column; transition: opacity 0.6s ease, visibility 0.6s; }
         .loader-logo { animation: pulseLogo 1.5s infinite alternate; }
-        @keyframes pulseLogo { 
-            0% { transform: scale(0.95); opacity: 0.8; } 
-            100% { transform: scale(1.05); opacity: 1; } 
-        }
+        @keyframes pulseLogo { 0% { transform: scale(0.95); opacity: 0.8; } 100% { transform: scale(1.05); opacity: 1; filter: drop-shadow(0 0 20px rgba(255,106,0,0.3)); } }
 
         /* Sistema Multi-Página Interno */
-        .page-view { display: none; opacity: 0; animation: fadeInPage 0.5s ease forwards; }
+        .page-view { display: none; opacity: 0; animation: fadeInPage 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .page-view.active-page { display: block; }
-        @keyframes fadeInPage { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInPage { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Cortes Diagonales Optimizados para Contraste */
-        .clip-diagonal { 
-            /* Desktop: Punto medio exacto al 50% para sincronizar con el grid de 2 columnas */
-            clip-path: polygon(55% 0, 100% 0, 100% 100%, 45% 100%); 
-        }
-        @media (max-width: 1024px) { 
-            .clip-diagonal { 
-                /* Mobile: Naranja inicia en la parte inferior protegiendo el 100% de la zona de texto superior */
-                clip-path: polygon(0 55%, 100% 35%, 100% 100%, 0% 100%); 
-            } 
-        }
+        .clip-diagonal { clip-path: polygon(55% 0, 100% 0, 100% 100%, 45% 100%); }
+        @media (max-width: 1024px) { .clip-diagonal { clip-path: polygon(0 55%, 100% 35%, 100% 100%, 0% 100%); } }
         .clip-diagonal-reverse { clip-path: polygon(0 0, 100% 10%, 100% 100%, 0 90%); }
 
         /* Navbar Scrolled */
-        .scrolled-nav { background-color: rgba(255, 255, 255, 0.98); border-bottom: 1px solid #E9ECEF; box-shadow: 0 4px 20px rgba(0,0,0,0.05); padding-top: 0.5rem; padding-bottom: 0.5rem; }
-        .nav-link.active { color: #FF6A00; position: relative; }
-        .nav-link.active::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 100%; height: 2px; background-color: #FF6A00; border-radius: 2px; transition: all 0.3s ease; }
+        .scrolled-nav { background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(233, 236, 239, 0.5); box-shadow: 0 10px 30px rgba(0,0,0,0.03); padding-top: 0.75rem; padding-bottom: 0.75rem; }
+        .nav-link { position: relative; }
+        .nav-link::after { content: ''; position: absolute; bottom: -4px; left: 50%; width: 0; height: 2px; background-color: #FF6A00; border-radius: 2px; transition: all 0.3s ease; transform: translateX(-50%); }
+        .nav-link:hover::after { width: 50%; }
+        .nav-link.active::after { width: 100%; }
 
-        /* Animaciones Reveal - Más Fluidas */
+        /* Animaciones Reveal */
         .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal-left { opacity: 0; transform: translateX(-40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal-right { opacity: 0; transform: translateX(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -119,167 +123,200 @@
         .delay-100 { transition-delay: 0.15s; } .delay-200 { transition-delay: 0.3s; }
 
         /* Efectos Parallax & Animaciones 3D */
-        .parallax-wrapper { transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); will-change: transform; }
-        .levitate { animation: levitate 5s ease-in-out infinite; }
-        .levitate-slow { animation: levitate 7s ease-in-out infinite reverse; }
-        @keyframes levitate { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        .png-mockup { filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15)); transition: transform 0.5s ease, filter 0.5s ease; }
-        .group:hover .png-mockup { transform: scale(1.05) translateY(-10px); filter: drop-shadow(0 30px 40px rgba(255,106,0,0.25)); }
+        .parallax-wrapper { transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); will-change: transform; }
+        .levitate { animation: levitate 6s ease-in-out infinite; }
+        .levitate-slow { animation: levitate 8s ease-in-out infinite reverse; }
+        @keyframes levitate { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .png-mockup { filter: drop-shadow(0 20px 30px rgba(0,0,0,0.15)); transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .group:hover .png-mockup { transform: scale(1.03) translateY(-15px) rotate(2deg); filter: drop-shadow(0 30px 40px rgba(255,106,0,0.3)); }
 
         /* Footer Marquee */
         .marquee-wrapper { display: flex; overflow: hidden; width: 100%; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
-        .marquee-track { display: flex; flex-shrink: 0; min-width: 100%; animation: scrollMarquee 25s linear infinite; }
+        .marquee-track { display: flex; flex-shrink: 0; min-width: 100%; animation: scrollMarquee 30s linear infinite; }
         @keyframes scrollMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* SPA Tabs Ajustados (Exacto como la imagen) */
-        .tab-btn { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); border-left: 4px solid transparent; }
-        .tab-btn.active { background-color: #FFFFFF; box-shadow: 0 10px 40px rgba(0,0,0,0.06); font-weight: 800; color: #111111; transform: translateX(5px); border-radius: 16px; border-left-color: transparent;}
-        .plan-card { opacity: 0; transform: scale(0.95); animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        /* SPA Tabs Ajustados */
+        .tab-btn { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); border-left: 4px solid transparent; }
+        .tab-btn.active { background-color: #FFFFFF; box-shadow: 0 10px 40px rgba(0,0,0,0.08); font-weight: 800; color: #111111; transform: translateX(8px); border-radius: 16px; border-left-color: transparent;}
+        .plan-card { opacity: 0; transform: scale(0.95); animation: popIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         @keyframes popIn { to { opacity: 1; transform: scale(1); } }
         
         .custom-select { background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23FF6A00' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 1rem center; background-repeat: no-repeat; background-size: 1.5em 1.5em; appearance: none; -webkit-appearance: none; }
         main { flex-grow: 1; }
+
+        /* Ocultar marca de agua de Elfsight */
+        a[href*="elfsight.com"], .eapps-link { display: none !important; opacity: 0 !important; pointer-events: none !important; }
     </style>
 </head>
 <body class="bg-brand-light">
 
+    <!-- Cursor Personalizado (Solo Desktop) -->
+    <div class="custom-cursor hidden lg:block" id="cursor-ring"></div>
+    <div class="custom-cursor-dot hidden lg:block" id="cursor-dot"></div>
+
     <!-- Preloader -->
     <div id="preloader">
-        <img src="https://www.image2url.com/r2/default/images/1783443251633-c2d56297-30d4-4ac8-8d74-7e9f2b2d6681.png" class="h-16 md:h-20 mb-6 loader-logo object-contain" alt="EQB Loading">
-        <div class="w-48 h-1 bg-brand-gray rounded-full overflow-hidden">
-            <div class="h-full bg-brand-accent w-0 transition-all duration-[1000ms] ease-out" id="loader-bar"></div>
+        <img src="https://www.image2url.com/r2/default/images/1783443251633-c2d56297-30d4-4ac8-8d74-7e9f2b2d6681.png" class="h-16 md:h-24 mb-8 loader-logo object-contain" alt="EQB Loading">
+        <div class="w-48 h-1.5 bg-brand-gray rounded-full overflow-hidden shadow-inner">
+            <div class="h-full bg-brand-accent w-0 transition-all duration-[1000ms] ease-out shadow-[0_0_10px_#FF6A00]" id="loader-bar"></div>
         </div>
     </div>
 
     <!-- Navbar -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-white/90 backdrop-blur-md py-3 sm:py-4 shadow-sm border-b border-brand-gray">
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-400 bg-white/80 backdrop-blur-md py-4 sm:py-5 border-b border-brand-gray/50">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 xl:px-12 w-full">
             <div class="flex justify-between items-center h-12 transition-all duration-300">
-                <div class="flex-shrink-0 cursor-pointer" onclick="navigate('inicio')">
-                    <img class="h-9 sm:h-12 md:h-14 w-auto object-contain transition-all duration-300 drop-shadow-sm" src="https://www.image2url.com/r2/default/images/1783443251633-c2d56297-30d4-4ac8-8d74-7e9f2b2d6681.png" alt="EQB STUDIO Logo">
+                <div class="flex-shrink-0 cursor-pointer interactive-el" onclick="navigate('inicio')">
+                    <img class="h-9 sm:h-12 md:h-14 w-auto object-contain transition-transform duration-300 hover:scale-105 drop-shadow-sm" src="https://www.image2url.com/r2/default/images/1783443251633-c2d56297-30d4-4ac8-8d74-7e9f2b2d6681.png" alt="EQB STUDIO Logo">
                 </div>
-                <div class="hidden md:flex space-x-8 items-center px-6 py-2">
-                    <button onclick="navigate('inicio')" class="nav-link text-[13px] font-bold tracking-wide text-brand-textDark hover:text-brand-accent transition-colors uppercase">Inicio</button>
-                    <button onclick="navigate('nosotros')" class="nav-link text-[13px] font-bold tracking-wide text-brand-textDark hover:text-brand-accent transition-colors uppercase">Nosotros</button>
-                    <button onclick="navigate('servicios')" class="nav-link text-[13px] font-bold tracking-wide text-brand-textDark hover:text-brand-accent transition-colors uppercase">Servicios</button>
-                    <button onclick="navigate('portafolio')" class="nav-link text-[13px] font-bold tracking-wide text-brand-textDark hover:text-brand-accent transition-colors uppercase">Portafolio</button>
+                <div class="hidden md:flex space-x-10 items-center px-6 py-2">
+                    <button onclick="navigate('inicio')" class="interactive-el nav-link text-[13px] font-bold tracking-widest text-brand-textDark hover:text-brand-accent transition-colors uppercase">Inicio</button>
+                    <button onclick="navigate('nosotros')" class="interactive-el nav-link text-[13px] font-bold tracking-widest text-brand-textDark hover:text-brand-accent transition-colors uppercase">Nosotros</button>
+                    <button onclick="navigate('servicios')" class="interactive-el nav-link text-[13px] font-bold tracking-widest text-brand-textDark hover:text-brand-accent transition-colors uppercase">Servicios</button>
+                    <button onclick="navigate('portafolio')" class="interactive-el nav-link text-[13px] font-bold tracking-widest text-brand-textDark hover:text-brand-accent transition-colors uppercase">Portafolio</button>
                 </div>
                 <div class="flex items-center gap-4">
-                    <a href="https://eqbstudio.vercel.app/cotizar" target="_blank" rel="noopener noreferrer" class="hidden md:inline-flex bg-brand-accent text-white px-6 py-2.5 text-xs font-black tracking-widest hover:bg-brand-accentHover transition-transform hover:-translate-y-1 uppercase rounded-full shadow-lg shadow-brand-accent/40">
+                    <button onclick="navigate('contacto'); setTimeout(() => document.getElementById('nombre').focus(), 400);" class="interactive-el hidden md:inline-flex bg-brand-accent text-white px-7 py-3 text-xs font-black tracking-widest hover:bg-brand-accentHover transition-all hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(255,106,0,0.4)] uppercase rounded-full shadow-lg shadow-brand-accent/30">
                         Cotizar Proyecto
-                    </a>
-                    <button id="mobile-menu-btn" class="md:hidden text-brand-textDark p-2 bg-brand-light border border-brand-gray rounded-full shadow-sm transition-transform active:scale-95">
+                    </button>
+                    <button id="mobile-menu-btn" class="interactive-el md:hidden text-brand-textDark p-2.5 bg-white border border-brand-gray/50 rounded-full shadow-md transition-transform active:scale-90">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"></path></svg>
                     </button>
                 </div>
             </div>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 w-full bg-white border-b border-brand-gray shadow-xl transition-all duration-300">
-            <div class="flex flex-col p-6 space-y-2 text-center">
-                <button onclick="navigate('inicio')" class="mobile-nav-link text-brand-textDark text-sm uppercase tracking-widest font-black py-3 border-b border-brand-gray">Inicio</button>
-                <button onclick="navigate('nosotros')" class="mobile-nav-link text-brand-textDark text-sm uppercase tracking-widest font-black py-3 border-b border-brand-gray">Nosotros</button>
-                <button onclick="navigate('servicios')" class="mobile-nav-link text-brand-textDark text-sm uppercase tracking-widest font-black py-3 border-b border-brand-gray">Servicios</button>
-                <button onclick="navigate('portafolio')" class="mobile-nav-link text-brand-textDark text-sm uppercase tracking-widest font-black py-3 border-b border-brand-gray">Portafolio</button>
-                <a href="https://eqbstudio.vercel.app/cotizar" target="_blank" rel="noopener noreferrer" class="bg-brand-accent text-white py-4 text-xs uppercase tracking-widest font-black rounded-md mt-4 shadow-lg shadow-brand-accent/30 flex justify-center items-center hover:bg-brand-accentHover transition-colors">Cotizar Proyecto</a>
+        
+        <!-- Mobile Menu Flotante (Glassmorphism) -->
+        <div id="mobile-menu" class="hidden md:hidden absolute top-[110%] left-4 right-4 bg-white/95 backdrop-blur-xl border border-brand-gray/50 shadow-2xl rounded-3xl transition-all duration-300 overflow-hidden">
+            <div class="flex flex-col p-4 space-y-1 text-center">
+                <button onclick="navigate('inicio')" class="mobile-nav-link text-brand-textDark text-sm uppercase tracking-widest font-black py-4 rounded-2xl hover:bg-brand-light transition-colors">Inicio</button>
+                <button onclick="navigate('nosotros')" class="mobile-nav-link text-brand-textDark text-sm uppercase tracking-widest font-black py-4 rounded-2xl hover:bg-brand-light transition-colors">Nosotros</button>
+                <button onclick="navigate('servicios')" class="mobile-nav-link text-brand-textDark text-sm uppercase tracking-widest font-black py-4 rounded-2xl hover:bg-brand-light transition-colors">Servicios</button>
+                <button onclick="navigate('portafolio')" class="mobile-nav-link text-brand-textDark text-sm uppercase tracking-widest font-black py-4 rounded-2xl hover:bg-brand-light transition-colors">Portafolio</button>
+                <button onclick="navigate('contacto'); setTimeout(() => document.getElementById('nombre').focus(), 400);" class="interactive-el w-full bg-brand-accent text-white py-4 text-xs uppercase tracking-widest font-black rounded-2xl mt-2 shadow-lg shadow-brand-accent/30 flex justify-center items-center hover:bg-brand-accentHover transition-colors">Cotizar Proyecto</button>
             </div>
         </div>
     </nav>
 
     <!-- Main Content Area -->
-    <main class="pt-16 sm:pt-20 lg:pt-24 w-full overflow-x-hidden">
+    <main class="pt-16 sm:pt-20 w-full overflow-x-hidden">
 
         <!-- ================= PÁGINA: INICIO ================= -->
         <div id="page-inicio" class="page-view active-page">
-            <section class="relative lg:min-h-[90vh] flex items-center bg-white overflow-hidden py-12 sm:py-16 lg:py-0">
-                <!-- Fondo Naranja protegido del texto mediante clip-path sincronizado al 50% -->
-                <div class="absolute inset-0 z-0 bg-brand-accent clip-diagonal hidden lg:block"></div>
+            <section class="relative lg:min-h-screen flex items-center bg-white overflow-hidden py-16 lg:py-0">
+                <!-- Luz ambiental sutil naranja atrás -->
+                <div class="absolute -top-40 -left-40 w-96 h-96 bg-brand-accent/10 blur-[120px] rounded-full pointer-events-none"></div>
+
+                <div class="absolute inset-0 z-0 bg-brand-accent clip-diagonal hidden lg:block shadow-2xl"></div>
                 <div class="absolute inset-0 z-0 bg-brand-accent clip-diagonal lg:hidden opacity-95"></div>
 
-                <!-- Grid de 2 columnas exactas (50/50) para que el texto NUNCA cruce al área naranja -->
-                <div class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+                <div class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center mt-6 lg:mt-0">
                     
-                    <!-- Left Text Content -->
-                    <div class="text-center lg:text-left reveal-left">
-                        <span class="inline-block py-1.5 px-4 bg-brand-light border border-brand-gray rounded-full text-[10px] sm:text-xs font-black text-brand-accent uppercase tracking-widest mb-4 sm:mb-6 shadow-sm">
-                            Desarrollo Digital & Creativo
+                    <div class="text-center lg:text-left reveal-left pt-6 lg:py-0 relative z-20">
+                        <span class="inline-block py-2 px-5 bg-brand-light/80 backdrop-blur-sm border border-brand-gray rounded-full text-[10px] sm:text-xs font-black text-brand-accent uppercase tracking-[0.2em] mb-6 shadow-sm">
+                            Agencia Creativa Digital
                         </span>
-                        <!-- Tipografía fluida calibrada para evitar desbordamientos en móviles pequeños (320px-480px) -->
-                        <h1 class="text-[2.5rem] sm:text-5xl lg:text-[4rem] xl:text-[5.5rem] font-black leading-[1.08] mb-4 sm:mb-6 text-brand-textDark tracking-tighter break-words">
+                        <h1 class="text-[2.75rem] leading-[1.05] sm:text-6xl lg:text-[4.25rem] xl:text-[5.5rem] font-black mb-6 text-brand-textDark tracking-tighter drop-shadow-sm">
                             MARCAS CON <br>
                             <span class="text-brand-accent">COHERENCIA</span> <br>
                             VISUAL.
                         </h1>
-                        <p class="text-sm sm:text-base lg:text-lg max-w-md mx-auto lg:mx-0 mb-8 sm:mb-10 font-semibold text-brand-textSoft px-2 sm:px-0">
-                            Diseñamos con propósito e innovamos con pasión. Impulsamos tu negocio con estrategias que dominan el mercado digital.
+                        <p class="text-base sm:text-lg max-w-lg mx-auto lg:mx-0 mb-10 font-semibold text-brand-textSoft leading-relaxed">
+                            Diseñamos con propósito e innovamos con pasión. Impulsamos tu negocio con estrategias que dominan el mercado digital actual.
                         </p>
-                        <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-3 sm:gap-4 w-full px-4 sm:px-0">
-                            <button onclick="navigate('portafolio')" class="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-brand-textDark text-white text-xs sm:text-sm font-black tracking-widest uppercase hover:bg-black transition-transform hover:-translate-y-1 rounded-full shadow-xl flex items-center justify-center gap-2">
-                                Ver Proyectos
+                        <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 px-4 sm:px-0">
+                            <button onclick="navigate('portafolio')" class="interactive-el w-full sm:w-auto px-8 py-4 bg-brand-textDark text-white text-xs sm:text-sm font-black tracking-widest uppercase hover:bg-black transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(17,17,17,0.3)] rounded-full flex items-center justify-center gap-3">
+                                Ver Proyectos <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
                             </button>
-                            <button onclick="navigate('contacto')" class="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 bg-white border-2 border-brand-gray text-brand-textDark text-xs sm:text-sm font-black tracking-widest uppercase hover:border-brand-textDark transition-all rounded-full flex items-center justify-center">
+                            <button onclick="navigate('contacto')" class="interactive-el w-full sm:w-auto px-8 py-4 bg-white/80 backdrop-blur-md border-2 border-brand-gray text-brand-textDark text-xs sm:text-sm font-black tracking-widest uppercase hover:border-brand-textDark transition-all duration-300 rounded-full flex items-center justify-center hover:bg-brand-light">
                                 Contáctanos
                             </button>
                         </div>
                     </div>
 
-                    <!-- Right Image Content -->
-                    <div class="relative flex justify-center lg:justify-end items-center reveal-right pt-6 lg:pt-0">
-                        <div class="absolute w-[240px] sm:w-[350px] lg:w-[450px] h-[240px] sm:h-[350px] lg:h-[450px] bg-black/10 blur-[50px] rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
-                        <img src="https://www.image2url.com/r2/default/images/1782571037969-5dcdb824-91fd-43d8-b539-cfe0894386ca.png" alt="Mascota Eqbito" class="w-full max-w-[260px] sm:max-w-[400px] lg:max-w-[600px] xl:max-w-[700px] h-auto object-contain relative z-20 drop-shadow-2xl levitate parallax-wrapper" data-speed="1.2">
+                    <div class="relative flex justify-center lg:justify-end items-center reveal-right pt-10 lg:pt-0 pointer-events-none">
+                        <!-- Brillo dinámico detrás de mascota -->
+                        <div class="absolute w-[280px] sm:w-[400px] h-[280px] sm:h-[400px] bg-white/20 blur-[80px] rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                        <img src="https://www.image2url.com/r2/default/images/1782571037969-5dcdb824-91fd-43d8-b539-cfe0894386ca.png" alt="Mascota Eqbito" class="w-full max-w-[320px] sm:max-w-[450px] lg:max-w-[700px] h-auto object-contain relative z-20 drop-shadow-[0_30px_50px_rgba(0,0,0,0.3)] levitate parallax-wrapper" data-speed="1.3">
                     </div>
                 </div>
             </section>
 
             <!-- Stats Banner -->
             <div class="bg-brand-textDark relative z-20 -mt-[1px]">
-                <div class="max-w-[1200px] mx-auto px-6 py-12 lg:py-16 grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-white/10 text-center counter-box">
+                <!-- Luces de acento interior -->
+                <div class="absolute inset-0 bg-gradient-to-r from-brand-accent/5 via-transparent to-brand-accent/5 pointer-events-none"></div>
+                <div class="max-w-[1200px] mx-auto px-6 py-12 lg:py-16 grid grid-cols-1 md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-white/10 text-center counter-box relative z-10">
                     <div class="reveal">
-                        <h4 class="text-5xl lg:text-7xl font-black text-white mb-2">+<span class="counter" data-target="200">0</span></h4>
-                        <p class="text-xs text-brand-accent font-black uppercase tracking-widest">Diseños Gráficos</p>
+                        <h4 class="text-5xl lg:text-7xl font-black text-white mb-2 drop-shadow-md">+<span class="counter" data-target="200">0</span></h4>
+                        <p class="text-xs text-brand-accent font-black uppercase tracking-[0.2em]">Diseños Gráficos</p>
                     </div>
                     <div class="pt-8 md:pt-0 reveal delay-100">
-                        <h4 class="text-5xl lg:text-7xl font-black text-white mb-2">+<span class="counter" data-target="50">0</span></h4>
-                        <p class="text-xs text-brand-accent font-black uppercase tracking-widest">Páginas Realizadas</p>
+                        <h4 class="text-5xl lg:text-7xl font-black text-white mb-2 drop-shadow-md">+<span class="counter" data-target="50">0</span></h4>
+                        <p class="text-xs text-brand-accent font-black uppercase tracking-[0.2em]">Páginas Realizadas</p>
                     </div>
                     <div class="pt-8 md:pt-0 reveal delay-200">
-                        <h4 class="text-5xl lg:text-7xl font-black text-white mb-2">+<span class="counter" data-target="3">0</span></h4>
-                        <p class="text-xs text-brand-accent font-black uppercase tracking-widest">Años de Experiencia</p>
+                        <h4 class="text-5xl lg:text-7xl font-black text-white mb-2 drop-shadow-md">+<span class="counter" data-target="3">0</span></h4>
+                        <p class="text-xs text-brand-accent font-black uppercase tracking-[0.2em]">Años de Experiencia</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Testimonios agregados como valor estratégico -->
-            <section class="py-20 lg:py-32 bg-brand-light relative overflow-hidden border-b border-brand-gray">
+            <!-- Testimonios (Textura bg-dots agregada) -->
+            <section class="py-20 lg:py-32 bg-dots relative overflow-hidden border-b border-brand-gray/50">
+                <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-white to-transparent pointer-events-none"></div>
                 <div class="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
                     <div class="text-center mb-16 reveal">
-                        <h2 class="text-sm font-black tracking-[0.2em] text-brand-accent uppercase mb-2">Lo que dicen de nosotros</h2>
+                        <h2 class="text-xs sm:text-sm font-black tracking-[0.25em] text-brand-accent uppercase mb-3">Lo que dicen de nosotros</h2>
                         <h3 class="text-4xl lg:text-5xl font-black text-brand-textDark uppercase tracking-tight">CLIENTES SATISFECHOS</h3>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="bg-white border-2 border-brand-gray p-8 rounded-3xl reveal hover:-translate-y-2 transition-transform duration-300 shadow-md flex flex-col">
-                            <svg class="w-10 h-10 text-brand-accent/20 mb-6" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-                            <p class="text-brand-textSoft font-medium mb-8 italic flex-grow">"EQB Studio transformó por completo nuestra presencia online. El diseño de nuestra web superó todas las expectativas y el soporte post-lanzamiento fue impecable."</p>
+                        <div class="bg-white/80 backdrop-blur-md border border-brand-gray/60 p-8 rounded-[30px] reveal hover:-translate-y-2 transition-all duration-300 shadow-xl shadow-brand-textDark/5 flex flex-col group interactive-el">
+                            <svg class="w-10 h-10 text-brand-accent/20 mb-6 group-hover:text-brand-accent transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                            <p class="text-brand-textSoft font-medium mb-8 italic flex-grow leading-relaxed">"EQB Studio transformó por completo nuestra presencia online. El diseño de nuestra web superó todas las expectativas y el soporte post-lanzamiento fue impecable."</p>
                             <div class="flex items-center gap-4 mt-auto">
                                 <div class="w-12 h-12 bg-brand-textDark rounded-full flex items-center justify-center text-white font-black text-lg shrink-0">CM</div>
-                                <div><h5 class="font-black text-brand-textDark text-sm">Carlos Mendoza</h5><p class="text-[10px] text-brand-accent font-black uppercase tracking-widest">CEO, TechFlow</p></div>
+                                <div><h5 class="font-black text-brand-textDark text-sm">Carlos Mendoza</h5><p class="text-[10px] text-brand-accent font-black uppercase tracking-widest mt-0.5">CEO, TechFlow</p></div>
                             </div>
                         </div>
-                        <div class="bg-white border-2 border-brand-gray p-8 rounded-3xl reveal delay-100 hover:-translate-y-2 transition-transform duration-300 shadow-md flex flex-col">
-                            <svg class="w-10 h-10 text-brand-accent/20 mb-6" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-                            <p class="text-brand-textSoft font-medium mb-8 italic flex-grow">"Buscábamos un rediseño de marca que reflejara nuestros nuevos valores corporativos. El equipo logró capturar nuestra esencia a la perfección. 100% recomendados."</p>
+                        <div class="bg-white/80 backdrop-blur-md border border-brand-gray/60 p-8 rounded-[30px] reveal delay-100 hover:-translate-y-2 transition-all duration-300 shadow-xl shadow-brand-textDark/5 flex flex-col group interactive-el">
+                            <svg class="w-10 h-10 text-brand-accent/20 mb-6 group-hover:text-brand-accent transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                            <p class="text-brand-textSoft font-medium mb-8 italic flex-grow leading-relaxed">"Buscábamos un rediseño de marca que reflejara nuestros nuevos valores corporativos. El equipo logró capturar nuestra esencia a la perfección. 100% recomendados."</p>
                             <div class="flex items-center gap-4 mt-auto">
-                                <div class="w-12 h-12 bg-brand-accent rounded-full flex items-center justify-center text-white font-black text-lg shrink-0">LG</div>
-                                <div><h5 class="font-black text-brand-textDark text-sm">Laura Gómez</h5><p class="text-[10px] text-brand-accent font-black uppercase tracking-widest">Dir. Creativa, Lumina</p></div>
+                                <div class="w-12 h-12 bg-brand-accent rounded-full flex items-center justify-center text-white font-black text-lg shrink-0 shadow-md">LG</div>
+                                <div><h5 class="font-black text-brand-textDark text-sm">Laura Gómez</h5><p class="text-[10px] text-brand-accent font-black uppercase tracking-widest mt-0.5">Dir. Creativa, Lumina</p></div>
                             </div>
                         </div>
-                        <div class="bg-white border-2 border-brand-gray p-8 rounded-3xl reveal delay-200 hover:-translate-y-2 transition-transform duration-300 shadow-md flex flex-col">
-                            <svg class="w-10 h-10 text-brand-accent/20 mb-6" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
-                            <p class="text-brand-textSoft font-medium mb-8 italic flex-grow">"La entrega fue rápida y el catálogo digital interactivo nos ha ayudado a cerrar ventas mucho más rápido a través de WhatsApp. Un excelente servicio integral."</p>
+                        <div class="bg-white/80 backdrop-blur-md border border-brand-gray/60 p-8 rounded-[30px] reveal delay-200 hover:-translate-y-2 transition-all duration-300 shadow-xl shadow-brand-textDark/5 flex flex-col group interactive-el">
+                            <svg class="w-10 h-10 text-brand-accent/20 mb-6 group-hover:text-brand-accent transition-colors" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                            <p class="text-brand-textSoft font-medium mb-8 italic flex-grow leading-relaxed">"La entrega fue rápida y el catálogo digital interactivo nos ha ayudado a cerrar ventas mucho más rápido a través de WhatsApp. Un excelente servicio integral."</p>
                             <div class="flex items-center gap-4 mt-auto">
                                 <div class="w-12 h-12 bg-brand-textDark rounded-full flex items-center justify-center text-white font-black text-lg shrink-0">AF</div>
-                                <div><h5 class="font-black text-brand-textDark text-sm">Andrés Forero</h5><p class="text-[10px] text-brand-accent font-black uppercase tracking-widest">Fundador, EcoStore</p></div>
+                                <div><h5 class="font-black text-brand-textDark text-sm">Andrés Forero</h5><p class="text-[10px] text-brand-accent font-black uppercase tracking-widest mt-0.5">Fundador, EcoStore</p></div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Instagram Feed -->
+            <section class="py-20 lg:py-24 bg-white relative overflow-hidden">
+                <div class="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
+                    <div class="text-center mb-12 reveal">
+                        <h2 class="text-xs sm:text-sm font-black tracking-[0.25em] text-brand-accent uppercase mb-3">Últimos Proyectos</h2>
+                        <h3 class="text-4xl lg:text-5xl font-black text-brand-textDark uppercase tracking-tight">SÍGUENOS EN INSTAGRAM</h3>
+                    </div>
+                    
+                    <div class="reveal delay-100 w-full rounded-[30px] overflow-hidden shadow-2xl shadow-brand-textDark/10 border border-brand-gray/50 bg-brand-light p-2 sm:p-4">
+                        <script src="https://elfsightcdn.com/platform.js" async></script>
+                        <div class="elfsight-app-bc6f760e-4796-43eb-a7d6-22536e6cfcff" data-elfsight-app-lazy></div>
+                    </div>
+                    
+                    <div class="mt-12 text-center reveal delay-200">
+                        <a href="https://www.instagram.com/eqbstudio/" target="_blank" class="interactive-el inline-flex items-center justify-center px-10 py-4 bg-brand-textDark text-white text-xs sm:text-sm font-black tracking-[0.2em] uppercase hover:bg-brand-accent transition-all duration-300 rounded-full shadow-[0_10px_30px_rgba(17,17,17,0.2)] hover:shadow-[0_10px_30px_rgba(255,106,0,0.4)] hover:-translate-y-1 gap-3">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                            @eqbstudio
+                        </a>
                     </div>
                 </div>
             </section>
@@ -287,95 +324,88 @@
 
         <!-- ================= PÁGINA: NOSOTROS ================= -->
         <div id="page-nosotros" class="page-view">
-            <section class="py-20 lg:py-28 bg-white relative overflow-hidden border-b border-brand-gray">
+            <section class="py-20 lg:py-28 bg-white relative overflow-hidden">
                 <div class="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
                     
-                    <!-- Párrafo cabecera idéntico a la imagen -->
-                    <p class="text-brand-textSoft font-bold max-w-4xl text-lg sm:text-xl lg:text-2xl mb-16 reveal">
+                    <p class="text-brand-textSoft font-bold max-w-4xl text-lg sm:text-xl lg:text-2xl mb-20 reveal leading-relaxed border-l-4 border-brand-accent pl-6">
                         No creamos elementos aislados; desarrollamos ecosistemas visuales y digitales listos para operar y generar valor real a su empresa.
                     </p>
 
-                    <!-- Layout 2 columnas idéntico a la imagen -->
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-                        
-                        <!-- Columna Izquierda: Tarjetas de Beneficios (Apiladas verticalmente) -->
-                        <div class="lg:col-span-7 flex flex-col gap-5">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8 items-center">
+                        <div class="lg:col-span-7 flex flex-col gap-6">
                             
-                            <!-- Card 1 -->
-                            <div class="bg-brand-light border border-brand-gray/60 p-6 sm:p-8 rounded-[20px] reveal hover:shadow-lg transition-all duration-300 flex items-start gap-6">
-                                <div class="w-14 h-14 bg-white shadow-sm rounded-full flex items-center justify-center shrink-0 text-brand-accent">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                            <div class="bg-brand-light border border-brand-gray/50 p-8 sm:p-10 rounded-[30px] reveal hover:shadow-2xl hover:shadow-brand-accent/10 transition-all duration-400 flex flex-col sm:flex-row items-start sm:items-center gap-6 group interactive-el">
+                                <div class="w-16 h-16 bg-white shadow-md rounded-full flex items-center justify-center shrink-0 text-brand-accent group-hover:scale-110 transition-transform">
+                                    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                                 </div>
                                 <div>
                                     <h4 class="text-xl sm:text-2xl font-black text-brand-textDark mb-2">Atención Cercana</h4>
-                                    <p class="text-brand-textSoft text-sm font-medium leading-relaxed">Atención personalizada y dedicada para cada cliente durante todo el proceso creativo.</p>
+                                    <p class="text-brand-textSoft text-sm sm:text-base font-medium leading-relaxed">Atención personalizada y dedicada para cada cliente durante todo el proceso creativo.</p>
                                 </div>
                             </div>
 
-                            <!-- Card 2 -->
-                            <div class="bg-brand-light border border-brand-gray/60 p-6 sm:p-8 rounded-[20px] reveal delay-100 hover:shadow-lg transition-all duration-300 flex items-start gap-6">
-                                <div class="w-14 h-14 bg-white shadow-sm rounded-full flex items-center justify-center shrink-0 text-brand-accent">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                            <div class="bg-brand-light border border-brand-gray/50 p-8 sm:p-10 rounded-[30px] reveal delay-100 hover:shadow-2xl hover:shadow-brand-accent/10 transition-all duration-400 flex flex-col sm:flex-row items-start sm:items-center gap-6 group interactive-el">
+                                <div class="w-16 h-16 bg-white shadow-md rounded-full flex items-center justify-center shrink-0 text-brand-accent group-hover:scale-110 transition-transform">
+                                    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
                                 </div>
                                 <div>
                                     <h4 class="text-xl sm:text-2xl font-black text-brand-textDark mb-2">Diseños Modernos</h4>
-                                    <p class="text-brand-textSoft text-sm font-medium leading-relaxed">Creaciones funcionales y estéticamente atractivas, adaptadas a las tendencias actuales.</p>
+                                    <p class="text-brand-textSoft text-sm sm:text-base font-medium leading-relaxed">Creaciones funcionales y estéticamente atractivas, adaptadas a las tendencias actuales.</p>
                                 </div>
                             </div>
 
-                            <!-- Card 3 -->
-                            <div class="bg-brand-light border border-brand-gray/60 p-6 sm:p-8 rounded-[20px] reveal delay-200 hover:shadow-lg transition-all duration-300 flex items-start gap-6">
-                                <div class="w-14 h-14 bg-white shadow-sm rounded-full flex items-center justify-center shrink-0 text-brand-accent">
-                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
+                            <div class="bg-brand-light border border-brand-gray/50 p-8 sm:p-10 rounded-[30px] reveal delay-200 hover:shadow-2xl hover:shadow-brand-accent/10 transition-all duration-400 flex flex-col sm:flex-row items-start sm:items-center gap-6 group interactive-el">
+                                <div class="w-16 h-16 bg-white shadow-md rounded-full flex items-center justify-center shrink-0 text-brand-accent group-hover:scale-110 transition-transform">
+                                    <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
                                 </div>
                                 <div>
                                     <h4 class="text-xl sm:text-2xl font-black text-brand-textDark mb-2">Entrega Profesional</h4>
-                                    <p class="text-brand-textSoft text-sm font-medium leading-relaxed">Cumplimos rigurosamente con los plazos y los altos estándares de calidad establecidos.</p>
+                                    <p class="text-brand-textSoft text-sm sm:text-base font-medium leading-relaxed">Cumplimos rigurosamente con los plazos y los altos estándares de calidad establecidos.</p>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- Columna Derecha: Imagen interactiva de Zorro -->
-                        <div class="lg:col-span-5 relative flex justify-center reveal-right pt-10 lg:pt-0">
-                            <!-- Destello de fondo -->
-                            <div class="absolute w-[300px] h-[300px] bg-brand-accent/5 blur-[80px] rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-                            <!-- Usando la imagen 3D genérica del zorro como fallback interactivo -->
-                            <img src="https://www.image2url.com/r2/default/images/1782663913038-eaa39201-f81e-43d7-aed0-ef120710283c.png" alt="Nosotros EQB" class="w-full max-w-[320px] sm:max-w-[420px] lg:max-w-[550px] object-contain relative z-10 parallax-wrapper levitate" data-speed="1.5">
+                        <div class="lg:col-span-5 relative flex justify-center reveal-right pt-10 lg:pt-0 pointer-events-none">
+                            <div class="absolute w-[350px] h-[350px] bg-brand-accent/10 blur-[100px] rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"></div>
+                            <img src="https://www.image2url.com/r2/default/images/1782663913038-eaa39201-f81e-43d7-aed0-ef120710283c.png" alt="Nosotros EQB" class="w-full max-w-[380px] sm:max-w-[480px] lg:max-w-[650px] object-contain relative z-10 parallax-wrapper levitate drop-shadow-[0_20px_40px_rgba(0,0,0,0.2)]" data-speed="1.8">
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Metodología - Proceso Estratégico (Valor Agregado) -->
-            <section class="py-20 lg:py-32 bg-brand-textDark relative overflow-hidden">
-                <div class="absolute right-0 top-0 w-1/3 h-full bg-brand-accent opacity-10 blur-[100px] pointer-events-none"></div>
+            <!-- Metodología (Fondo oscuro con glow) -->
+            <section class="py-24 lg:py-32 bg-brand-textDark relative overflow-hidden">
+                <div class="absolute -top-40 right-0 w-1/2 h-full bg-brand-accent/10 blur-[150px] pointer-events-none"></div>
+                <div class="absolute -bottom-40 left-0 w-1/2 h-full bg-brand-accent/10 blur-[150px] pointer-events-none"></div>
+                
                 <div class="max-w-[1400px] mx-auto px-6 lg:px-12 relative z-10">
-                    <div class="text-center mb-20 reveal">
-                        <h2 class="text-sm font-black tracking-[0.2em] text-brand-accent uppercase mb-2">Metodología Comprobada</h2>
+                    <div class="text-center mb-24 reveal">
+                        <h2 class="text-xs sm:text-sm font-black tracking-[0.25em] text-brand-accent uppercase mb-3">Metodología Comprobada</h2>
                         <h3 class="text-4xl lg:text-5xl font-black text-white uppercase tracking-tight">NUESTRO PROCESO</h3>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-6 relative">
-                        <div class="hidden md:block absolute top-10 left-[12%] right-[12%] h-[2px] bg-white/10 z-0"></div>
-                        <div class="relative z-10 text-center reveal">
-                            <div class="w-20 h-20 mx-auto bg-brand-textDark border-4 border-brand-accent text-brand-accent rounded-full flex items-center justify-center text-3xl font-black mb-6 shadow-[0_0_20px_rgba(255,106,0,0.3)]">1</div>
-                            <h4 class="text-xl font-black text-white mb-3">Descubrimiento</h4>
-                            <p class="text-brand-gray text-sm font-medium">Analizamos tu marca, objetivos y competencia para trazar una ruta clara.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-16 md:gap-8 relative">
+                        <div class="hidden md:block absolute top-12 left-[12%] right-[12%] h-1 bg-white/5 rounded-full z-0"></div>
+                        
+                        <div class="relative z-10 text-center reveal group interactive-el">
+                            <div class="w-24 h-24 mx-auto bg-brand-textDark border-4 border-brand-accent text-brand-accent rounded-full flex items-center justify-center text-3xl font-black mb-8 shadow-[0_0_30px_rgba(255,106,0,0.4)] group-hover:scale-110 transition-transform duration-300">1</div>
+                            <h4 class="text-xl font-black text-white mb-4 tracking-wide">Descubrimiento</h4>
+                            <p class="text-brand-gray/80 text-sm font-medium leading-relaxed px-4">Analizamos tu marca, objetivos y competencia para trazar una ruta clara.</p>
                         </div>
-                        <div class="relative z-10 text-center reveal delay-100">
-                            <div class="w-20 h-20 mx-auto bg-brand-textDark border-4 border-white/20 text-white rounded-full flex items-center justify-center text-3xl font-black mb-6 hover:border-brand-accent transition-colors duration-300">2</div>
-                            <h4 class="text-xl font-black text-white mb-3">Estrategia</h4>
-                            <p class="text-brand-gray text-sm font-medium">Presentamos conceptos visuales y arquitectura funcional del proyecto.</p>
+                        <div class="relative z-10 text-center reveal delay-100 group interactive-el">
+                            <div class="w-24 h-24 mx-auto bg-brand-textDark border-4 border-white/10 text-white rounded-full flex items-center justify-center text-3xl font-black mb-8 group-hover:border-brand-accent group-hover:text-brand-accent group-hover:shadow-[0_0_30px_rgba(255,106,0,0.4)] group-hover:scale-110 transition-all duration-300">2</div>
+                            <h4 class="text-xl font-black text-white mb-4 tracking-wide">Estrategia</h4>
+                            <p class="text-brand-gray/80 text-sm font-medium leading-relaxed px-4">Presentamos conceptos visuales y arquitectura funcional del proyecto.</p>
                         </div>
-                        <div class="relative z-10 text-center reveal delay-200">
-                            <div class="w-20 h-20 mx-auto bg-brand-textDark border-4 border-white/20 text-white rounded-full flex items-center justify-center text-3xl font-black mb-6 hover:border-brand-accent transition-colors duration-300">3</div>
-                            <h4 class="text-xl font-black text-white mb-3">Desarrollo</h4>
-                            <p class="text-brand-gray text-sm font-medium">Damos vida al proyecto con diseño moderno, iteraciones y optimización.</p>
+                        <div class="relative z-10 text-center reveal delay-200 group interactive-el">
+                            <div class="w-24 h-24 mx-auto bg-brand-textDark border-4 border-white/10 text-white rounded-full flex items-center justify-center text-3xl font-black mb-8 group-hover:border-brand-accent group-hover:text-brand-accent group-hover:shadow-[0_0_30px_rgba(255,106,0,0.4)] group-hover:scale-110 transition-all duration-300">3</div>
+                            <h4 class="text-xl font-black text-white mb-4 tracking-wide">Desarrollo</h4>
+                            <p class="text-brand-gray/80 text-sm font-medium leading-relaxed px-4">Damos vida al proyecto con diseño moderno, iteraciones y optimización.</p>
                         </div>
-                        <div class="relative z-10 text-center reveal delay-300">
-                            <div class="w-20 h-20 mx-auto bg-brand-textDark border-4 border-white/20 text-white rounded-full flex items-center justify-center text-3xl font-black mb-6 hover:border-brand-accent transition-colors duration-300">4</div>
-                            <h4 class="text-xl font-black text-white mb-3">Lanzamiento</h4>
-                            <p class="text-brand-gray text-sm font-medium">Realizamos pruebas finales y entregamos tu proyecto listo para impactar.</p>
+                        <div class="relative z-10 text-center reveal delay-300 group interactive-el">
+                            <div class="w-24 h-24 mx-auto bg-brand-textDark border-4 border-white/10 text-white rounded-full flex items-center justify-center text-3xl font-black mb-8 group-hover:border-brand-accent group-hover:text-brand-accent group-hover:shadow-[0_0_30px_rgba(255,106,0,0.4)] group-hover:scale-110 transition-all duration-300">4</div>
+                            <h4 class="text-xl font-black text-white mb-4 tracking-wide">Lanzamiento</h4>
+                            <p class="text-brand-gray/80 text-sm font-medium leading-relaxed px-4">Realizamos pruebas finales y entregamos tu proyecto listo para impactar.</p>
                         </div>
                     </div>
                 </div>
@@ -384,58 +414,51 @@
 
         <!-- ================= PÁGINA: SERVICIOS ================= -->
         <div id="page-servicios" class="page-view">
-            <section class="py-16 lg:py-28 bg-brand-light relative">
+            <section class="py-16 lg:py-28 bg-dots relative border-b border-brand-gray/50">
                 
-                <!-- Extra Interactive Image Floating (from new links) -->
-                <div class="absolute right-[0%] top-[10%] opacity-20 pointer-events-none parallax-wrapper hidden sm:block" data-speed="0.8">
-                    <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1782664134/no_bg_image_3_fozthi.png" alt="Decoración 3D" class="w-[200px] md:w-[500px] levitate-slow blur-[1px]">
+                <div class="absolute right-[0%] top-[10%] opacity-40 pointer-events-none parallax-wrapper hidden sm:block drop-shadow-2xl" data-speed="1.2">
+                    <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1782664134/no_bg_image_3_fozthi.png" alt="Decoración 3D" class="w-[200px] md:w-[650px] levitate-slow blur-[1px]">
                 </div>
 
                 <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
-                    
-                    <div class="flex flex-col lg:flex-row gap-8 lg:gap-16">
-                        
-                        <!-- Sidebar Tabs (Scrollable horizontal en móvil con diseño impecable) -->
-                        <div class="w-full lg:w-1/4 flex flex-row lg:flex-col gap-2 overflow-x-auto no-scrollbar pb-3 lg:pb-0 reveal shrink-0 -mx-4 px-4 sm:mx-0 sm:px-0">
-                            
-                            <!-- Tab 1 -->
-                            <button onclick="renderService('web')" id="btn-web" class="tab-btn active flex items-center gap-3 sm:gap-4 w-full text-left px-4 sm:px-5 py-3.5 sm:py-4 text-xs sm:text-sm font-bold text-brand-textSoft hover:bg-white/60 whitespace-nowrap lg:whitespace-normal shrink-0">
-                                <span class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-brand-accent/10 flex items-center justify-center text-brand-accent shrink-0"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg></span>
+                    <div class="text-center md:text-left mb-16 reveal flex flex-col md:flex-row justify-between items-end">
+                        <div>
+                            <h2 class="text-xs sm:text-sm font-black tracking-[0.25em] text-brand-accent uppercase mb-3">Catálogo de Soluciones</h2>
+                            <h3 class="text-4xl lg:text-5xl font-black text-brand-textDark uppercase tracking-tight">¿QUÉ NECESITAS HOY?</h3>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col lg:flex-row gap-10">
+                        <div class="w-full lg:w-1/4 flex flex-row lg:flex-col gap-3 overflow-x-auto lg:overflow-visible pb-4 lg:pb-0 reveal no-scrollbar shrink-0 -mx-4 px-4 sm:mx-0 sm:px-0">
+                            <button onclick="renderService('web')" id="btn-web" class="interactive-el tab-btn active flex items-center gap-4 w-full text-left px-6 py-5 rounded-2xl text-sm font-bold text-brand-textSoft transition-all whitespace-nowrap lg:whitespace-normal bg-transparent hover:bg-white/80 border border-transparent hover:border-brand-gray/50">
+                                <span class="w-10 h-10 rounded-full bg-brand-accent/10 flex items-center justify-center text-brand-accent shrink-0 shadow-inner"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg></span>
                                 Páginas Web
                             </button>
-                            <!-- Tab 2 -->
-                            <button onclick="renderService('marca')" id="btn-marca" class="tab-btn flex items-center gap-3 sm:gap-4 w-full text-left px-4 sm:px-5 py-3.5 sm:py-4 text-xs sm:text-sm font-bold text-brand-textSoft hover:bg-white/60 whitespace-nowrap lg:whitespace-normal shrink-0">
-                                <span class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-brand-accent/10 flex items-center justify-center text-brand-accent shrink-0"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2-1 4-2 7-2 2.5 0 4.5 1 6.5 2a1 1 0 0 1 1 1z"></path></svg></span>
+                            <button onclick="renderService('marca')" id="btn-marca" class="interactive-el tab-btn flex items-center gap-4 w-full text-left px-6 py-5 rounded-2xl text-sm font-bold text-brand-textSoft transition-all whitespace-nowrap lg:whitespace-normal bg-transparent hover:bg-white/80 border border-transparent hover:border-brand-gray/50">
+                                <span class="w-10 h-10 rounded-full bg-brand-accent/10 flex items-center justify-center text-brand-accent shrink-0 shadow-inner"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2-1 4-2 7-2 2.5 0 4.5 1 6.5 2a1 1 0 0 1 1 1z"></path></svg></span>
                                 Creación de Marca
                             </button>
-                            <!-- Tab 3 -->
-                            <button onclick="renderService('catalogos')" id="btn-catalogos" class="tab-btn flex items-center gap-3 sm:gap-4 w-full text-left px-4 sm:px-5 py-3.5 sm:py-4 text-xs sm:text-sm font-bold text-brand-textSoft hover:bg-white/60 whitespace-nowrap lg:whitespace-normal shrink-0">
-                                <span class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-brand-accent/10 flex items-center justify-center text-brand-accent shrink-0"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
+                            <button onclick="renderService('catalogos')" id="btn-catalogos" class="interactive-el tab-btn flex items-center gap-4 w-full text-left px-6 py-5 rounded-2xl text-sm font-bold text-brand-textSoft transition-all whitespace-nowrap lg:whitespace-normal bg-transparent hover:bg-white/80 border border-transparent hover:border-brand-gray/50">
+                                <span class="w-10 h-10 rounded-full bg-brand-accent/10 flex items-center justify-center text-brand-accent shrink-0 shadow-inner"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg></span>
                                 Catálogos Digitales
                             </button>
-                            <!-- Tab 4 -->
-                            <button onclick="renderService('vcard')" id="btn-vcard" class="tab-btn flex items-center gap-3 sm:gap-4 w-full text-left px-4 sm:px-5 py-3.5 sm:py-4 text-xs sm:text-sm font-bold text-brand-textSoft hover:bg-white/60 whitespace-nowrap lg:whitespace-normal shrink-0">
-                                <span class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-brand-accent/10 flex items-center justify-center text-brand-accent shrink-0"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg></span>
+                            <button onclick="renderService('vcard')" id="btn-vcard" class="interactive-el tab-btn flex items-center gap-4 w-full text-left px-6 py-5 rounded-2xl text-sm font-bold text-brand-textSoft transition-all whitespace-nowrap lg:whitespace-normal bg-transparent hover:bg-white/80 border border-transparent hover:border-brand-gray/50">
+                                <span class="w-10 h-10 rounded-full bg-brand-accent/10 flex items-center justify-center text-brand-accent shrink-0 shadow-inner"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg></span>
                                 vCard Digitales
                             </button>
-                            <!-- Tab 5 -->
-                            <button onclick="renderService('nfc')" id="btn-nfc" class="tab-btn flex items-center gap-3 sm:gap-4 w-full text-left px-4 sm:px-5 py-3.5 sm:py-4 text-xs sm:text-sm font-bold text-brand-textSoft hover:bg-white/60 whitespace-nowrap lg:whitespace-normal shrink-0">
-                                <span class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-brand-accent/10 flex items-center justify-center text-brand-accent shrink-0"><svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M6 10a6 6 0 0 1 12 0"></path><path d="M12 14v4"></path></svg></span>
+                            <button onclick="renderService('nfc')" id="btn-nfc" class="interactive-el tab-btn flex items-center gap-4 w-full text-left px-6 py-5 rounded-2xl text-sm font-bold text-brand-textSoft transition-all whitespace-nowrap lg:whitespace-normal bg-transparent hover:bg-white/80 border border-transparent hover:border-brand-gray/50">
+                                <span class="w-10 h-10 rounded-full bg-brand-accent/10 flex items-center justify-center text-brand-accent shrink-0 shadow-inner"><svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"></rect><path d="M6 10a6 6 0 0 1 12 0"></path><path d="M12 14v4"></path></svg></span>
                                 Tarjetas NFC
                             </button>
                         </div>
 
-                        <!-- Content Area -->
-                        <div class="w-full lg:w-3/4 min-h-[400px]">
-                            
-                            <!-- Header de la sección interna -->
-                            <div id="service-header" class="mb-6 sm:mb-10 reveal delay-100 bg-white p-6 sm:p-10 rounded-[20px] shadow-sm border border-brand-gray/60">
-                                <h3 id="service-title" class="text-3xl sm:text-5xl font-black text-brand-textDark mb-3 sm:mb-4 uppercase tracking-tight">Cargando...</h3>
-                                <p id="service-desc" class="text-brand-textSoft max-w-3xl text-sm sm:text-lg font-semibold leading-relaxed">Por favor espere.</p>
+                        <div class="w-full lg:w-3/4 min-h-[450px]">
+                            <div id="service-header" class="mb-10 reveal delay-100 bg-white/90 backdrop-blur-sm p-8 sm:p-10 rounded-[30px] shadow-lg shadow-brand-gray/30 border border-brand-gray/80 relative overflow-hidden">
+                                <div class="absolute right-0 top-0 w-32 h-32 bg-brand-accent/5 rounded-full blur-[40px] pointer-events-none"></div>
+                                <h3 id="service-title" class="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-textDark mb-4 uppercase tracking-tighter">Cargando...</h3>
+                                <p id="service-desc" class="text-brand-textSoft max-w-3xl text-base sm:text-lg font-semibold leading-relaxed">Por favor espere.</p>
                             </div>
-                            
-                            <!-- Plans Grid -->
-                            <div id="service-plans" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div id="service-plans" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                                 <!-- JS injects here -->
                             </div>
                         </div>
@@ -443,7 +466,7 @@
                 </div>
             </section>
 
-            <!-- Acordeón FAQ Agregado -->
+            <!-- FAQ -->
             <section class="py-20 lg:py-32 bg-white relative">
                 <div class="max-w-[800px] mx-auto px-6 lg:px-12 relative z-10">
                     <div class="text-center mb-16 reveal">
@@ -452,9 +475,9 @@
                     </div>
 
                     <div class="space-y-4 reveal delay-100">
-                        <div class="faq-item border-2 border-brand-gray rounded-2xl overflow-hidden bg-brand-light transition-all">
+                        <div class="faq-item border-2 border-brand-gray rounded-2xl overflow-hidden bg-brand-light transition-all hover:border-brand-gray/80 interactive-el">
                             <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
-                                <span class="font-black text-brand-textDark text-sm sm:text-base">¿Cuánto tiempo toma diseñar una página web?</span>
+                                <span class="font-black text-brand-textDark text-sm sm:text-base tracking-wide">¿Cuánto tiempo toma diseñar una página web?</span>
                                 <svg class="w-6 h-6 text-brand-accent transform transition-transform duration-300 shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
                             </button>
                             <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
@@ -464,9 +487,9 @@
                             </div>
                         </div>
                         
-                        <div class="faq-item border-2 border-brand-gray rounded-2xl overflow-hidden bg-brand-light transition-all">
+                        <div class="faq-item border-2 border-brand-gray rounded-2xl overflow-hidden bg-brand-light transition-all hover:border-brand-gray/80 interactive-el">
                             <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
-                                <span class="font-black text-brand-textDark text-sm sm:text-base">¿Cuáles son los métodos de pago?</span>
+                                <span class="font-black text-brand-textDark text-sm sm:text-base tracking-wide">¿Cuáles son los métodos de pago?</span>
                                 <svg class="w-6 h-6 text-brand-accent transform transition-transform duration-300 shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
                             </button>
                             <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
@@ -476,9 +499,9 @@
                             </div>
                         </div>
 
-                        <div class="faq-item border-2 border-brand-gray rounded-2xl overflow-hidden bg-brand-light transition-all">
+                        <div class="faq-item border-2 border-brand-gray rounded-2xl overflow-hidden bg-brand-light transition-all hover:border-brand-gray/80 interactive-el">
                             <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none" onclick="toggleFaq(this)">
-                                <span class="font-black text-brand-textDark text-sm sm:text-base">¿Incluyen el dominio y hosting?</span>
+                                <span class="font-black text-brand-textDark text-sm sm:text-base tracking-wide">¿Incluyen el dominio y hosting?</span>
                                 <svg class="w-6 h-6 text-brand-accent transform transition-transform duration-300 shrink-0 ml-4" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
                             </button>
                             <div class="faq-content max-h-0 overflow-hidden transition-all duration-300 ease-in-out">
@@ -494,61 +517,60 @@
 
         <!-- ================= PÁGINA: PORTAFOLIO ================= -->
         <div id="page-portafolio" class="page-view">
-            <section class="py-16 lg:py-32 bg-white relative overflow-hidden border-b border-brand-gray">
+            <section class="py-16 lg:py-32 bg-dots relative overflow-hidden border-b border-brand-gray/50">
                 
-                <!-- Decoración 3D Flotando -->
-                <div class="absolute left-[0%] top-[5%] opacity-30 parallax-wrapper pointer-events-none hidden sm:block" data-speed="1.2">
-                    <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1782664406/Gemini_Generated_Image_vllh0gvllh0gvllh_inspyrenet_ocw53a.png" alt="3D Graphics" class="w-[250px] md:w-[600px] levitate-slow rotate-12">
+                <div class="absolute left-[0%] top-[5%] opacity-40 parallax-wrapper pointer-events-none hidden sm:block drop-shadow-2xl" data-speed="1.4">
+                    <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1782664406/Gemini_Generated_Image_vllh0gvllh0gvllh_inspyrenet_ocw53a.png" alt="3D Graphics" class="w-[250px] md:w-[650px] levitate-slow rotate-12 blur-[1px]">
                 </div>
 
                 <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
                     <div class="text-center mb-16 sm:mb-24 reveal relative">
-                        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-textDark uppercase tracking-tight relative z-10">MUESTRA DE TRABAJO</h2>
-                        <div class="w-20 sm:w-24 h-2 bg-brand-accent mx-auto mt-4 sm:mt-6 rounded-full relative z-10"></div>
+                        <h2 class="text-xs sm:text-sm font-black tracking-[0.25em] text-brand-accent uppercase mb-3">Nuestra Experiencia</h2>
+                        <h3 class="text-4xl lg:text-5xl xl:text-6xl font-black text-brand-textDark uppercase tracking-tighter relative z-10">MUESTRA DE TRABAJO</h3>
                     </div>
 
-                    <div class="space-y-20 sm:space-y-32 lg:space-y-48">
-                        <div class="reveal group flex flex-col lg:flex-row gap-8 sm:gap-12 items-center">
+                    <div class="space-y-28 lg:space-y-48">
+                        <div class="reveal group flex flex-col lg:flex-row gap-12 sm:gap-16 items-center bg-white/50 backdrop-blur-sm p-6 sm:p-10 rounded-[40px] shadow-xl shadow-brand-textDark/5 border border-white">
                             <div class="w-full lg:w-1/2 flex justify-center relative">
-                                <div class="absolute inset-0 bg-brand-light rounded-full transform -rotate-6 scale-105 transition-transform duration-500 group-hover:rotate-0 border border-brand-gray"></div>
-                                <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1778502887/1_jgcm39.png" alt="Identidad Corporativa" class="w-full h-auto object-contain png-mockup max-h-[350px] sm:max-h-[500px] relative z-10">
+                                <div class="absolute inset-0 bg-brand-light rounded-full transform -rotate-6 scale-105 transition-transform duration-600 group-hover:rotate-0 border-2 border-brand-gray shadow-inner"></div>
+                                <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1778502887/1_jgcm39.png" alt="Identidad Corporativa" class="w-full h-auto object-contain png-mockup max-h-[350px] sm:max-h-[550px] relative z-10">
                             </div>
-                            <div class="w-full lg:w-1/2 flex flex-col justify-center px-2 sm:px-4 text-center lg:text-left">
-                                <span class="inline-block py-1 px-3 bg-brand-light border border-brand-gray text-brand-accent font-black text-[10px] sm:text-[11px] uppercase tracking-widest rounded-full w-max mx-auto lg:mx-0 mb-3 sm:mb-4">Papelería Institucional</span>
-                                <h4 class="text-2xl sm:text-3xl lg:text-4xl font-black text-brand-textDark mb-3 sm:mb-4">IDENTIDAD CORPORATIVA</h4>
-                                <p class="text-sm sm:text-lg font-medium text-brand-textSoft mb-6 sm:mb-8 max-w-md mx-auto lg:mx-0">Diseño estratégico del logotipo y papelería asegurando presencia coherente y profesional en cada punto de contacto.</p>
-                                <button onclick="selectPlan('Identidad de Marca', 'Consulta de Portafolio')" class="inline-flex items-center justify-center lg:justify-start text-brand-textDark text-sm sm:text-base font-black uppercase tracking-widest hover:text-brand-accent transition-colors">
-                                    Iniciar Proyecto <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                            <div class="w-full lg:w-1/2 flex flex-col justify-center px-2 sm:px-8 text-center lg:text-left">
+                                <span class="inline-block py-1.5 px-4 bg-brand-textDark text-brand-accent font-black text-[10px] sm:text-[11px] uppercase tracking-[0.2em] rounded-full w-max mx-auto lg:mx-0 mb-4 shadow-md">Papelería Institucional</span>
+                                <h4 class="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-textDark mb-4 tracking-tight">IDENTIDAD CORPORATIVA</h4>
+                                <p class="text-base sm:text-lg font-medium text-brand-textSoft mb-8 max-w-md mx-auto lg:mx-0 leading-relaxed">Diseño estratégico del logotipo y papelería asegurando presencia coherente y profesional en cada punto de contacto.</p>
+                                <button onclick="selectPlan('Identidad de Marca', 'Consulta de Portafolio')" class="interactive-el inline-flex items-center justify-center lg:justify-start text-brand-textDark font-black uppercase tracking-widest hover:text-brand-accent transition-colors w-max mx-auto lg:mx-0 group-hover:translate-x-2 duration-300">
+                                    Iniciar Proyecto <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
                                 </button>
                             </div>
                         </div>
 
-                        <div class="reveal group flex flex-col lg:flex-row-reverse gap-8 sm:gap-12 items-center">
+                        <div class="reveal group flex flex-col lg:flex-row-reverse gap-12 sm:gap-16 items-center bg-white/50 backdrop-blur-sm p-6 sm:p-10 rounded-[40px] shadow-xl shadow-brand-textDark/5 border border-white">
                             <div class="w-full lg:w-1/2 flex justify-center relative">
-                                <div class="absolute inset-0 bg-brand-light rounded-full transform rotate-6 scale-105 transition-transform duration-500 group-hover:rotate-0 border border-brand-gray"></div>
-                                <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1778502887/4_xspar2.png" alt="Diseño Web" class="w-full h-auto object-contain png-mockup max-h-[350px] sm:max-h-[500px] relative z-10">
+                                <div class="absolute inset-0 bg-brand-light rounded-full transform rotate-6 scale-105 transition-transform duration-600 group-hover:rotate-0 border-2 border-brand-gray shadow-inner"></div>
+                                <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1778502887/4_xspar2.png" alt="Diseño Web" class="w-full h-auto object-contain png-mockup max-h-[350px] sm:max-h-[550px] relative z-10">
                             </div>
-                            <div class="w-full lg:w-1/2 flex flex-col justify-center px-2 sm:px-4 text-center lg:text-left">
-                                <span class="inline-block py-1 px-3 bg-brand-light border border-brand-gray text-brand-accent font-black text-[10px] sm:text-[11px] uppercase tracking-widest rounded-full w-max mx-auto lg:mx-0 mb-3 sm:mb-4">Plataformas Web</span>
-                                <h4 class="text-2xl sm:text-3xl lg:text-4xl font-black text-brand-textDark mb-3 sm:mb-4">DESARROLLO DIGITAL</h4>
-                                <p class="text-sm sm:text-lg font-medium text-brand-textSoft mb-6 sm:mb-8 max-w-md mx-auto lg:mx-0">Ecosistemas optimizados y responsivos diseñados bajo los más altos estándares de conversión y experiencia de usuario.</p>
-                                <button onclick="selectPlan('Páginas Web', 'Consulta de Desarrollo Digital')" class="inline-flex items-center justify-center lg:justify-start text-brand-textDark text-sm sm:text-base font-black uppercase tracking-widest hover:text-brand-accent transition-colors">
-                                    Cotizar Web <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                            <div class="w-full lg:w-1/2 flex flex-col justify-center px-2 sm:px-8 text-center lg:text-left">
+                                <span class="inline-block py-1.5 px-4 bg-brand-textDark text-brand-accent font-black text-[10px] sm:text-[11px] uppercase tracking-[0.2em] rounded-full w-max mx-auto lg:mx-0 mb-4 shadow-md">Plataformas Web</span>
+                                <h4 class="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-textDark mb-4 tracking-tight">DESARROLLO DIGITAL</h4>
+                                <p class="text-base sm:text-lg font-medium text-brand-textSoft mb-8 max-w-md mx-auto lg:mx-0 leading-relaxed">Ecosistemas optimizados y responsivos diseñados bajo los más altos estándares de conversión y experiencia de usuario.</p>
+                                <button onclick="selectPlan('Páginas Web', 'Consulta de Desarrollo Digital')" class="interactive-el inline-flex items-center justify-center lg:justify-start text-brand-textDark font-black uppercase tracking-widest hover:text-brand-accent transition-colors w-max mx-auto lg:mx-0 group-hover:translate-x-2 duration-300">
+                                    Cotizar Web <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
                                 </button>
                             </div>
                         </div>
                         
-                        <div class="reveal group flex flex-col lg:flex-row gap-8 sm:gap-12 items-center">
+                        <div class="reveal group flex flex-col lg:flex-row gap-12 sm:gap-16 items-center bg-white/50 backdrop-blur-sm p-6 sm:p-10 rounded-[40px] shadow-xl shadow-brand-textDark/5 border border-white">
                             <div class="w-full lg:w-1/2 flex justify-center relative">
-                                <div class="absolute inset-0 bg-brand-light rounded-full transform -rotate-6 scale-105 transition-transform duration-500 group-hover:rotate-0 border border-brand-gray"></div>
-                                <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1778502888/2_eohnei.png" alt="Catálogo Virtual" class="w-full h-auto object-contain png-mockup max-h-[350px] sm:max-h-[500px] relative z-10">
+                                <div class="absolute inset-0 bg-brand-light rounded-full transform -rotate-6 scale-105 transition-transform duration-600 group-hover:rotate-0 border-2 border-brand-gray shadow-inner"></div>
+                                <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1778502888/2_eohnei.png" alt="Catálogo Virtual" class="w-full h-auto object-contain png-mockup max-h-[350px] sm:max-h-[550px] relative z-10">
                             </div>
-                            <div class="w-full lg:w-1/2 flex flex-col justify-center px-2 sm:px-4 text-center lg:text-left">
-                                <span class="inline-block py-1 px-3 bg-brand-light border border-brand-gray text-brand-accent font-black text-[10px] sm:text-[11px] uppercase tracking-widest rounded-full w-max mx-auto lg:mx-0 mb-3 sm:mb-4">Diseño Interactivo</span>
-                                <h4 class="text-2xl sm:text-3xl lg:text-4xl font-black text-brand-textDark mb-3 sm:mb-4">CATÁLOGO VIRTUAL</h4>
-                                <p class="text-sm sm:text-lg font-medium text-brand-textSoft mb-6 sm:mb-8 max-w-md mx-auto lg:mx-0">Sistemas dinámicos y atractivos para exponer productos facilitando enormemente la toma de decisión del cliente.</p>
-                                <button onclick="selectPlan('Catálogos Digitales', 'Consulta de Catálogo Virtual')" class="inline-flex items-center justify-center lg:justify-start text-brand-textDark text-sm sm:text-base font-black uppercase tracking-widest hover:text-brand-accent transition-colors">
-                                    Diseñar Catálogo <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                            <div class="w-full lg:w-1/2 flex flex-col justify-center px-2 sm:px-8 text-center lg:text-left">
+                                <span class="inline-block py-1.5 px-4 bg-brand-textDark text-brand-accent font-black text-[10px] sm:text-[11px] uppercase tracking-[0.2em] rounded-full w-max mx-auto lg:mx-0 mb-4 shadow-md">Diseño Interactivo</span>
+                                <h4 class="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-textDark mb-4 tracking-tight">CATÁLOGO VIRTUAL</h4>
+                                <p class="text-base sm:text-lg font-medium text-brand-textSoft mb-8 max-w-md mx-auto lg:mx-0 leading-relaxed">Sistemas dinámicos y atractivos para exponer productos facilitando enormemente la toma de decisión del cliente.</p>
+                                <button onclick="selectPlan('Catálogos Digitales', 'Consulta de Catálogo Virtual')" class="interactive-el inline-flex items-center justify-center lg:justify-start text-brand-textDark font-black uppercase tracking-widest hover:text-brand-accent transition-colors w-max mx-auto lg:mx-0 group-hover:translate-x-2 duration-300">
+                                    Diseñar Catálogo <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
                                 </button>
                             </div>
                         </div>
@@ -559,40 +581,45 @@
 
         <!-- ================= PÁGINA: CONTACTO ================= -->
         <div id="page-contacto" class="page-view">
-            <section class="relative py-16 sm:py-24 lg:py-32 bg-brand-textDark overflow-hidden">
-                <div class="absolute right-0 top-0 w-1/2 h-full bg-brand-accent opacity-20 blur-[100px] pointer-events-none"></div>
+            <section class="relative py-20 sm:py-28 lg:py-40 bg-brand-textDark overflow-hidden">
+                <div class="absolute right-0 top-0 w-2/3 h-full bg-brand-accent/20 blur-[150px] pointer-events-none"></div>
+                <div class="absolute left-0 bottom-0 w-1/3 h-1/2 bg-brand-accent/10 blur-[150px] pointer-events-none"></div>
 
                 <div class="max-w-[1200px] mx-auto px-4 sm:px-6 relative z-10">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                         
                         <div class="text-center lg:text-left reveal-left relative">
-                            <h2 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white uppercase tracking-tight mb-4 sm:mb-6 leading-none relative z-10">
+                            <h2 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-black text-white uppercase tracking-tighter mb-6 leading-[1.05] relative z-10 drop-shadow-md">
                                 ES HORA <br><span class="text-brand-accent">DE ESCALAR</span> <br>TU MARCA.
                             </h2>
-                            <p class="text-brand-gray text-sm sm:text-base lg:text-lg font-medium max-w-md mx-auto lg:mx-0 mb-6 sm:mb-10 relative z-10 px-2 sm:px-0">
+                            <p class="text-brand-gray/90 text-sm sm:text-base lg:text-lg font-medium max-w-md mx-auto lg:mx-0 mb-10 relative z-10 px-2 sm:px-0 leading-relaxed">
                                 Seleccione el servicio, escriba sus detalles y envíenos la solicitud directamente a nuestro WhatsApp oficial para atención inmediata.
                             </p>
-                            <div class="hidden lg:flex items-center justify-center lg:justify-start gap-4 text-brand-gray font-bold text-lg relative z-10">
+                            <div class="hidden lg:flex items-center justify-center lg:justify-start gap-4 text-brand-gray font-bold text-lg relative z-10 interactive-el">
                                 <svg class="w-8 h-8 text-brand-accent" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                                 +57 302 119 2800
                             </div>
+
+                            <div class="absolute right-[10%] bottom-[0%] opacity-40 pointer-events-none parallax-wrapper hidden sm:block drop-shadow-2xl z-0" data-speed="2">
+                                <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1782664272/no_bg_image_4_zjuest.png" alt="Decoración 3D" class="w-[150px] md:w-[350px] levitate-slow blur-[1px]">
+                            </div>
                         </div>
 
-                        <div class="bg-white p-6 sm:p-10 rounded-3xl shadow-2xl reveal-right border-4 border-brand-accent/20 relative z-20 w-full">
-                            <form id="contact-form" class="space-y-4 sm:space-y-6" onsubmit="handleFormSubmit(event)">
-                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                        <div class="bg-white/95 backdrop-blur-xl p-8 sm:p-10 rounded-[40px] shadow-[0_20px_60px_rgba(0,0,0,0.4)] reveal-right border border-white/20 relative z-20 w-full">
+                            <form id="contact-form" class="space-y-5 sm:space-y-6" onsubmit="handleFormSubmit(event)">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
                                     <div>
-                                        <label class="block text-xs font-black uppercase tracking-widest text-brand-textDark mb-2">Nombre</label>
-                                        <input type="text" id="nombre" required class="w-full bg-brand-light border-2 border-brand-gray rounded-xl px-4 sm:px-5 py-3.5 sm:py-4 text-brand-textDark text-sm focus:border-brand-accent focus:ring-1 focus:ring-brand-accent focus:outline-none transition-all font-medium">
+                                        <label class="block text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-brand-textSoft mb-2">Nombre</label>
+                                        <input type="text" id="nombre" required class="interactive-el w-full bg-brand-light border-2 border-brand-gray/80 rounded-2xl px-5 py-4 text-brand-textDark text-sm focus:border-brand-accent focus:bg-white focus:ring-4 focus:ring-brand-accent/20 focus:outline-none transition-all font-semibold">
                                     </div>
                                     <div>
-                                        <label class="block text-xs font-black uppercase tracking-widest text-brand-textDark mb-2">Correo</label>
-                                        <input type="email" id="email" required class="w-full bg-brand-light border-2 border-brand-gray rounded-xl px-4 sm:px-5 py-3.5 sm:py-4 text-brand-textDark text-sm focus:border-brand-accent focus:ring-1 focus:ring-brand-accent focus:outline-none transition-all font-medium">
+                                        <label class="block text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-brand-textSoft mb-2">Correo</label>
+                                        <input type="email" id="email" required class="interactive-el w-full bg-brand-light border-2 border-brand-gray/80 rounded-2xl px-5 py-4 text-brand-textDark text-sm focus:border-brand-accent focus:bg-white focus:ring-4 focus:ring-brand-accent/20 focus:outline-none transition-all font-semibold">
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-black uppercase tracking-widest text-brand-textDark mb-2">Servicio</label>
-                                    <select id="servicio-select" class="w-full bg-brand-light border-2 border-brand-gray rounded-xl px-4 sm:px-5 py-3.5 sm:py-4 text-brand-textDark text-sm focus:border-brand-accent focus:ring-1 focus:ring-brand-accent focus:outline-none transition-all custom-select font-bold">
+                                    <label class="block text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-brand-textSoft mb-2">Servicio</label>
+                                    <select id="servicio-select" class="interactive-el w-full bg-brand-light border-2 border-brand-gray/80 rounded-2xl px-5 py-4 text-brand-textDark text-sm focus:border-brand-accent focus:bg-white focus:ring-4 focus:ring-brand-accent/20 focus:outline-none transition-all custom-select font-bold">
                                         <option value="Páginas Web">Páginas Web</option>
                                         <option value="Identidad de Marca">Identidad de Marca</option>
                                         <option value="Catálogos Digitales">Catálogos Digitales</option>
@@ -602,10 +629,10 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <label class="block text-xs font-black uppercase tracking-widest text-brand-textDark mb-2">Detalles del proyecto</label>
-                                    <textarea id="mensaje" rows="4" required class="w-full bg-brand-light border-2 border-brand-gray rounded-xl px-4 sm:px-5 py-3.5 sm:py-4 text-brand-textDark text-sm focus:border-brand-accent focus:ring-1 focus:ring-brand-accent focus:outline-none transition-all resize-none font-medium" placeholder="Cuéntanos más sobre lo que necesitas..."></textarea>
+                                    <label class="block text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-brand-textSoft mb-2">Detalles del proyecto</label>
+                                    <textarea id="mensaje" rows="4" required class="interactive-el w-full bg-brand-light border-2 border-brand-gray/80 rounded-2xl px-5 py-4 text-brand-textDark text-sm focus:border-brand-accent focus:bg-white focus:ring-4 focus:ring-brand-accent/20 focus:outline-none transition-all resize-none font-semibold" placeholder="Cuéntanos más sobre lo que necesitas..."></textarea>
                                 </div>
-                                <button type="submit" class="w-full bg-brand-accent text-white py-4 font-black tracking-widest uppercase text-xs sm:text-sm hover:bg-brand-accentHover transition-transform transform hover:-translate-y-1 rounded-xl shadow-lg shadow-brand-accent/40 flex justify-center items-center gap-2">
+                                <button type="submit" class="interactive-el w-full bg-brand-accent text-white py-5 font-black tracking-[0.2em] uppercase text-xs sm:text-sm hover:bg-brand-accentHover transition-all duration-300 hover:-translate-y-1 rounded-2xl shadow-[0_10px_30px_rgba(255,106,0,0.4)] flex justify-center items-center gap-3">
                                     <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
                                     Enviar a WhatsApp
                                 </button>
@@ -618,76 +645,93 @@
 
     </main>
 
-    <!-- Footer y Marquesina (Agrandada e Invertida) -->
-    <footer class="bg-brand-textDark pt-12 pb-8 border-t border-white/10 relative z-20 mt-auto overflow-hidden">
+    <!-- Footer y Marquesina -->
+    <footer class="bg-brand-textDark pt-16 pb-8 border-t border-white/5 relative z-20 mt-auto overflow-hidden">
         <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-6 md:gap-8 mb-8 w-full">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-8 md:gap-12 mb-12 w-full">
                 
-                <!-- Logo Agrandado y Protegido para Contraste -->
-                <div class="text-center md:text-left shrink-0 z-10 bg-white p-3 sm:p-4 rounded-2xl shadow-lg border border-brand-gray/20 transition-transform hover:-translate-y-1">
-                    <img class="h-12 sm:h-16 w-auto mx-auto md:mx-0 object-contain" src="https://www.image2url.com/r2/default/images/1783443251633-c2d56297-30d4-4ac8-8d74-7e9f2b2d6681.png" alt="EQB STUDIO Logo">
+                <div class="interactive-el text-center md:text-left shrink-0 z-10 bg-white/5 backdrop-blur-md p-4 sm:p-5 rounded-[24px] shadow-2xl border border-white/10 transition-transform duration-400 hover:-translate-y-2 hover:bg-white/10 hover:border-white/20">
+                    <img class="h-14 sm:h-20 w-auto mx-auto md:mx-0 object-contain drop-shadow-md" src="https://www.image2url.com/r2/default/images/1783443251633-c2d56297-30d4-4ac8-8d74-7e9f2b2d6681.png" alt="EQB STUDIO Logo">
                 </div>
                 
-                <!-- Marquesina de Servicios Responsiva -->
-                <div class="flex-grow w-full relative marquee-wrapper py-3 flex">
-                    <div class="marquee-track items-center text-white/40 font-black uppercase tracking-[0.15em] sm:tracking-[0.2em] lg:tracking-[0.3em] text-sm sm:text-lg lg:text-2xl">
-                        <span class="mx-4 sm:mx-6 text-white">Páginas Web</span> <span class="text-brand-accent opacity-50">✦</span>
-                        <span class="mx-4 sm:mx-6 text-white">Creación de Marca</span> <span class="text-brand-accent opacity-50">✦</span>
-                        <span class="mx-4 sm:mx-6 text-white">Catálogos Digitales</span> <span class="text-brand-accent opacity-50">✦</span>
-                        <span class="mx-4 sm:mx-6 text-white">vCard Digitales</span> <span class="text-brand-accent opacity-50">✦</span>
-                        <span class="mx-4 sm:mx-6 text-white">Tarjetas NFC</span> <span class="text-brand-accent opacity-50">✦</span>
-                        <!-- Repetición para loop infinito continuo -->
-                        <span class="mx-4 sm:mx-6 text-white">Páginas Web</span> <span class="text-brand-accent opacity-50">✦</span>
-                        <span class="mx-4 sm:mx-6 text-white">Creación de Marca</span> <span class="text-brand-accent opacity-50">✦</span>
-                        <span class="mx-4 sm:mx-6 text-white">Catálogos Digitales</span> <span class="text-brand-accent opacity-50">✦</span>
-                        <span class="mx-4 sm:mx-6 text-white">vCard Digitales</span> <span class="text-brand-accent opacity-50">✦</span>
-                        <span class="mx-4 sm:mx-6 text-white">Tarjetas NFC</span> <span class="text-brand-accent opacity-50">✦</span>
+                <div class="flex-grow w-full relative marquee-wrapper py-4 flex cursor-default">
+                    <div class="marquee-track items-center text-white/20 font-black uppercase tracking-[0.2em] sm:tracking-[0.3em] lg:tracking-[0.4em] text-lg sm:text-2xl lg:text-4xl">
+                        <span class="mx-6 sm:mx-10 text-white/90">Páginas Web</span> <span class="text-brand-accent opacity-50 text-2xl">✦</span>
+                        <span class="mx-6 sm:mx-10 text-white/90">Creación de Marca</span> <span class="text-brand-accent opacity-50 text-2xl">✦</span>
+                        <span class="mx-6 sm:mx-10 text-white/90">Catálogos Digitales</span> <span class="text-brand-accent opacity-50 text-2xl">✦</span>
+                        <span class="mx-6 sm:mx-10 text-white/90">vCard Digitales</span> <span class="text-brand-accent opacity-50 text-2xl">✦</span>
+                        <span class="mx-6 sm:mx-10 text-white/90">Tarjetas NFC</span> <span class="text-brand-accent opacity-50 text-2xl">✦</span>
+                        
+                        <span class="mx-6 sm:mx-10 text-white/90">Páginas Web</span> <span class="text-brand-accent opacity-50 text-2xl">✦</span>
+                        <span class="mx-6 sm:mx-10 text-white/90">Creación de Marca</span> <span class="text-brand-accent opacity-50 text-2xl">✦</span>
+                        <span class="mx-6 sm:mx-10 text-white/90">Catálogos Digitales</span> <span class="text-brand-accent opacity-50 text-2xl">✦</span>
+                        <span class="mx-6 sm:mx-10 text-white/90">vCard Digitales</span> <span class="text-brand-accent opacity-50 text-2xl">✦</span>
+                        <span class="mx-6 sm:mx-10 text-white/90">Tarjetas NFC</span> <span class="text-brand-accent opacity-50 text-2xl">✦</span>
                     </div>
                 </div>
 
-                <!-- Icono Redes Blanco Destacado -->
                 <div class="flex items-center gap-6 shrink-0 z-10">
-                    <a href="https://www.instagram.com/eqbstudio/" target="_blank" class="w-12 h-12 rounded-full border-2 border-white bg-transparent flex items-center justify-center text-white hover:bg-white hover:text-brand-textDark transition-all shadow-lg">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                    <a href="https://www.instagram.com/eqbstudio/" target="_blank" class="interactive-el w-14 h-14 rounded-full border-2 border-white/20 bg-white/5 backdrop-blur-sm flex items-center justify-center text-white hover:bg-brand-accent hover:border-brand-accent transition-all duration-300 shadow-xl hover:-translate-y-1">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
                     </a>
                 </div>
             </div>
-            <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-brand-textSoft font-medium text-center sm:text-left gap-2 sm:gap-0">
-                <p>&copy; 2026 EQB STUDIO.</p>
-                <p class="font-bold uppercase tracking-widest text-brand-gray">Orden • Estrategia • Diseño</p>
+            <div class="border-t border-white/10 pt-8 flex flex-col sm:flex-row justify-between items-center text-xs text-brand-textSoft font-semibold text-center sm:text-left gap-4 sm:gap-0">
+                <p>&copy; 2026 EQB STUDIO. Todos los derechos reservados.</p>
+                <p class="font-black uppercase tracking-[0.2em] text-brand-gray/50">Orden • Estrategia • Diseño</p>
             </div>
         </div>
     </footer>
 
-    <!-- Botón Flotante WhatsApp Blanco Premium -->
-    <a href="https://wa.me/573021192800?text=Hola%20EQB%20STUDIO" target="_blank" class="md:hidden fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 bg-white text-brand-textDark border-2 border-brand-gray rounded-full shadow-2xl hover:scale-110 transition-transform">
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <!-- Botón Flotante WhatsApp -->
+    <a href="https://wa.me/573021192800?text=Hola%20EQB%20STUDIO" target="_blank" class="interactive-el md:hidden fixed bottom-6 right-6 z-50 flex items-center justify-center w-[60px] h-[60px] bg-white text-brand-textDark border-2 border-brand-gray rounded-[20px] shadow-[0_15px_30px_rgba(0,0,0,0.15)] hover:scale-110 transition-transform duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     </a>
 
     <script>
-        // --- 1. Router Interno Multi-Página ---
+        // --- Custom Cursor Logic ---
+        const cursorRing = document.getElementById('cursor-ring');
+        const cursorDot = document.getElementById('cursor-dot');
+        
+        if (window.matchMedia("(pointer: fine)").matches) {
+            document.addEventListener('mousemove', (e) => {
+                cursorRing.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%))`;
+                cursorDot.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%))`;
+            });
+
+            document.addEventListener('mousedown', () => cursorRing.style.transform += ' scale(0.8)');
+            document.addEventListener('mouseup', () => cursorRing.style.transform = cursorRing.style.transform.replace(' scale(0.8)', ''));
+
+            const interactiveElements = document.querySelectorAll('button, a, input, select, textarea, .interactive-el');
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => cursorRing.classList.add('hovering'));
+                el.addEventListener('mouseleave', () => cursorRing.classList.remove('hovering'));
+            });
+        }
+
+        // --- Router SPA ---
         function navigate(pageId) {
             document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active-page'));
-            
             const targetPage = document.getElementById(`page-${pageId}`);
             if (targetPage) {
                 targetPage.classList.add('active-page');
                 window.scrollTo(0, 0); 
-                
                 setTimeout(() => {
                     targetPage.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => el.classList.add('active'));
                     if (pageId === 'inicio') triggerCounters();
                 }, 50);
             }
-
             document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
-                link.classList.remove('active', 'text-brand-accent');
-                if (link.textContent.toLowerCase() === pageId.toLowerCase()) link.classList.add('active', 'text-brand-accent');
+                link.classList.remove('active', 'text-brand-accent', 'bg-brand-light');
+                if (link.textContent.toLowerCase() === pageId.toLowerCase()) {
+                    link.classList.add('active', 'text-brand-accent');
+                    if(link.classList.contains('mobile-nav-link')) link.classList.add('bg-brand-light');
+                }
             });
             document.getElementById('mobile-menu').classList.add('hidden');
         }
 
-        // --- 2. Selección Inteligente de Plan a Contacto ---
+        // --- Redirección Inteligente ---
         function selectPlan(serviceName, planName) {
             navigate('contacto');
             const select = document.getElementById('servicio-select');
@@ -697,7 +741,7 @@
                 }
             }
             const textarea = document.getElementById('mensaje');
-            textarea.value = `Hola, estoy muy interesado en el servicio de ${serviceName}, específicamente me gustaría cotizar el "${planName}". Por favor envíenme más información.`;
+            textarea.value = `Hola, estoy interesado en el servicio de ${serviceName}, específicamente me gustaría cotizar el "${planName}". Por favor envíenme más información.`;
             
             setTimeout(() => {
                 document.getElementById('contact-form').scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -705,7 +749,7 @@
             }, 300);
         }
 
-        //        // --- 3. Base de Datos de Servicios (Coincide con diseño enviado) ---
+        // --- Data de Servicios ---
         const servicesData = {
             web: {
                 title: "Páginas Web", desc: "Diseñamos plataformas modernas, rápidas y optimizadas para dispositivos móviles.",
@@ -761,26 +805,34 @@
             plansContainer.innerHTML = ''; 
             
             data.plans.forEach((plan, index) => {
-                const popularBadge = plan.isPopular ? `<span class="absolute -top-3.5 right-6 bg-brand-accent text-white text-[10px] font-black uppercase tracking-widest py-1.5 px-4 rounded-full shadow-lg z-10">Recomendado</span>` : '';
-                const borderClass = plan.isPopular ? 'border-brand-accent shadow-2xl shadow-brand-accent/20 border-[3px]' : 'border-brand-gray/60 shadow-md border-2';
+                const popularBadge = plan.isPopular ? `<span class="absolute -top-4 right-6 bg-brand-accent text-white text-[10px] font-black uppercase tracking-[0.2em] py-2 px-5 rounded-full shadow-lg z-10">Recomendado</span>` : '';
+                const borderClass = plan.isPopular ? 'border-brand-accent shadow-[0_20px_40px_rgba(255,106,0,0.15)] border-[3px] bg-white' : 'border-brand-gray/60 shadow-lg border-2 bg-white/80 backdrop-blur-md';
                 
-                const featuresHtml = plan.features.map(f => `<li class="flex items-start text-sm text-brand-textSoft font-semibold mb-3"><svg class="w-5 h-5 text-brand-accent mr-2 shrink-0" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"></path></svg>${f}</li>`).join('');
+                const featuresHtml = plan.features.map(f => `<li class="flex items-start text-sm text-brand-textSoft font-semibold mb-3"><svg class="w-5 h-5 text-brand-accent mr-3 mt-0.5 shrink-0" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"></path></svg>${f}</li>`).join('');
                 
                 const cardHtml = `
-                <div class="plan-card bg-white p-8 rounded-3xl ${borderClass} relative hover:-translate-y-2 transition-transform duration-300 flex flex-col" style="animation-delay: ${index * 0.1}s">
+                <div class="plan-card p-8 rounded-[30px] ${borderClass} relative hover:-translate-y-2 transition-transform duration-400 flex flex-col group" style="animation-delay: ${index * 0.1}s">
                     ${popularBadge}
-                    <h4 class="text-2xl font-black text-brand-textDark mb-1">${plan.name}</h4>
-                    <p class="text-xs text-brand-accent font-black uppercase tracking-[0.1em] mb-6">${plan.target}</p>
+                    <h4 class="text-2xl font-black text-brand-textDark mb-1 tracking-tight">${plan.name}</h4>
+                    <p class="text-[10px] text-brand-accent font-black uppercase tracking-[0.2em] mb-6">${plan.target}</p>
                     <ul class="mb-8 flex-grow">${featuresHtml}</ul>
-                    <button onclick="selectPlan('${data.title}', '${plan.name}')" class="mt-auto flex justify-center w-full py-4 bg-brand-light border-2 border-brand-gray hover:border-brand-accent hover:bg-brand-accent hover:text-white text-xs font-black uppercase tracking-widest text-brand-textDark transition-all rounded-2xl">
+                    <button onclick="selectPlan('${data.title}', '${plan.name}')" class="interactive-el mt-auto flex justify-center w-full py-4 bg-brand-light border-2 border-brand-gray hover:border-brand-accent hover:bg-brand-accent hover:text-white text-xs font-black uppercase tracking-[0.2em] text-brand-textDark transition-all duration-300 rounded-2xl group-hover:shadow-[0_10px_20px_rgba(255,106,0,0.3)]">
                         Elegir Plan
                     </button>
                 </div>`;
                 plansContainer.insertAdjacentHTML('beforeend', cardHtml);
             });
+
+            // Re-vincular eventos del cursor a los nuevos botones
+            if (window.matchMedia("(pointer: fine)").matches) {
+                document.querySelectorAll('#service-plans .interactive-el').forEach(el => {
+                    el.addEventListener('mouseenter', () => cursorRing.classList.add('hovering'));
+                    el.addEventListener('mouseleave', () => cursorRing.classList.remove('hovering'));
+                });
+            }
         }
 
-        // --- 4. Inicialización e Interacciones ---
+        // --- Core Functions ---
         function triggerCounters() {
             document.querySelectorAll('.counter').forEach(counter => {
                 const target = +counter.getAttribute('data-target');
@@ -794,7 +846,6 @@
             });
         }
 
-        // Funciones FAQ aseguradas para el menú de servicios
         function toggleFaq(button) {
             const content = button.nextElementSibling;
             const icon = button.querySelector('svg');
@@ -803,24 +854,21 @@
             if (content.style.maxHeight) {
                 content.style.maxHeight = null;
                 icon.classList.remove('-rotate-180');
-                parent.classList.remove('border-brand-accent', 'shadow-md');
+                parent.classList.remove('border-brand-gray/80');
                 parent.classList.add('border-brand-gray');
             } else {
                 document.querySelectorAll('.faq-content').forEach(c => c.style.maxHeight = null);
                 document.querySelectorAll('.faq-btn svg').forEach(i => i.classList.remove('-rotate-180'));
-                document.querySelectorAll('.faq-item').forEach(p => {
-                    p.classList.remove('border-brand-accent', 'shadow-md');
-                    p.classList.add('border-brand-gray');
-                });
+                document.querySelectorAll('.faq-item').forEach(p => { p.classList.remove('border-brand-gray/80'); p.classList.add('border-brand-gray'); });
 
                 content.style.maxHeight = content.scrollHeight + "px";
                 icon.classList.add('-rotate-180');
                 parent.classList.remove('border-brand-gray');
-                parent.classList.add('border-brand-accent', 'shadow-md');
+                parent.classList.add('border-brand-gray/80');
             }
         }
 
-        // Efecto Parallax Sensible al Movimiento
+        // --- Efecto Parallax ---
         document.addEventListener('mousemove', (e) => {
             const wrappers = document.querySelectorAll('.parallax-wrapper');
             const centerX = window.innerWidth / 2;
@@ -830,13 +878,10 @@
 
             wrappers.forEach(wrap => {
                 const speed = parseFloat(wrap.getAttribute('data-speed')) || 1;
-                const moveX = percentX * 30 * speed;
-                const moveY = percentY * 30 * speed;
-                wrap.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                wrap.style.transform = `translate(${percentX * 30 * speed}px, ${percentY * 30 * speed}px)`;
             });
         });
 
-        // Soporte Parallax móvil
         document.addEventListener('touchmove', (e) => {
             if (e.touches.length > 0) {
                 const touch = e.touches[0];
@@ -847,13 +892,12 @@
 
                 document.querySelectorAll('.parallax-wrapper').forEach(wrap => {
                     const speed = parseFloat(wrap.getAttribute('data-speed')) || 1;
-                    const moveX = percentX * 20 * speed;
-                    const moveY = percentY * 20 * speed;
-                    wrap.style.transform = `translate(${moveX}px, ${moveY}px)`;
+                    wrap.style.transform = `translate(${percentX * 20 * speed}px, ${percentY * 20 * speed}px)`;
                 });
             }
         });
 
+        // --- Inicialización ---
         window.addEventListener('load', () => {
             const loader = document.getElementById('preloader');
             const loaderBar = document.getElementById('loader-bar');
@@ -868,6 +912,7 @@
             document.getElementById('mobile-menu').classList.toggle('hidden');
         });
 
+        // --- WhatsApp Form ---
         function handleFormSubmit(event) {
             event.preventDefault();
             const nombre = document.getElementById('nombre').value;
@@ -877,7 +922,6 @@
             const mensaje = document.getElementById('mensaje').value;
 
             const txt = `Hola EQB STUDIO, solicito información.\n\n*Mis Datos:*\n- Nombre: ${nombre}\n- Correo: ${email}\n- Interés: ${servicioTexto}\n\n*Proyecto:*\n${mensaje}`;
-
             window.open(`https://wa.me/573021192800?text=${encodeURIComponent(txt)}`, '_blank');
             event.target.reset();
         }
