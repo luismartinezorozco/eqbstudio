@@ -498,60 +498,103 @@
         <!-- ================= PÁGINA: PORTAFOLIO ================= -->
         <div id="page-portafolio" class="page-view">
             <section class="py-16 lg:py-32 bg-dots relative overflow-hidden border-b border-brand-gray/50">
-                <div class="absolute left-[0%] top-[5%] opacity-40 parallax-wrapper pointer-events-none hidden sm:block drop-shadow-2xl" data-speed="1.4">
-                    <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1782664406/Gemini_Generated_Image_vllh0gvllh0gvllh_inspyrenet_ocw53a.png" alt="3D Graphics" class="w-[250px] md:w-[650px] levitate-slow rotate-12 blur-[1px]">
-                </div>
                 <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-12 relative z-10">
                     <div class="text-center mb-16 sm:mb-24 reveal relative">
-                        <h2 class="text-xs sm:text-sm font-black tracking-[0.25em] text-brand-accent uppercase mb-3">Nuestra Experiencia</h2>
-                        <h3 class="text-4xl lg:text-5xl xl:text-6xl font-black text-brand-textDark uppercase tracking-tighter relative z-10">MUESTRA DE TRABAJO</h3>
+                        <h2 class="text-xs sm:text-sm font-black tracking-[0.25em] text-brand-accent uppercase mb-3">Casos de Éxito</h2>
+                        <h3 class="text-4xl lg:text-5xl xl:text-6xl font-black text-brand-textDark uppercase tracking-tighter relative z-10">NUESTRO PORTAFOLIO</h3>
+                        <p class="mt-6 text-brand-textSoft font-semibold text-base sm:text-lg max-w-2xl mx-auto">Explora una selección de marcas que hemos impulsado a través de diseño estratégico y desarrollo web de alto nivel.</p>
                     </div>
 
-                    <div class="space-y-28 lg:space-y-48">
-                        <div class="reveal group flex flex-col lg:flex-row gap-12 sm:gap-16 items-center bg-white/50 backdrop-blur-sm p-6 sm:p-10 rounded-[40px] shadow-xl shadow-brand-textDark/5 border border-white">
-                            <div class="w-full lg:w-1/2 flex justify-center relative">
-                                <div class="absolute inset-0 bg-brand-light rounded-full transform -rotate-6 scale-105 transition-transform duration-600 group-hover:rotate-0 border-2 border-brand-gray shadow-inner"></div>
-                                <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1778502887/1_jgcm39.png" alt="Identidad Corporativa" class="w-full h-auto object-contain png-mockup max-h-[350px] sm:max-h-[550px] relative z-10">
-                            </div>
-                            <div class="w-full lg:w-1/2 flex flex-col justify-center px-2 sm:px-8 text-center lg:text-left">
-                                <span class="inline-block py-1.5 px-4 bg-brand-textDark text-brand-accent font-black text-[10px] sm:text-[11px] uppercase tracking-[0.2em] rounded-full w-max mx-auto lg:mx-0 mb-4 shadow-md">Papelería Institucional</span>
-                                <h4 class="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-textDark mb-4 tracking-tight">IDENTIDAD CORPORATIVA</h4>
-                                <p class="text-base sm:text-lg font-medium text-brand-textSoft mb-8 max-w-md mx-auto lg:mx-0 leading-relaxed">Diseño estratégico del logotipo y papelería asegurando presencia coherente y profesional en cada punto de contacto.</p>
-                                <button onclick="selectPlan('Identidad de Marca', 'Consulta de Portafolio')" class="interactive-el inline-flex items-center justify-center lg:justify-start text-brand-textDark font-black uppercase tracking-widest hover:text-brand-accent transition-colors w-max mx-auto lg:mx-0 group-hover:translate-x-2 duration-300">
-                                    Iniciar Proyecto <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                    <!-- Galería de Proyectos (Grid) -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                        
+                        <!-- Proyecto 1 -->
+                        <div class="group relative overflow-hidden rounded-[30px] h-[350px] sm:h-[400px] cursor-pointer interactive-el reveal shadow-lg shadow-brand-textDark/10">
+                            <!-- Imagen de fondo (Placeholder de Web Design) -->
+                            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop" alt="Proyecto Web" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <!-- Capa oscura superpuesta -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-brand-textDark via-brand-textDark/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-400"></div>
+                            
+                            <!-- Contenido (Aparece al hacer hover) -->
+                            <div class="absolute bottom-0 left-0 w-full p-8 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-400 flex flex-col justify-end h-full">
+                                <span class="text-brand-accent text-[10px] font-black uppercase tracking-[0.2em] mb-2 drop-shadow-md">Desarrollo Web</span>
+                                <h4 class="text-white text-2xl font-black mb-3 tracking-tight">Plataforma TechFlow</h4>
+                                <p class="text-white/80 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-400 delay-100 mb-6 line-clamp-2">Rediseño completo de experiencia de usuario y desarrollo de sitio corporativo.</p>
+                                
+                                <button onclick="selectPlan('Páginas Web', 'Cotizar proyecto similar a TechFlow')" class="opacity-0 group-hover:opacity-100 transition-all duration-400 delay-200 inline-flex items-center text-xs font-black uppercase tracking-widest text-white hover:text-brand-accent">
+                                    Cotizar Similar <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
                                 </button>
                             </div>
                         </div>
 
-                        <div class="reveal group flex flex-col lg:flex-row-reverse gap-12 sm:gap-16 items-center bg-white/50 backdrop-blur-sm p-6 sm:p-10 rounded-[40px] shadow-xl shadow-brand-textDark/5 border border-white">
-                            <div class="w-full lg:w-1/2 flex justify-center relative">
-                                <div class="absolute inset-0 bg-brand-light rounded-full transform rotate-6 scale-105 transition-transform duration-600 group-hover:rotate-0 border-2 border-brand-gray shadow-inner"></div>
-                                <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1778502887/4_xspar2.png" alt="Diseño Web" class="w-full h-auto object-contain png-mockup max-h-[350px] sm:max-h-[550px] relative z-10">
-                            </div>
-                            <div class="w-full lg:w-1/2 flex flex-col justify-center px-2 sm:px-8 text-center lg:text-left">
-                                <span class="inline-block py-1.5 px-4 bg-brand-textDark text-brand-accent font-black text-[10px] sm:text-[11px] uppercase tracking-[0.2em] rounded-full w-max mx-auto lg:mx-0 mb-4 shadow-md">Plataformas Web</span>
-                                <h4 class="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-textDark mb-4 tracking-tight">DESARROLLO DIGITAL</h4>
-                                <p class="text-base sm:text-lg font-medium text-brand-textSoft mb-8 max-w-md mx-auto lg:mx-0 leading-relaxed">Ecosistemas optimizados y responsivos diseñados bajo los más altos estándares de conversión y experiencia de usuario.</p>
-                                <button onclick="selectPlan('Páginas Web', 'Consulta de Desarrollo Digital')" class="interactive-el inline-flex items-center justify-center lg:justify-start text-brand-textDark font-black uppercase tracking-widest hover:text-brand-accent transition-colors w-max mx-auto lg:mx-0 group-hover:translate-x-2 duration-300">
-                                    Cotizar Web <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                        <!-- Proyecto 2 -->
+                        <div class="group relative overflow-hidden rounded-[30px] h-[350px] sm:h-[400px] cursor-pointer interactive-el reveal delay-100 shadow-lg shadow-brand-textDark/10">
+                            <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?q=80&w=800&auto=format&fit=crop" alt="Proyecto Marca" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-brand-textDark via-brand-textDark/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-400"></div>
+                            <div class="absolute bottom-0 left-0 w-full p-8 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-400 flex flex-col justify-end h-full">
+                                <span class="text-brand-accent text-[10px] font-black uppercase tracking-[0.2em] mb-2 drop-shadow-md">Identidad de Marca</span>
+                                <h4 class="text-white text-2xl font-black mb-3 tracking-tight">Lumina Studio</h4>
+                                <p class="text-white/80 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-400 delay-100 mb-6 line-clamp-2">Creación de identidad visual, paleta de colores y manual de marca corporativo.</p>
+                                <button onclick="selectPlan('Identidad de Marca', 'Cotizar proyecto similar a Lumina')" class="opacity-0 group-hover:opacity-100 transition-all duration-400 delay-200 inline-flex items-center text-xs font-black uppercase tracking-widest text-white hover:text-brand-accent">
+                                    Cotizar Similar <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
                                 </button>
                             </div>
                         </div>
-                        
-                        <div class="reveal group flex flex-col lg:flex-row gap-12 sm:gap-16 items-center bg-white/50 backdrop-blur-sm p-6 sm:p-10 rounded-[40px] shadow-xl shadow-brand-textDark/5 border border-white">
-                            <div class="w-full lg:w-1/2 flex justify-center relative">
-                                <div class="absolute inset-0 bg-brand-light rounded-full transform -rotate-6 scale-105 transition-transform duration-600 group-hover:rotate-0 border-2 border-brand-gray shadow-inner"></div>
-                                <img src="https://res.cloudinary.com/dkufuo5wc/image/upload/v1778502888/2_eohnei.png" alt="Catálogo Virtual" class="w-full h-auto object-contain png-mockup max-h-[350px] sm:max-h-[550px] relative z-10">
-                            </div>
-                            <div class="w-full lg:w-1/2 flex flex-col justify-center px-2 sm:px-8 text-center lg:text-left">
-                                <span class="inline-block py-1.5 px-4 bg-brand-textDark text-brand-accent font-black text-[10px] sm:text-[11px] uppercase tracking-[0.2em] rounded-full w-max mx-auto lg:mx-0 mb-4 shadow-md">Diseño Interactivo</span>
-                                <h4 class="text-3xl sm:text-4xl lg:text-5xl font-black text-brand-textDark mb-4 tracking-tight">CATÁLOGO VIRTUAL</h4>
-                                <p class="text-base sm:text-lg font-medium text-brand-textSoft mb-8 max-w-md mx-auto lg:mx-0 leading-relaxed">Sistemas dinámicos y atractivos para exponer productos facilitando enormemente la toma de decisión del cliente.</p>
-                                <button onclick="selectPlan('Catálogos Digitales', 'Consulta de Catálogo Virtual')" class="interactive-el inline-flex items-center justify-center lg:justify-start text-brand-textDark font-black uppercase tracking-widest hover:text-brand-accent transition-colors w-max mx-auto lg:mx-0 group-hover:translate-x-2 duration-300">
-                                    Diseñar Catálogo <svg class="w-6 h-6 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+
+                        <!-- Proyecto 3 -->
+                        <div class="group relative overflow-hidden rounded-[30px] h-[350px] sm:h-[400px] cursor-pointer interactive-el reveal delay-200 shadow-lg shadow-brand-textDark/10">
+                            <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?q=80&w=800&auto=format&fit=crop" alt="Catálogo Digital" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-brand-textDark via-brand-textDark/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-400"></div>
+                            <div class="absolute bottom-0 left-0 w-full p-8 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-400 flex flex-col justify-end h-full">
+                                <span class="text-brand-accent text-[10px] font-black uppercase tracking-[0.2em] mb-2 drop-shadow-md">Catálogo Digital</span>
+                                <h4 class="text-white text-2xl font-black mb-3 tracking-tight">Colección EcoWear</h4>
+                                <p class="text-white/80 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-400 delay-100 mb-6 line-clamp-2">Diagramación y diseño interactivo de catálogo de ventas optimizado para WhatsApp.</p>
+                                <button onclick="selectPlan('Catálogos Digitales', 'Cotizar catálogo similar a EcoWear')" class="opacity-0 group-hover:opacity-100 transition-all duration-400 delay-200 inline-flex items-center text-xs font-black uppercase tracking-widest text-white hover:text-brand-accent">
+                                    Cotizar Similar <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
                                 </button>
                             </div>
                         </div>
+
+                        <!-- Proyecto 4 -->
+                        <div class="group relative overflow-hidden rounded-[30px] h-[350px] sm:h-[400px] cursor-pointer interactive-el reveal shadow-lg shadow-brand-textDark/10">
+                            <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=800&auto=format&fit=crop" alt="vCard Digital" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-brand-textDark via-brand-textDark/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-400"></div>
+                            <div class="absolute bottom-0 left-0 w-full p-8 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-400 flex flex-col justify-end h-full">
+                                <span class="text-brand-accent text-[10px] font-black uppercase tracking-[0.2em] mb-2 drop-shadow-md">vCard & NFC</span>
+                                <h4 class="text-white text-2xl font-black mb-3 tracking-tight">Tarjetas Smart</h4>
+                                <p class="text-white/80 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-400 delay-100 mb-6 line-clamp-2">Implementación de tarjetas de presentación digitales con tecnología NFC para ejecutivos.</p>
+                                <button onclick="selectPlan('vCard Digitales', 'Cotizar vCard similar a Smart')" class="opacity-0 group-hover:opacity-100 transition-all duration-400 delay-200 inline-flex items-center text-xs font-black uppercase tracking-widest text-white hover:text-brand-accent">
+                                    Cotizar Similar <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Proyecto 5 -->
+                        <div class="group relative overflow-hidden rounded-[30px] h-[350px] sm:h-[400px] cursor-pointer interactive-el reveal delay-100 shadow-lg shadow-brand-textDark/10">
+                            <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop" alt="Desarrollo a Medida" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-brand-textDark via-brand-textDark/50 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-400"></div>
+                            <div class="absolute bottom-0 left-0 w-full p-8 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-400 flex flex-col justify-end h-full">
+                                <span class="text-brand-accent text-[10px] font-black uppercase tracking-[0.2em] mb-2 drop-shadow-md">Web Empresarial</span>
+                                <h4 class="text-white text-2xl font-black mb-3 tracking-tight">Grupo Inmobiliario</h4>
+                                <p class="text-white/80 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-400 delay-100 mb-6 line-clamp-2">Página web corporativa con buscador avanzado y optimización SEO local.</p>
+                                <button onclick="selectPlan('Páginas Web', 'Cotizar web similar a Inmobiliaria')" class="opacity-0 group-hover:opacity-100 transition-all duration-400 delay-200 inline-flex items-center text-xs font-black uppercase tracking-widest text-white hover:text-brand-accent">
+                                    Cotizar Similar <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Panel Call to Action -->
+                        <div class="group relative overflow-hidden rounded-[30px] h-[350px] sm:h-[400px] cursor-pointer interactive-el reveal delay-200 bg-brand-textDark shadow-lg shadow-brand-textDark/10 flex flex-col items-center justify-center text-center p-8 border-4 border-brand-textDark hover:border-brand-accent transition-colors duration-400" onclick="navigate('contacto')">
+                            <div class="w-16 h-16 rounded-full bg-brand-accent/20 flex items-center justify-center text-brand-accent mb-6 group-hover:scale-110 transition-transform duration-400">
+                                <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg>
+                            </div>
+                            <h4 class="text-white text-2xl font-black mb-3 tracking-tight">Tu Marca Aquí</h4>
+                            <p class="text-white/60 text-sm font-medium mb-6">Estamos listos para convertir tu idea en nuestro próximo gran caso de éxito.</p>
+                            <span class="inline-flex items-center text-xs font-black uppercase tracking-[0.2em] text-brand-accent">
+                                Iniciar Proyecto <svg class="w-4 h-4 ml-2 group-hover:translate-x-2 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                            </span>
+                        </div>
+
                     </div>
                 </div>
             </section>
