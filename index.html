@@ -166,7 +166,8 @@
                     <button onclick="navigate('nosotros')" class="interactive-el nav-link text-[13px] font-bold tracking-widest text-brand-textDark hover:text-brand-accent transition-colors uppercase">Nosotros</button>
                     <button onclick="navigate('servicios')" class="interactive-el nav-link text-[13px] font-bold tracking-widest text-brand-textDark hover:text-brand-accent transition-colors uppercase">Servicios</button>
                     <button onclick="navigate('portafolio')" class="interactive-el nav-link text-[13px] font-bold tracking-widest text-brand-textDark hover:text-brand-accent transition-colors uppercase">Portafolio</button>
-                    <button onclick="navigate('qr')" class="interactive-el nav-link text-[13px] font-bold tracking-widest text-brand-textDark hover:text-brand-accent transition-colors uppercase">QR</button>
+                    <!-- Botón QR Oculto temporalmente -->
+                    <!-- <button onclick="navigate('qr')" class="interactive-el nav-link text-[13px] font-bold tracking-widest text-brand-textDark hover:text-brand-accent transition-colors uppercase">QR</button> -->
                 </div>
                 <div class="flex items-center gap-4">
                     <button onclick="navigate('contacto'); setTimeout(() => document.getElementById('nombre').focus(), 400);" class="interactive-el hidden md:inline-flex bg-brand-accent text-white px-7 py-3 text-xs font-black tracking-widest hover:bg-brand-accentHover transition-all hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(255,106,0,0.4)] uppercase rounded-full shadow-lg shadow-brand-accent/30">
@@ -186,7 +187,8 @@
                 <button onclick="navigate('nosotros')" class="mobile-nav-link text-brand-textDark text-sm uppercase tracking-widest font-black py-4 rounded-2xl hover:bg-brand-light transition-colors">Nosotros</button>
                 <button onclick="navigate('servicios')" class="mobile-nav-link text-brand-textDark text-sm uppercase tracking-widest font-black py-4 rounded-2xl hover:bg-brand-light transition-colors">Servicios</button>
                 <button onclick="navigate('portafolio')" class="mobile-nav-link text-brand-textDark text-sm uppercase tracking-widest font-black py-4 rounded-2xl hover:bg-brand-light transition-colors">Portafolio</button>
-                <button onclick="navigate('qr')" class="mobile-nav-link text-brand-textDark text-sm uppercase tracking-widest font-black py-4 rounded-2xl hover:bg-brand-light transition-colors">QR</button>
+                <!-- Botón QR Móvil Oculto temporalmente -->
+                <!-- <button onclick="navigate('qr')" class="mobile-nav-link text-brand-textDark text-sm uppercase tracking-widest font-black py-4 rounded-2xl hover:bg-brand-light transition-colors">QR</button> -->
                 <button onclick="navigate('contacto'); setTimeout(() => document.getElementById('nombre').focus(), 400);" class="interactive-el w-full bg-brand-accent text-white py-4 text-xs uppercase tracking-widest font-black rounded-2xl mt-2 shadow-lg shadow-brand-accent/30 flex justify-center items-center hover:bg-brand-accentHover transition-colors">Cotizar Proyecto</button>
             </div>
         </div>
@@ -603,88 +605,121 @@
 
         <!-- ================= PÁGINA: QR (vCard) ================= -->
         <div id="page-qr" class="page-view">
-            <section class="py-12 flex justify-center items-center min-h-[calc(100vh-80px)] bg-[radial-gradient(circle_at_top_right,#F8F9FA_0%,#E9ECEF_100%)] p-4 sm:p-6 border-b border-brand-gray/50">
+            <section class="pt-10 pb-20 lg:pt-24 lg:pb-32 bg-[radial-gradient(circle_at_top_right,#F8F9FA_0%,#E9ECEF_100%)] relative overflow-hidden border-b border-brand-gray/50 min-h-[calc(100vh-80px)] flex items-center">
                 
-                <!-- Contenedor Principal de la Tarjeta Móvil (vCard) - SIN RECUADRO -->
-                <div class="w-full max-w-[420px] bg-white min-h-[85vh] sm:min-h-[auto] rounded-[30px] shadow-[0_20px_50px_rgba(0,0,0,0.08)] relative overflow-hidden flex flex-col z-10 reveal">
+                <!-- Decoración de fondo suave para evitar vacíos -->
+                <div class="absolute -left-40 top-20 w-[500px] h-[500px] bg-brand-accent/5 blur-[120px] rounded-full pointer-events-none z-0"></div>
+                <div class="absolute right-0 bottom-0 w-1/3 h-1/3 bg-brand-accent/5 blur-[100px] rounded-tl-full pointer-events-none z-0"></div>
+
+                <!-- Contenedor Grid 2 Columnas -->
+                <div class="max-w-[1400px] w-full mx-auto px-4 sm:px-6 lg:px-12 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start lg:items-center">
                     
-                    <!-- Mascota en el fondo de los botones -->
-                    <div class="absolute inset-x-0 bottom-28 flex justify-center pointer-events-none opacity-[0.06] z-0">
-                        <img src="https://www.image2url.com/r2/default/images/1782571037969-5dcdb824-91fd-43d8-b539-cfe0894386ca.png" alt="Eqbito Marca de Agua" class="w-[280px] h-auto object-contain">
-                    </div>
-
-                    <!-- Header Diagonal con Mascota como Portada -->
-                    <div class="relative h-56 bg-brand-textDark clip-header flex justify-center items-start overflow-hidden">
-                        <div class="absolute w-[220px] h-[220px] bg-brand-accent/30 blur-[50px] rounded-full -top-10 left-1/2 transform -translate-x-1/2 pointer-events-none z-0"></div>
-                        
-                        <div class="absolute inset-x-0 bottom-3 flex justify-center items-end z-10 h-full max-h-[85%] select-none">
-                            <img src="https://www.image2url.com/r2/default/images/1782571037969-5dcdb824-91fd-43d8-b539-cfe0894386ca.png" alt="Eqbito Portada" class="w-auto h-full object-contain levitate drop-shadow-[0_10px_20px_rgba(255,106,0,0.2)]">
-                        </div>
-
-                        <div class="relative z-20 text-center pt-6">
-                            <span class="text-[9px] text-brand-accent font-black uppercase tracking-[0.25em] bg-brand-textDark/80 py-1 px-3.5 rounded-full border border-white/10 backdrop-blur-sm">Tarjeta de Contacto</span>
-                        </div>
-                    </div>
-
-                    <!-- Foto de Perfil Central -->
-                    <div class="flex justify-center -mt-16 relative z-30">
-                        <div class="w-28 h-28 bg-white rounded-full border-[5px] border-white shadow-[0_10px_25px_rgba(0,0,0,0.15)] overflow-hidden flex items-center justify-center p-4 relative transition-transform hover:scale-105 duration-300">
-                            <div class="absolute inset-0 bg-gradient-to-tr from-brand-light to-white"></div>
-                            <img src="https://www.image2url.com/r2/default/images/1783443251633-c2d56297-30d4-4ac8-8d74-7e9f2b2d6681.png" alt="EQB Logo" class="w-full h-full object-contain relative z-10">
-                        </div>
-                    </div>
-
-                    <!-- Información de Presentación -->
-                    <div class="text-center px-6 mt-4 relative z-10">
-                        <h1 class="text-3xl font-black uppercase tracking-tight text-brand-textDark">EQB STUDIO</h1>
-                        <p class="text-[11px] text-brand-accent font-black uppercase tracking-[0.2em] mt-1">Desarrollo Digital & Creativo</p>
-                        <p class="text-sm font-semibold text-brand-textSoft mt-4 leading-relaxed max-w-[320px] mx-auto">
-                            Diseñamos con propósito e innovamos con pasión. Impulsamos tu negocio con ecosistemas digitales de alto impacto.
+                    <!-- Lado Izquierdo: Textos de presentación (Llena el espacio en PC) -->
+                    <div class="hidden lg:flex flex-col justify-center text-left reveal-left pl-4 xl:pl-12">
+                        <span class="inline-block py-2 px-5 bg-white border border-brand-gray/80 rounded-full text-[10px] font-black text-brand-accent uppercase tracking-[0.2em] mb-6 shadow-sm w-max">
+                            Conexión Inteligente
+                        </span>
+                        <h2 class="text-5xl xl:text-[4rem] font-black text-brand-textDark mb-6 tracking-tighter leading-[1.05]">
+                            NUESTRA <br><span class="text-brand-accent">TARJETA</span> <br>DIGITAL.
+                        </h2>
+                        <p class="text-brand-textSoft font-semibold text-lg max-w-md mb-10 leading-relaxed">
+                            Experimenta cómo funciona nuestro sistema de tarjetas digitales (vCard). Toda la información de contacto, redes sociales y sitio web a un solo clic de distancia.
                         </p>
+                        <div class="flex items-center gap-4">
+                            <button onclick="selectPlan('vCard Digitales', 'Cotizar vCard Pro')" class="interactive-el px-8 py-4 bg-brand-textDark text-white text-xs font-black tracking-widest uppercase hover:bg-brand-accent transition-all duration-300 hover:-translate-y-1 rounded-full shadow-[0_10px_30px_rgba(17,17,17,0.2)] hover:shadow-[0_10px_30px_rgba(255,106,0,0.4)]">
+                                Quiero una así
+                            </button>
+                        </div>
                     </div>
 
-                    <!-- Botones de Redes y Enlaces -->
-                    <div class="px-6 mt-8 space-y-4 flex-grow pb-28 relative z-10">
+                    <!-- Lado Derecho: La Tarjeta vCard -->
+                    <div class="flex justify-center items-center relative reveal-right w-full">
                         
-                        <a href="https://wa.me/573021192800" target="_blank" class="interactive-el w-full bg-brand-accent text-white border-2 border-brand-accent hover:bg-brand-accentHover transition-transform transform hover:-translate-y-1 rounded-2xl p-4 flex items-center justify-between shadow-lg shadow-brand-accent/30 group">
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
-                                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                                </div>
-                                <span class="text-sm font-black uppercase tracking-widest text-left leading-tight">Chatear en<br>WhatsApp</span>
-                            </div>
-                            <svg class="w-6 h-6 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
-                        </a>
+                        <!-- Resplandor sutil detrás de la tarjeta -->
+                        <div class="absolute w-[80%] h-[80%] bg-white/50 rounded-full blur-[70px] pointer-events-none z-0"></div>
 
-                        <button onclick="navigate('inicio')" class="interactive-el w-full bg-white border-2 border-brand-gray text-brand-textDark hover:bg-brand-textDark hover:border-brand-textDark hover:text-white transition-all transform hover:-translate-y-1 rounded-2xl p-4 flex items-center justify-between group">
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 bg-brand-gray/50 group-hover:bg-white/10 rounded-full flex items-center justify-center transition-colors">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
-                                </div>
-                                <span class="text-sm font-black uppercase tracking-widest">Sitio Web</span>
+                        <!-- Contenedor Principal de la Tarjeta Móvil (vCard) -->
+                        <div class="w-full max-w-[400px] bg-white rounded-[30px] shadow-[0_20px_50px_rgba(0,0,0,0.08)] relative overflow-hidden flex flex-col z-10">
+                            
+                            <!-- Mascota en el fondo de los botones -->
+                            <div class="absolute inset-x-0 bottom-28 flex justify-center pointer-events-none opacity-[0.06] z-0">
+                                <img src="https://www.image2url.com/r2/default/images/1782571037969-5dcdb824-91fd-43d8-b539-cfe0894386ca.png" alt="Eqbito Marca de Agua" class="w-[280px] h-auto object-contain">
                             </div>
-                            <svg class="w-6 h-6 transform transition-transform group-hover:translate-x-1 opacity-50 group-hover:opacity-100" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg>
-                        </button>
 
-                        <a href="https://www.instagram.com/eqbstudio/" target="_blank" class="interactive-el w-full bg-white border-2 border-brand-gray text-brand-textDark hover:bg-brand-textDark hover:border-brand-textDark hover:text-white transition-all transform hover:-translate-y-1 rounded-2xl p-4 flex items-center justify-between group">
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 bg-brand-gray/50 group-hover:bg-white/10 rounded-full flex items-center justify-center transition-colors">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                            <!-- Header Diagonal con Mascota como Portada -->
+                            <div class="relative h-56 bg-brand-textDark clip-header flex justify-center items-start overflow-hidden">
+                                <div class="absolute w-[220px] h-[220px] bg-brand-accent/30 blur-[50px] rounded-full -top-10 left-1/2 transform -translate-x-1/2 pointer-events-none z-0"></div>
+                                
+                                <div class="absolute inset-x-0 bottom-3 flex justify-center items-end z-10 h-full max-h-[85%] select-none">
+                                    <img src="https://www.image2url.com/r2/default/images/1782571037969-5dcdb824-91fd-43d8-b539-cfe0894386ca.png" alt="Eqbito Portada" class="w-auto h-full object-contain levitate drop-shadow-[0_10px_20px_rgba(255,106,0,0.2)]">
                                 </div>
-                                <span class="text-sm font-black uppercase tracking-widest">Instagram</span>
+
+                                <div class="relative z-20 text-center pt-6">
+                                    <span class="text-[9px] text-brand-accent font-black uppercase tracking-[0.25em] bg-brand-textDark/80 py-1 px-3.5 rounded-full border border-white/10 backdrop-blur-sm">Tarjeta de Contacto</span>
+                                </div>
                             </div>
-                            <svg class="w-6 h-6 transform transition-transform group-hover:translate-x-1 opacity-50 group-hover:opacity-100" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg>
-                        </a>
+
+                            <!-- Foto de Perfil Central -->
+                            <div class="flex justify-center -mt-16 relative z-30">
+                                <div class="w-28 h-28 bg-white rounded-full border-[5px] border-white shadow-[0_10px_25px_rgba(0,0,0,0.15)] overflow-hidden flex items-center justify-center p-4 relative transition-transform hover:scale-105 duration-300">
+                                    <div class="absolute inset-0 bg-gradient-to-tr from-brand-light to-white"></div>
+                                    <img src="https://www.image2url.com/r2/default/images/1783443251633-c2d56297-30d4-4ac8-8d74-7e9f2b2d6681.png" alt="EQB Logo" class="w-full h-full object-contain relative z-10">
+                                </div>
+                            </div>
+
+                            <!-- Información de Presentación -->
+                            <div class="text-center px-6 mt-4 relative z-10">
+                                <h1 class="text-3xl font-black uppercase tracking-tight text-brand-textDark">EQB STUDIO</h1>
+                                <p class="text-[11px] text-brand-accent font-black uppercase tracking-[0.2em] mt-1">Desarrollo Digital & Creativo</p>
+                                <p class="text-sm font-semibold text-brand-textSoft mt-4 leading-relaxed max-w-[320px] mx-auto">
+                                    Diseñamos con propósito e innovamos con pasión. Impulsamos tu negocio con ecosistemas digitales de alto impacto.
+                                </p>
+                            </div>
+
+                            <!-- Botones de Redes y Enlaces -->
+                            <div class="px-6 mt-8 space-y-4 flex-grow pb-28 relative z-10">
+                                
+                                <a href="https://wa.me/573021192800" target="_blank" class="interactive-el w-full bg-brand-accent text-white border-2 border-brand-accent hover:bg-brand-accentHover transition-transform transform hover:-translate-y-1 rounded-2xl p-4 flex items-center justify-between shadow-lg shadow-brand-accent/30 group">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                        </div>
+                                        <span class="text-sm font-black uppercase tracking-widest text-left leading-tight">Chatear en<br>WhatsApp</span>
+                                    </div>
+                                    <svg class="w-6 h-6 transform transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                                </a>
+
+                                <button onclick="navigate('inicio')" class="interactive-el w-full bg-white border-2 border-brand-gray text-brand-textDark hover:bg-brand-textDark hover:border-brand-textDark hover:text-white transition-all transform hover:-translate-y-1 rounded-2xl p-4 flex items-center justify-between group">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 bg-brand-gray/50 group-hover:bg-white/10 rounded-full flex items-center justify-center transition-colors">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                                        </div>
+                                        <span class="text-sm font-black uppercase tracking-widest">Sitio Web</span>
+                                    </div>
+                                    <svg class="w-6 h-6 transform transition-transform group-hover:translate-x-1 opacity-50 group-hover:opacity-100" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg>
+                                </button>
+
+                                <a href="https://www.instagram.com/eqbstudio/" target="_blank" class="interactive-el w-full bg-white border-2 border-brand-gray text-brand-textDark hover:bg-brand-textDark hover:border-brand-textDark hover:text-white transition-all transform hover:-translate-y-1 rounded-2xl p-4 flex items-center justify-between group">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-10 h-10 bg-brand-gray/50 group-hover:bg-white/10 rounded-full flex items-center justify-center transition-colors">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                                        </div>
+                                        <span class="text-sm font-black uppercase tracking-widest">Instagram</span>
+                                    </div>
+                                    <svg class="w-6 h-6 transform transition-transform group-hover:translate-x-1 opacity-50 group-hover:opacity-100" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"></path></svg>
+                                </a>
+                            </div>
+
+                            <!-- Botón Inferior Fijo (Guardar Contacto) -->
+                            <div class="absolute bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-brand-gray p-4 z-20">
+                                <button onclick="downloadVCard()" class="interactive-el w-full bg-brand-textDark text-white py-3.5 font-black tracking-widest uppercase text-xs hover:bg-black hover:scale-[1.02] active:scale-[0.98] transition-all rounded-xl flex items-center justify-center gap-2 shadow-lg">
+                                    <svg class="w-5 h-5 text-brand-accent" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                                    Guardar Contacto
+                                </button>
+                            </div>
+
+                        </div>
                     </div>
-
-                    <!-- Botón Inferior Fijo (Guardar Contacto - Funcional) -->
-                    <div class="absolute bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-brand-gray p-4 z-20">
-                        <button onclick="downloadVCard()" class="interactive-el w-full bg-brand-textDark text-white py-3.5 font-black tracking-widest uppercase text-xs hover:bg-black hover:scale-[1.02] active:scale-[0.98] transition-all rounded-xl flex items-center justify-center gap-2 shadow-lg">
-                            <svg class="w-5 h-5 text-brand-accent" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-                            Guardar Contacto
-                        </button>
-                    </div>
-
                 </div>
             </section>
         </div>
