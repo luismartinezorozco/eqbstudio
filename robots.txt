@@ -3,4 +3,3 @@ Allow: /
 Disallow: /qr
 
 Sitemap: https://eqbstudio.com.co/sitemap.xml
-```eof
