@@ -110,6 +110,8 @@
         .nav-link:hover::after { width: 50%; }
         .nav-link.active::after { width: 100%; }
 
+        .reveal, .reveal-left, .reveal-right { will-change: transform, opacity; }
+
         .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal-left { opacity: 0; transform: translateX(-40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal-right { opacity: 0; transform: translateX(40px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -851,16 +853,30 @@
         }
 
         // --- Router SPA (Safe URL Handling) ---
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { rootMargin: "0px 0px -50px 0px", threshold: 0.1 });
+
         function navigate(pageId) {
             document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active-page'));
             const targetPage = document.getElementById(`page-${pageId}`);
             if (targetPage) {
                 targetPage.classList.add('active-page');
                 window.scrollTo(0, 0); 
-                setTimeout(() => {
-                    targetPage.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => el.classList.add('active'));
-                    if (pageId === 'inicio') triggerCounters();
-                }, 50);
+                
+                // Optimizacion: Animar SOLO cuando el elemento entre en pantalla
+                targetPage.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+                    el.classList.remove('active'); // Reiniciamos
+                    revealObserver.observe(el);    // Observamos el scroll
+                });
+
+                if (pageId === 'inicio') {
+                    setTimeout(triggerCounters, 200);
+                }
             }
             document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
                 link.classList.remove('active', 'text-brand-accent', 'bg-brand-light');
@@ -1031,33 +1047,45 @@
         }
 
         // --- Efecto Parallax ---
+        let ticking = false;
         document.addEventListener('mousemove', (e) => {
-            const wrappers = document.querySelectorAll('.parallax-wrapper');
-            const centerX = window.innerWidth / 2;
-            const centerY = window.innerHeight / 2;
-            const percentX = (e.clientX - centerX) / centerX;
-            const percentY = (e.clientY - centerY) / centerY;
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const wrappers = document.querySelectorAll('.parallax-wrapper');
+                    const centerX = window.innerWidth / 2;
+                    const centerY = window.innerHeight / 2;
+                    const percentX = (e.clientX - centerX) / centerX;
+                    const percentY = (e.clientY - centerY) / centerY;
 
-            wrappers.forEach(wrap => {
-                const speed = parseFloat(wrap.getAttribute('data-speed')) || 1;
-                wrap.style.transform = `translate(${percentX * 30 * speed}px, ${percentY * 30 * speed}px)`;
-            });
-        });
-
-        document.addEventListener('touchmove', (e) => {
-            if (e.touches.length > 0) {
-                const touch = e.touches[0];
-                const centerX = window.innerWidth / 2;
-                const centerY = window.innerHeight / 2;
-                const percentX = (touch.clientX - centerX) / centerX;
-                const percentY = (touch.clientY - centerY) / centerY;
-
-                document.querySelectorAll('.parallax-wrapper').forEach(wrap => {
-                    const speed = parseFloat(wrap.getAttribute('data-speed')) || 1;
-                    wrap.style.transform = `translate(${percentX * 20 * speed}px, ${percentY * 20 * speed}px)`;
+                    wrappers.forEach(wrap => {
+                        const speed = parseFloat(wrap.getAttribute('data-speed')) || 1;
+                        wrap.style.transform = `translate(${percentX * 30 * speed}px, ${percentY * 30 * speed}px)`;
+                    });
+                    ticking = false;
                 });
+                ticking = true;
             }
         });
+
+        let tickingTouch = false;
+        document.addEventListener('touchmove', (e) => {
+            if (e.touches.length > 0 && !tickingTouch) {
+                window.requestAnimationFrame(() => {
+                    const touch = e.touches[0];
+                    const centerX = window.innerWidth / 2;
+                    const centerY = window.innerHeight / 2;
+                    const percentX = (touch.clientX - centerX) / centerX;
+                    const percentY = (touch.clientY - centerY) / centerY;
+
+                    document.querySelectorAll('.parallax-wrapper').forEach(wrap => {
+                        const speed = parseFloat(wrap.getAttribute('data-speed')) || 1;
+                        wrap.style.transform = `translate(${percentX * 20 * speed}px, ${percentY * 20 * speed}px)`;
+                    });
+                    tickingTouch = false;
+                });
+                tickingTouch = true;
+            }
+        }, { passive: true }); // Esto hace que el scroll en móviles no se trabe
 
         // --- Inicialización y Router Inteligente ---
         window.addEventListener('load', () => {
